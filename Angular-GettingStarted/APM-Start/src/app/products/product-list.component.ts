@@ -12,12 +12,12 @@ export class ProductListComponent implements OnInit {
     imageMargin: number = 2;
     showImage: boolean = false;
     private _listFilter: string = "";
-    get listFilter(): string{
+    get listFilter(): string {
         return this._listFilter;
     }
-    set listFilter(value:string){
+    set listFilter(value: string) {
         this._listFilter = value;
-        console.log("Setter change to:" +value);
+        console.log("Setter change to:" + value);
 
     }
     products: IProduct[] =
@@ -73,6 +73,21 @@ export class ProductListComponent implements OnInit {
                 "imageUrl": "assets/images/xbox-controller.png"
             }
         ];
+
+    performFilter(): IProduct[] {
+        /*
+            Note:
+                Filter returns a shallow copy of an array that if modified 
+                will change the original array.
+                In this instance since we're only returning a filtered version of 
+                the array and not setting any values, it works.
+                If we were going to change any array values, then a deep copy of the
+                array should be modified and returned, not the original if we want to
+                preservce the original array. 
+        */
+        return this.products.filter((product: IProduct) =>
+            product.productName.toLowerCase().includes(this.listFilter.toLowerCase()));
+    }
 
     toggleImage(): void {
         this.showImage = !this.showImage;
