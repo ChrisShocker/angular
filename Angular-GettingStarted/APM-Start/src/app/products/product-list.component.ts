@@ -1,16 +1,26 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { IProduct } from "./product";
 
 @Component({
     selector: "pm-products",
-    templateUrl: "./product-list.component.html"
+    templateUrl: "./product-list.component.html",
+    styleUrls: ["./product-list.component.css"]
 })
-export class ProductListComponent {
+export class ProductListComponent implements OnInit {
     pageTitle: string = "Product List";
     imageWidth: number = 50;
     imageMargin: number = 2;
     showImage: boolean = false;
-    listFilter: string = "";
-    products: any[] =
+    private _listFilter: string = "";
+    get listFilter(): string {
+        return this._listFilter;
+    }
+    set listFilter(value: string) {
+        this._listFilter = value;
+        console.log("Setter change to:" + value);
+
+    }
+    products: IProduct[] =
         [
             {
                 "productId": 1,
@@ -64,7 +74,26 @@ export class ProductListComponent {
             }
         ];
 
+    performFilter(): IProduct[] {
+        /*
+            Note:
+                Filter returns a shallow copy of an array that if modified 
+                will change the original array.
+                In this instance since we're only returning a filtered version of 
+                the array and not setting any values, it works.
+                If we were going to modify any array values, then a deep copy of the
+                original array should be made, modified, and returned, if we want to
+                preserve the original array. 
+        */
+        return this.products.filter((product: IProduct) =>
+            product.productName.toLowerCase().includes(this.listFilter.toLowerCase()));
+    }
+
     toggleImage(): void {
         this.showImage = !this.showImage;
+    }
+
+    ngOnInit(): void {
+        console.log('Triggered OnInit');
     }
 }
