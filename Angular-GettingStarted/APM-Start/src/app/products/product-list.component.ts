@@ -81,9 +81,9 @@ export class ProductListComponent implements OnInit {
                 will change the original array.
                 In this instance since we're only returning a filtered version of 
                 the array and not setting any values, it works.
-                If we were going to change any array values, then a deep copy of the
-                array should be modified and returned, not the original if we want to
-                preservce the original array. 
+                If we were going to modify any array values, then a deep copy of the
+                original array should be made, modified, and returned, if we want to
+                preserve the original array. 
         */
         return this.products.filter((product: IProduct) =>
             product.productName.toLowerCase().includes(this.listFilter.toLowerCase()));
