@@ -59,7 +59,21 @@
                         <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
                         <td>{{product.releaseDate}}</td>
                         <td>{{product.price | currency}}</td>
-                        <td><pm-star [rating] = "product.starRating"> </pm-star></td>
+                        <td><pm-star [rating] = "product.starRating" 
+                            (ratingClicked)="onRatingClicked($event)"> </pm-star></td>
+                            <!--
+                                Step 3:
+                                    1. The outside container must listen for the nested event's output
+                                        Bind to the event emited from the nested component 
+                                        (ratingClicked) is the event listened for
+
+                                    2.  When event is triggered we call a function inside the 
+                                        product-list.component.ts to handle it (onRatingClicked($event)), passing in event data 
+                                        $event passes any data associated with triggering the event, (string from onClick() in star.component.ts) 
+                                    3.  The onRatingClicked($event) function must be implemented to handle event data (now we're in the parent container)
+                                        onRatingLicked is implmemented in parent container of star.component, which is product-list.component.ts
+                                        
+                                    -->
                     </tr>
                 </tbody>
             </table>
