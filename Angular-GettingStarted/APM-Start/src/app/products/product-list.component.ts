@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IProduct } from "./product";
+import { ProductService } from "./product.service";
 
 @Component({
     selector: "pm-products",
@@ -7,6 +8,20 @@ import { IProduct } from "./product";
     styleUrls: ["./product-list.component.css"]
 })
 export class ProductListComponent implements OnInit {
+
+    /*
+    To inject the product service into the component for component access:
+     private _productService;
+     constructor(productService: ProductService){
+        this._productService = productService;
+      }
+      Note: Typescript has provided shorthand syntax for the above functionality (below):
+    */
+
+    //Shorthand constructor service injectable example:
+    constructor(private productService: ProductService){
+    }
+
     pageTitle: string = "Product List";
     imageWidth: number = 50;
     imageMargin: number = 2;
