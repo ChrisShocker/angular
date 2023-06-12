@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
 import { IProduct } from "./product";
 
-@Injectable()
+/*
+Global access to the service via root:
+    @Injectable({
+        providedIn: "root"
+    })
+*/
 export class ProductService {
 
     getProducts(): IProduct[] {
