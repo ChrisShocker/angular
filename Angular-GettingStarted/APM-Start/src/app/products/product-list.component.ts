@@ -96,4 +96,12 @@ export class ProductListComponent implements OnInit {
     ngOnInit(): void {
         console.log('Triggered OnInit');
     }
+
+    /*
+        Step 4:
+            Implement Function to handle the event passed in from nested component
+    */
+    onRatingClicked(message: string): void {
+        this.pageTitle = "Product List " + message;
+    }
 }
