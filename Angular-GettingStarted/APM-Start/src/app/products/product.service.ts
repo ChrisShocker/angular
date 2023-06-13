@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { IProduct } from "./product";
-import { HttpClient } from "@angular/common/http"
-import { Observable } from "rxjs";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http"
+import { Observable,catchError,tap, throwError } from "rxjs";
 
 /*
 Global access to the service via root:
@@ -17,9 +17,23 @@ export class ProductService {
     }
 
     getProducts(): Observable<IProduct[]> {
-        return this.http.get<IProduct[]>(this.productUrl);
+        return this.http.get<IProduct[]>(this.productUrl).pipe(
+            tap(data => console.log('All', JSON.stringify(data))),
+            catchError(this.handleError)
+        );
     }
 
-
+    private handleError(err: HttpErrorResponse){
+        let errorMessage = "";
+        if(err.error instanceof ErrorEvent){
+            //Client Side error ocurred, handle it
+            errorMessage = `An error occurred: ${err.error.message}`;
+        } else{
+            //Backend error ocurred, handle it
+            errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`; 
+        }
+        console.error(errorMessage);
+        return throwError(()=>errorMessage);
+    }
 
 }
