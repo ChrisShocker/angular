@@ -9,6 +9,9 @@ Global access to the service via root:
         providedIn: "root"
     })
 */
+
+@Injectable()
+
 export class ProductService {
 
     private productUrl = "api/products/products.json";
