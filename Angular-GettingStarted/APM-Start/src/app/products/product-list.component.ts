@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { IProduct } from "./product";
 import { ProductService } from "./product.service";
+import { Observable, Observer, Subscription } from "rxjs";
 
 @Component({
     selector: "pm-products",
@@ -8,7 +9,7 @@ import { ProductService } from "./product.service";
     styleUrls: ["./product-list.component.css"],
     providers: [ProductService]
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
 
     /*
     To inject the product service into the component for component access:
@@ -29,14 +30,35 @@ export class ProductListComponent implements OnInit {
     showImage: boolean = false;
     private _listFilter: string = "";
     products: IProduct[] = [];
+    errorMessage: string = "";
+
+    //Varibale for subscription
+    //! tells compiler we'll assign type later
+    sub!: Subscription;
 
     get listFilter(): string {
         return this._listFilter;
     }
+
     set listFilter(value: string) {
         this._listFilter = value;
         console.log("Setter change to:" + value);
+    }
 
+    ngOnDestroy(): void {
+       this.sub.unsubscribe(); 
+    }
+
+    ngOnInit(): void {
+        console.log('Triggered OnInit');
+        this.productService.getProducts().subscribe({
+            //since the products service is returning an http get we must subscribe to the observable
+            //and pass in an observer object that has 3 functions (next, error, complete)
+
+            //Upon next emit from observable, assigned local product to the returned array from the observable
+            next: products => this.products = products,
+            error: err => this.errorMessage = err
+        });
     }
 
     performFilter(): IProduct[] {
@@ -56,11 +78,6 @@ export class ProductListComponent implements OnInit {
 
     toggleImage(): void {
         this.showImage = !this.showImage;
-    }
-
-    ngOnInit(): void {
-        console.log('Triggered OnInit');
-        this.products = this.productService.getProducts();
     }
 
     /*
