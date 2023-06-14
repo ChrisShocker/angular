@@ -63,8 +63,10 @@ export class ProductListComponent implements OnInit {
     ngOnInit(): void {
         console.log('Triggered OnInit');
         this.productService.getProducts().subscribe({
-            //since the products service is returning an http get we must subscribe
-            //and pass in an obvserer object that has 3 functions (next, error, complete)
+            //since the products service is returning an http get we must subscribe to the observable
+            //and pass in an observer object that has 3 functions (next, error, complete)
+
+            //Upon next emit from observable, assigned local product to the returned array from the observable
             next: products => this.products = products,
             error: err => this.errorMessage = err
         });
