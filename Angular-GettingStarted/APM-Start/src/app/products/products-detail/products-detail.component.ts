@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IProduct } from '../product';
 
 @Component({
   selector: 'pm-products-detail',
@@ -8,7 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsDetailComponent implements OnInit {
 
-  pageTitle: string = "Product Details"
+  pageTitle: string = "Product Details";
+
+  //Mark the type as undefined since it's value will be passed in later with http
+  product: IProduct | undefined;
 
   //set activated route as dependency
   constructor(private route: ActivatedRoute) { }
@@ -26,7 +30,16 @@ export class ProductsDetailComponent implements OnInit {
     //using the snapshot approach since paramter won't change while comp is displayed
     //since id is a string, we cast to a number: Number()
     const id = Number(this.route.snapshot.paramMap.get("id"));
-    this.pageTitle += `: ${id}`
+    this.product = {
+      "productId": 1,
+      "productName": "Leaf Rake",
+      "productCode": "GDN-0011",
+      "releaseDate": "March 19, 2021",
+      "description": "Leaf rake with 48-inch wooden handle.",
+      "price": 19.95,
+      "starRating": 3.2,
+      "imageUrl": "assets/images/leaf_rake.png"
+    }
   }
 
 }
