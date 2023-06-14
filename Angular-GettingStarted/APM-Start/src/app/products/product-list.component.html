@@ -9,9 +9,7 @@
                 Filter by:
             </div>
             <div class="col-md-4">
-                <input type="text" 
-                [(ngModel)]="listFilter"
-                />
+                <input type="text" [(ngModel)]="listFilter" />
             </div>
         </div>
 
@@ -52,16 +50,20 @@
                 <tbody>
                     <tr *ngFor="let product of performFilter()">
                         <td>
-                            <img *ngIf="showImage" [src]="product.imageUrl" [title]='product.productName' [style.width.px]='imageWidth'
-                                [style.margin.px]="imageMargin">
+                            <img *ngIf="showImage" [src]="product.imageUrl" [title]='product.productName'
+                                [style.width.px]='imageWidth' [style.margin.px]="imageMargin">
                         </td>
-                        <td>{{product.productName}}</td>
+                        <td>
+                            <a [routerLink]="['/products', product.productId]"> 
+                                {{product.productName}} 
+                            </a>
+                        </td>
                         <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>
                         <td>{{product.releaseDate}}</td>
                         <td>{{product.price | currency}}</td>
-                        <td><pm-star [rating] = "product.starRating" 
-                            (ratingClicked)="onRatingClicked($event)"> </pm-star></td>
-                            <!--
+                        <td><pm-star [rating]="product.starRating" (ratingClicked)="onRatingClicked($event)"> </pm-star>
+                        </td>
+                        <!--
                                 Step 3:
                                     1. The outside container must listen for the nested event's output
                                         Bind to the event emited from the nested component 
