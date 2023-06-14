@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from '../product';
 
 @Component({
@@ -15,7 +15,8 @@ export class ProductsDetailComponent implements OnInit {
   product: IProduct | undefined;
 
   //set activated route as dependency
-  constructor(private route: ActivatedRoute) { }
+  //add router for code based navigation
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     //from RouterModule, defined route taking in 'id' param: {path: 'products/:id', component: ProductsDetailComponent}
@@ -40,6 +41,11 @@ export class ProductsDetailComponent implements OnInit {
       "starRating": 3.2,
       "imageUrl": "assets/images/leaf_rake.png"
     }
+  }
+
+  //method to allow code based navigation
+  onBack(): void{
+    this.router.navigate(['/products']);
   }
 
 }
