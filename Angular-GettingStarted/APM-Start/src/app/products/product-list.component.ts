@@ -45,13 +45,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
         console.log("Setter change to:" + value);
     }
 
-    ngOnDestroy(): void {
-       this.sub.unsubscribe(); 
-    }
 
     ngOnInit(): void {
         console.log('Triggered OnInit');
-        this.productService.getProducts().subscribe({
+        this.sub = this.productService.getProducts().subscribe({
             //since the products service is returning an http get we must subscribe to the observable
             //and pass in an observer object that has 3 functions (next, error, complete)
 
@@ -59,6 +56,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
             next: products => this.products = products,
             error: err => this.errorMessage = err
         });
+    }
+
+    ngOnDestroy(): void {
+       this.sub.unsubscribe(); 
     }
 
     performFilter(): IProduct[] {
