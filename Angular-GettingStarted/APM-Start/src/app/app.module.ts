@@ -34,6 +34,8 @@ import { ProductDetailGuard } from './products/products-detail/product-detail.gu
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'},
     ])
   ],
+  //bootstrap declares which component to load on startup
+  //usually used to start the root application component
   bootstrap: [AppComponent]
 })
 export class AppModule { }
