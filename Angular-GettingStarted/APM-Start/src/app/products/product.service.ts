@@ -15,10 +15,12 @@ Global access to the service via root:
 export class ProductService {
 
     private productUrl = "api/products/products.json";
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient){}
 
-    }
-
+    //set get to generic Iproduct[] to map returned array to IProduct type
+    //call observable pipe to access pipe and 
+    //tap accesses emitted item without modifying it
+    //data = observable emitted data
     getProducts(): Observable<IProduct[]> {
         return this.http.get<IProduct[]>(this.productUrl).pipe(
             tap(data => console.log('All', JSON.stringify(data))),
