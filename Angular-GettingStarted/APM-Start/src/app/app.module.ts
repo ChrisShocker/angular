@@ -10,6 +10,7 @@ import { ProductsDetailComponent } from './products/products-detail/products-det
 import { WelcomeComponent } from './home/welcome.component';
 import { RouterModule } from '@angular/router';
 import { ProductDetailGuard } from './products/products-detail/product-detail.guard';
+import { ProductModule } from './products/product.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ProductDetailGuard } from './products/products-detail/product-detail.gu
       {path: 'welcome', component: WelcomeComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'},
-    ])
+    ]),
+    ProductModule
   ],
   //bootstrap declares which component to load on startup
   //usually used to start the root application component
