@@ -15,21 +15,12 @@ import { ProductModule } from './products/product.module';
 @NgModule({
   declarations: [
     AppComponent,
-    ProductListComponent,
-    ConvertToSpacesPipe,
-    starComponent,
-    ProductsDetailComponent,
     WelcomeComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path: 'products', component: ProductListComponent},
-      {path: 'products/:id',
-       canActivate: [ProductDetailGuard],
-       component: ProductsDetailComponent},
       {path: 'welcome', component: WelcomeComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'},
