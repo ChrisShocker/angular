@@ -7,7 +7,7 @@ import { Component, OnChanges, Input, Output, EventEmitter } from "@angular/core
 })
 export class starComponent implements OnChanges {
     @Input() rating: number = 0;
-    cropWidth: number = 75;
+    cropWidth: number = 200;
 
     /*
     Step 1 for outputs:
@@ -19,7 +19,7 @@ export class starComponent implements OnChanges {
         new EventEmitter<string>();
 
     ngOnChanges(): void {
-        this.cropWidth = this.rating * 200 / 5.25;
+        this.cropWidth = this.rating * 75 / 4.55;
     }
 
     onClick(): void {
