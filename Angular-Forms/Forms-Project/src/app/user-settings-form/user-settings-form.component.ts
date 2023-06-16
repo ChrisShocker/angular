@@ -15,7 +15,8 @@ export class UserSettingsFormComponent implements OnInit{
     notes: 'notes'
   }
 
-
+  //copy is made using js spread syntax
+  //makes a simple copy, deep copy would require utility such as lodash deepClone()
   tempUserSettings : UserSettings = {...this.originalUserSettings};
 
   //test function 
