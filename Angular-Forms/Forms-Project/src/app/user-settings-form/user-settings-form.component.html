@@ -1,6 +1,6 @@
 <div class="container">
     <h2>User Settings</h2>
-    <form>
+    <form #form="ngForm">
 
         <div class="form-group">
             <label for="name">Name</label>
@@ -55,7 +55,7 @@
 
         <!-- <div class="mt-2 border"> -->
             <!-- <label for="password">Password</label> -->
-            <!-- <!-- for the password field to work, set type to "password"  -->
+            <!-- for the password field to work, set type to "password"  -->
                 <!-- different browsers support types differently-->
             <!-- <input type="password" id="password" name="password" class="form-control"/> -->
         <!-- </div> -->
@@ -65,3 +65,6 @@
         </div>
     </form>
 </div>
+
+<!-- form variable with ngForm piped through JSON filter -->
+{{form | json}}
