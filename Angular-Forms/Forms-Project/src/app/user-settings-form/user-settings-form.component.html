@@ -1,10 +1,12 @@
 <div class="container">
     <h2>User Settings</h2>
     <form>
+
         <div class="form-group">
             <label for="name">Name</label>
             <input id="name" class="form-control" placeholder="Please enter your Name" />
         </div>
+
         <div class="form-check mt-2">
             <input class="form-check-input" type="checkbox" value="" id="subscription">
             <label class="form-check-label" for="subscription">
@@ -36,13 +38,19 @@
                 </label>
             </div>
         </div>
+
         <div class="mt-2 border">
             <label for="subscriptionType">Subscription Type</label>
             <select class="form-select" id="subscriptionType" aria-label="subscription type">
                 <option value="1">Monthly</option>
                 <option value="2">Annual</option>
                 <option value="3">Lifetime</option>
-              </select>
+            </select>
+        </div>
+
+        <div class="mt-2 border">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
         </div>
 
         <div class="mt-2">
