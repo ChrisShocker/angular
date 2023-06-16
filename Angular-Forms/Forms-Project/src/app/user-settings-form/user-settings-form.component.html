@@ -5,11 +5,11 @@
         <div class="form-group">
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
-            <input id="name" name="name" class="form-control" placeholder="Please enter your Name" [(ngModel)]="userSettings.name"/>
+            <input id="name" name="name" class="form-control" placeholder="Please enter your Name" [(ngModel)]="tempUserSettings.name"/>
         </div>
 
         <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription" [(ngModel)]="userSettings.emailOffers">
+            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription" [(ngModel)]="tempUserSettings.emailOffers">
             <label class="form-check-label" for="subscription">
                 Subscribe to Offers
             </label>
@@ -19,19 +19,19 @@
             <p>User Interface Style</p>
             <!-- radio buttons require the same name to work in sync -->
             <div class="form-check" type="radio">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light" [(ngModel)]="userSettings.interfaceStyle">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light" [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioLight">
                   Light
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium" [(ngModel)]="userSettings.interfaceStyle">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium" [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioMedium">
                   Medium
                 </label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark" [(ngModel)]="userSettings.interfaceStyle">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark" [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioDark">
                   Dark
                 </label>
@@ -40,7 +40,7 @@
 
         <div class="mt-2 border">
             <label for="subscriptionType">Subscription Type</label>
-            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type" [(ngModel)]="userSettings.subscriptionType">
+            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type" [(ngModel)]="tempUserSettings.subscriptionType">
                 <option value="Monthly">Monthly</option>
                 <option value="Annual">Annual</option>
                 <option value="Lifetime">Lifetime</option>
@@ -49,7 +49,7 @@
 
         <div class="mt-2 border">
             <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="userSettings.notes"></textarea>
+            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="tempUserSettings.notes"></textarea>
         </div>
 
         <!-- <div class="mt-2 border"> -->
@@ -60,7 +60,7 @@
         <!-- </div> -->
 
         <div class="mt-2">
-            <button class="btn btn-primary">Ok</button>
+            <button class="btn btn-primary" (click)="updateUserSettings(tempUserSettings)">Ok</button>
         </div>
     </form>
 </div>
@@ -68,3 +68,10 @@
 <!-- form variable with ngForm piped through JSON filter -->
 <!-- form.value only displays the values object of ngForm -->
 {{form.value | json}}
+{{tempUserSettings.name}} ="help";
+<br>
+<br>
+{{tempUserSettings | json}}
+<br>
+<br>
+{{originalUserSettings | json}}
