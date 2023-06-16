@@ -7,7 +7,7 @@ import {UserSettings} from '../data/user-settings';
   styleUrls: ['./user-settings-form.component.css']
 })
 export class UserSettingsFormComponent implements OnInit{
-  userSettings: UserSettings = {
+  originalUserSettings: UserSettings = {
     name: 'Milton',
     emailOffers: false,
     interfaceStyle: 'dark',
@@ -15,8 +15,20 @@ export class UserSettingsFormComponent implements OnInit{
     notes: 'notes'
   }
 
+
+  tempUserSettings : UserSettings = {...this.originalUserSettings};
+
+  //test function 
+  changeName(tempUserSettings: UserSettings): void{
+    tempUserSettings.name = "help";
+  }
+
+  updateUserSettings(temp: UserSettings): void{
+    this.originalUserSettings = {...temp};
+  }
+
   ngOnInit(): void {
-      
+     this.changeName(this.tempUserSettings);
   }
 
 }
