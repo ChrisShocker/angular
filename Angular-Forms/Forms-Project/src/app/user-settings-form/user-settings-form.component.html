@@ -101,6 +101,12 @@
     </form>
 </div>
 
+<!-- error messages -->
+<div [hidden]="!postError" class="alter alert-danger">
+    {{ postErrorMessage }}
+</div>
+
+
 <!-- form variable with ngForm piped through JSON filter -->
 <!-- form.value only displays the values object of ngForm -->
 
@@ -111,3 +117,4 @@
 <br>
 <h3>original user object</h3>
 {{originalUserSettings | json}}
+
