@@ -37,7 +37,7 @@ export class UserSettingsFormComponent implements OnInit {
     //subscribe to the observable and handle it's callback functions
     this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
       result => console.log('success: ', result),
-      error => console.log('error:', error)
+      error => console.log('error:', error, this.tempUserSettings)
     );
   }
 

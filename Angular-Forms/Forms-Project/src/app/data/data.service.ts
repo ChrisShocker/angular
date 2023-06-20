@@ -17,7 +17,7 @@ export class DataService {
   //change Observable type to any, to handle whatever is posted from form
   postUserSettingsForm(UserSettings: UserSettings): Observable<any>{
     //http returns an observable, no type casting needed
-    return this.http.post(this.putsReq , UserSettings);
+    return this.http.post(this.putsReq, UserSettings);
     // return of(UserSettings);
   }
 }
