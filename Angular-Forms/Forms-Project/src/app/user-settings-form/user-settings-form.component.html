@@ -64,8 +64,16 @@
         <div class="mt-2 border">
             <label for="notes">Notes</label>
             <textarea id="notes" name="notes" class="form-control" rows="3"
-                [(ngModel)]="tempUserSettings.notes"></textarea>
+                [(ngModel)]="tempUserSettings.notes" required #propertyTest="ngModel"></textarea>
+                <!-- The angular validation classes are added to ngModel by default
+                we can reference them by creating a reference variable: #propertyTest
+                to access the ngModel attributes, #propertyTest must reference ngModel
+                i.e. #propertyTest="ngModel" -->
         </div>
+
+        <!-- accessing the #propertyTest variable attributes passed in from ngModel  -->
+        <h3> propetyTest.dirty: {{ propertyTest.dirty }}</h3>
+        <h3> propetyTest.pristine: {{ propertyTest.pristine }}</h3>
 
         <!-- <div class="mt-2 border"> -->
         <!-- <label for="password">Password</label> -->
