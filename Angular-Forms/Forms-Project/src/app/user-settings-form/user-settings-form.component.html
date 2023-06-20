@@ -68,9 +68,9 @@
             <label for="subscriptionType">Subscription Type</label>
             <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type"
                 [(ngModel)]="tempUserSettings.subscriptionType">
-                <option value="Monthly">Monthly</option>
-                <option value="Annual">Annual</option>
-                <option value="Lifetime">Lifetime</option>
+                <!-- use nfFor bound to an array of subscription types -->
+                <option *ngFor="let type of subscriptionTypes">{{type}}</option>
+                    
             </select>
         </div>
 

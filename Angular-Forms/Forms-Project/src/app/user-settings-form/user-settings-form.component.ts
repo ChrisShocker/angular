@@ -9,6 +9,11 @@ import { DataService } from '../data/data.service';
   styleUrls: ['./user-settings-form.component.css']
 })
 export class UserSettingsFormComponent implements OnInit {
+  postError = false;
+  postErrorMessage = '';
+  subscriptionTypes = ['one', 'two', 'three'];
+
+
   originalUserSettings: UserSettings = {
     name: 'Milton',
     emailOffers: false,
@@ -30,8 +35,6 @@ export class UserSettingsFormComponent implements OnInit {
     //tempUserSettings.name = "help";
   }
 
-  postError = false;
-  postErrorMessage = '';
 
   //if an error occurs from the http post
   onHttpError(errorResponse: any) {
