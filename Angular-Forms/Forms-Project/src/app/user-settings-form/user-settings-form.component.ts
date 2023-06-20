@@ -38,7 +38,7 @@ export class UserSettingsFormComponent implements OnInit {
     this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
       result => console.log('success: ', result),
       error => console.log('error:', error)
-    )
+    );
   }
 
   //handle blur event
