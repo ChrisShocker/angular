@@ -1,0 +1,9 @@
+/* :not(form) excluded the form from the css class
+.ng-touched: only displays class when ng-touched is true */
+/* .ng-invalid:not(form).ng-touched {
+    border: 1px solid red;
+} */
+
+.field-error {
+    border: 1px solid red;
+}

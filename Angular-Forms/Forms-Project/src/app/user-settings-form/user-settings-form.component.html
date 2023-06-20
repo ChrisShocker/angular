@@ -1,15 +1,38 @@
 <div class="container">
     <h2>User Settings</h2>
-    <form #form="ngForm">
+    <!-- ngNativeValidate allows browser to validate each control
+            It's turned off by default -->
+    <!-- <form #form="ngForm" ngNativeValidate> -->
+
+    <!-- instead of having validation done at each field, wait until user submits the form -->
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
 
         <div class="form-group">
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
-            <input id="name" name="name" class="form-control" placeholder="Please enter your Name" [(ngModel)]="tempUserSettings.name"/>
+            <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
+                [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" #classTest
+                #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid"
+                (blur)="onBlur(nameField)"/>
+            <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
+            <!-- add #classTest to display all current classes applied to the input -->
+            <!-- add custom class binding from CSS: "field-error" and bind to it conditionally
+                only added to the input if: the form has been submitted:form.submitted and invalid: nameField.invalid  -->
+                <!-- add blur event to trigger OnBlur funciton an pass in custom parameter -->
+
+            <!-- div remains hidden if form isn't submitted or nameField is valid -->
+            <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
+                Enter a name
+
+            </div>
         </div>
 
+        <!-- display the classes in the browser from the name input -->
+        <h3>{{ classTest.className }}</h3>
+
         <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription" [(ngModel)]="tempUserSettings.emailOffers">
+            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription"
+                [(ngModel)]="tempUserSettings.emailOffers">
             <label class="form-check-label" for="subscription">
                 Subscribe to Offers
             </label>
@@ -19,28 +42,32 @@
             <p>User Interface Style</p>
             <!-- radio buttons require the same name to work in sync -->
             <div class="form-check" type="radio">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light" [(ngModel)]="tempUserSettings.interfaceStyle">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioLight">
-                  Light
+                    Light
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium" [(ngModel)]="tempUserSettings.interfaceStyle">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioMedium">
-                  Medium
+                    Medium
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark" [(ngModel)]="tempUserSettings.interfaceStyle">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioDark">
-                  Dark
+                    Dark
                 </label>
-              </div>
+            </div>
         </div>
 
         <div class="mt-2 border">
             <label for="subscriptionType">Subscription Type</label>
-            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type" [(ngModel)]="tempUserSettings.subscriptionType">
+            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type"
+                [(ngModel)]="tempUserSettings.subscriptionType">
                 <option value="Monthly">Monthly</option>
                 <option value="Annual">Annual</option>
                 <option value="Lifetime">Lifetime</option>
@@ -49,14 +76,23 @@
 
         <div class="mt-2 border">
             <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="tempUserSettings.notes"></textarea>
+            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="tempUserSettings.notes"
+                required #propertyTest="ngModel"></textarea>
+            <!-- The angular validation classes are added to ngModel by default
+                we can reference them by creating a template reference variable: #propertyTest
+                to access the ngModel attributes, #propertyTest must reference ngModel
+                i.e. #propertyTest="ngModel" -->
         </div>
 
+        <!-- accessing the #propertyTest variable attributes passed in from ngModel  -->
+        <h3> propetyTest.dirty: {{ propertyTest.dirty }}</h3>
+        <h3> propetyTest.pristine: {{ propertyTest.pristine }}</h3>
+
         <!-- <div class="mt-2 border"> -->
-            <!-- <label for="password">Password</label> -->
-            <!-- for the password field to work, set type to "password"  -->
-                <!-- different browsers support types differently-->
-            <!-- <input type="password" id="password" name="password" class="form-control"/> -->
+        <!-- <label for="password">Password</label> -->
+        <!-- for the password field to work, set type to "password"  -->
+        <!-- different browsers support types differently-->
+        <!-- <input type="password" id="password" name="password" class="form-control"/> -->
         <!-- </div> -->
 
         <div class="mt-2">
@@ -67,11 +103,15 @@
 
 <!-- form variable with ngForm piped through JSON filter -->
 <!-- form.value only displays the values object of ngForm -->
+
+<h3>form values</h3>
 {{form.value | json}}
 {{tempUserSettings.name}} ="help";
 <br>
 <br>
+<h3>temp user object</h3>
 {{tempUserSettings | json}}
 <br>
 <br>
+<h3>original user object</h3>
 {{originalUserSettings | json}}
