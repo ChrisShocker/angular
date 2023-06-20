@@ -1,17 +1,19 @@
 <div class="container">
     <h2>User Settings</h2>
-    <form #form="ngForm">
+    <!-- ngNativeValidate allows browser to validate each control
+            It's turned off by default -->
+    <form #form="ngForm" ngNativeValidate>
 
-        <!-- ngNativeValidate allows browser to validate each control
-                It's turned off by default -->
-        <div class="form-group" ngNativeValidate>
+        <div class="form-group">
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
-            <input id="name" name="name" class="form-control" placeholder="Please enter your Name" [(ngModel)]="tempUserSettings.name"/>
+            <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
+                [(ngModel)]="tempUserSettings.name" required />
         </div>
 
         <div class="form-check mt-2">
-            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription" [(ngModel)]="tempUserSettings.emailOffers">
+            <input class="form-check-input" type="checkbox" value="" name="subscription" id="subscription"
+                [(ngModel)]="tempUserSettings.emailOffers">
             <label class="form-check-label" for="subscription">
                 Subscribe to Offers
             </label>
@@ -21,28 +23,32 @@
             <p>User Interface Style</p>
             <!-- radio buttons require the same name to work in sync -->
             <div class="form-check" type="radio">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light" [(ngModel)]="tempUserSettings.interfaceStyle">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioLight" value="light"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioLight">
-                  Light
+                    Light
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium" [(ngModel)]="tempUserSettings.interfaceStyle">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioMedium" value="medium"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioMedium">
-                  Medium
+                    Medium
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark" [(ngModel)]="tempUserSettings.interfaceStyle">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="radioInterface" id="radioDark" value="dark"
+                    [(ngModel)]="tempUserSettings.interfaceStyle">
                 <label class="form-check-label" for="radioDark">
-                  Dark
+                    Dark
                 </label>
-              </div>
+            </div>
         </div>
 
         <div class="mt-2 border">
             <label for="subscriptionType">Subscription Type</label>
-            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type" [(ngModel)]="tempUserSettings.subscriptionType">
+            <select class="form-select" id="subscriptionType" name="subscriptionType" aria-label="subscription type"
+                [(ngModel)]="tempUserSettings.subscriptionType">
                 <option value="Monthly">Monthly</option>
                 <option value="Annual">Annual</option>
                 <option value="Lifetime">Lifetime</option>
@@ -51,14 +57,15 @@
 
         <div class="mt-2 border">
             <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="tempUserSettings.notes"></textarea>
+            <textarea id="notes" name="notes" class="form-control" rows="3"
+                [(ngModel)]="tempUserSettings.notes"></textarea>
         </div>
 
         <!-- <div class="mt-2 border"> -->
-            <!-- <label for="password">Password</label> -->
-            <!-- for the password field to work, set type to "password"  -->
-                <!-- different browsers support types differently-->
-            <!-- <input type="password" id="password" name="password" class="form-control"/> -->
+        <!-- <label for="password">Password</label> -->
+        <!-- for the password field to work, set type to "password"  -->
+        <!-- different browsers support types differently-->
+        <!-- <input type="password" id="password" name="password" class="form-control"/> -->
         <!-- </div> -->
 
         <div class="mt-2">
