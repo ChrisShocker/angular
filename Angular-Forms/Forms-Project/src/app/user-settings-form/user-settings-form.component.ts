@@ -30,6 +30,15 @@ export class UserSettingsFormComponent implements OnInit {
     //tempUserSettings.name = "help";
   }
 
+  postError = false;
+  postErrorMessage = '';
+
+  onHttpError(errorResponse: any){
+    console.log('error: ', errorResponse);
+    this.postError = true;
+    this.postErrorMessage = errorResponse.error.errorMessage;
+  }
+
   //handle submite event
   onSubmit(form: NgForm) {
     console.log('in onSubmit: ', form.valid)
@@ -38,7 +47,7 @@ export class UserSettingsFormComponent implements OnInit {
     //note this form of subscribing is depracated
     this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
       result => console.log('success: ', result),
-      error => console.log('error:', error, this.tempUserSettings)
+      error => this.onHttpError(error)
     );
   }
 
