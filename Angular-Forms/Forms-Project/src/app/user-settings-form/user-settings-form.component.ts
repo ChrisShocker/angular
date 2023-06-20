@@ -43,7 +43,7 @@ export class UserSettingsFormComponent implements OnInit {
 
   //handle blur event
   onBlur(field: NgModel) {
-    console.log('in onBlue ', field.valid)
+    console.log('in onBlur ', field.valid)
   }
 
   updateUserSettings(temp: UserSettings): void {
