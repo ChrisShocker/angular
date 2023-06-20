@@ -2,7 +2,9 @@
     <h2>User Settings</h2>
     <form #form="ngForm">
 
-        <div class="form-group">
+        <!-- ngNativeValidate allows browser to validate each control
+                It's turned off by default -->
+        <div class="form-group" ngNativeValidate>
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
             <input id="name" name="name" class="form-control" placeholder="Please enter your Name" [(ngModel)]="tempUserSettings.name"/>
