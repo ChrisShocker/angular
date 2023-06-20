@@ -2,19 +2,24 @@
     <h2>User Settings</h2>
     <!-- ngNativeValidate allows browser to validate each control
             It's turned off by default -->
-    <form #form="ngForm" ngNativeValidate>
+    <!-- <form #form="ngForm" ngNativeValidate> -->
+
+    <!-- instead of having validation done at each field, wait until user submits the form -->
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
 
         <div class="form-group">
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
             <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
                 [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" #classTest
-                #nameField="ngModel" />
+                #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid"/>
             <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
             <!-- add #classTest to display all current classes applied to the input -->
+            <!-- add custom class binding from CSS: "field-error" and bind to it conditionally
+                only added to the input if: the form has been submitted:form.submitted and invalid: nameField.invalid  -->
 
-            <!-- div remains hidden if nameField is valid or untouched -->
-            <div [hidden]="nameField.valid || nameField.untouched" class="alert alert-danger">
+            <!-- div remains hidden if form isn't submitted or nameField is valid -->
+            <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
                 Enter a name
 
             </div>
