@@ -27,7 +27,7 @@ export class UserSettingsFormComponent implements OnInit {
 
   //test function 
   changeName(tempUserSettings: UserSettings): void {
-    tempUserSettings.name = "help";
+    //tempUserSettings.name = "help";
   }
 
   //handle submite event
