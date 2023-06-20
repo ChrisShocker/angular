@@ -8,10 +8,16 @@
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
             <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
-                [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" 
-                    #classTest/>
-                <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
-                <!-- add #classTest to display all current classes applied to the input -->
+                [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" #classTest
+                #nameField="ngModel" />
+            <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
+            <!-- add #classTest to display all current classes applied to the input -->
+
+            <!-- div remains hidden if nameField is valid or untouched -->
+            <div [hidden]="nameField.valid || nameField.untouched" class="alert alert-danger">
+                Enter a name
+
+            </div>
         </div>
 
         <!-- display the classes in the browser from the name input -->
@@ -63,9 +69,9 @@
 
         <div class="mt-2 border">
             <label for="notes">Notes</label>
-            <textarea id="notes" name="notes" class="form-control" rows="3"
-                [(ngModel)]="tempUserSettings.notes" required #propertyTest="ngModel"></textarea>
-                <!-- The angular validation classes are added to ngModel by default
+            <textarea id="notes" name="notes" class="form-control" rows="3" [(ngModel)]="tempUserSettings.notes"
+                required #propertyTest="ngModel"></textarea>
+            <!-- The angular validation classes are added to ngModel by default
                 we can reference them by creating a template reference variable: #propertyTest
                 to access the ngModel attributes, #propertyTest must reference ngModel
                 i.e. #propertyTest="ngModel" -->
