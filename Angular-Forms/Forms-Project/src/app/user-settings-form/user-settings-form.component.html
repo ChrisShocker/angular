@@ -8,7 +8,7 @@
             <label for="name">Name</label>
             <!-- add ngModel to build values object for ngForm -->
             <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
-                [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" />
+                [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" />
                 <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
         </div>
 
