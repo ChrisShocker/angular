@@ -96,11 +96,15 @@
 
 <!-- form variable with ngForm piped through JSON filter -->
 <!-- form.value only displays the values object of ngForm -->
+
+<h3>form values</h3>
 {{form.value | json}}
 {{tempUserSettings.name}} ="help";
 <br>
 <br>
+<h3>temp user object</h3>
 {{tempUserSettings | json}}
 <br>
 <br>
+<h3>original user object</h3>
 {{originalUserSettings | json}}
