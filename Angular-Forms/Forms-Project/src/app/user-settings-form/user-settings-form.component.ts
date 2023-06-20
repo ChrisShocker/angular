@@ -33,10 +33,11 @@ export class UserSettingsFormComponent implements OnInit {
   postError = false;
   postErrorMessage = '';
 
-  onHttpError(errorResponse: any){
+  //if an error occurs from the http post
+  onHttpError(errorResponse: any) {
     console.log('error: ', errorResponse);
     this.postError = true;
-    this.postErrorMessage = errorResponse.error.errorMessage;
+    this.postErrorMessage = errorResponse.error;
   }
 
   //handle submite event
@@ -45,10 +46,16 @@ export class UserSettingsFormComponent implements OnInit {
     //call data service method to post the User Settings object updated in the form
     //subscribe to the observable and handle it's callback functions
     //note this form of subscribing is depracated
-    this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
-      result => console.log('success: ', result),
-      error => this.onHttpError(error)
-    );
+    if (form.valid) {
+      this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
+        result => console.log('success: ', result),
+        error => this.onHttpError(error)
+      );
+    }
+    else{
+      this.postError = true;
+      this.postErrorMessage = "please fix above errors";
+    }
   }
 
   //handle blur event
