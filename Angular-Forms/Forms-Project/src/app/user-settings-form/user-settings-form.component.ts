@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserSettings} from '../data/user-settings';
 import { NgForm, NgModel } from '@angular/forms';
+import { DataService } from '../data/data.service';
 
 @Component({
   selector: 'app-user-settings-form',
@@ -16,6 +17,11 @@ export class UserSettingsFormComponent implements OnInit{
     notes: 'notes'
   }
 
+  //init data service for use in class
+  constructor(private dataService: DataService){
+
+  }
+
   //copy is made using js spread syntax
   //makes a simple copy, deep copy would require utility such as lodash deepClone()
   tempUserSettings : UserSettings = {...this.originalUserSettings};
@@ -28,6 +34,8 @@ export class UserSettingsFormComponent implements OnInit{
   //handle submite event
   onSubmit(form: NgForm){
     console.log('in onSubmit: ', form.valid)
+    //call data service method to post the User Settings object updated in the form
+    this.dataService.postUserSettingsForm(this.tempUserSettings)
   }
 
   //handle blur event
