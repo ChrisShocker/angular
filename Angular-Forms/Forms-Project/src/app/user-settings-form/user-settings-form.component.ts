@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserSettings} from '../data/user-settings';
+import { UserSettings } from '../data/user-settings';
 import { NgForm, NgModel } from '@angular/forms';
 import { DataService } from '../data/data.service';
 
@@ -8,7 +8,7 @@ import { DataService } from '../data/data.service';
   templateUrl: './user-settings-form.component.html',
   styleUrls: ['./user-settings-form.component.css']
 })
-export class UserSettingsFormComponent implements OnInit{
+export class UserSettingsFormComponent implements OnInit {
   originalUserSettings: UserSettings = {
     name: 'Milton',
     emailOffers: false,
@@ -18,37 +18,40 @@ export class UserSettingsFormComponent implements OnInit{
   }
 
   //init data service for use in class
-  constructor(private dataService: DataService){
-
+  constructor(private dataService: DataService) {
   }
 
   //copy is made using js spread syntax
   //makes a simple copy, deep copy would require utility such as lodash deepClone()
-  tempUserSettings : UserSettings = {...this.originalUserSettings};
+  tempUserSettings: UserSettings = { ...this.originalUserSettings };
 
   //test function 
-  changeName(tempUserSettings: UserSettings): void{
+  changeName(tempUserSettings: UserSettings): void {
     tempUserSettings.name = "help";
   }
 
   //handle submite event
-  onSubmit(form: NgForm){
+  onSubmit(form: NgForm) {
     console.log('in onSubmit: ', form.valid)
     //call data service method to post the User Settings object updated in the form
-    this.dataService.postUserSettingsForm(this.tempUserSettings)
+    //subscribe to the observable and handle it's callback functions
+    this.dataService.postUserSettingsForm(this.tempUserSettings).subscribe(
+      result => console.log('success: ', result),
+      error => console.log('error:', error)
+    )
   }
 
   //handle blur event
-  onBlur(field: NgModel){
+  onBlur(field: NgModel) {
     console.log('in onBlue ', field.valid)
   }
 
-  updateUserSettings(temp: UserSettings): void{
-    this.originalUserSettings = {...temp};
+  updateUserSettings(temp: UserSettings): void {
+    this.originalUserSettings = { ...temp };
   }
 
   ngOnInit(): void {
-     this.changeName(this.tempUserSettings);
+    this.changeName(this.tempUserSettings);
   }
 
 }
