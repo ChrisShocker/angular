@@ -9,6 +9,7 @@ export class DataService {
 
   constructor() { }
 
+  //handle user object sent from form 
   postUserSettingsForm(UserSettings: UserSettings): Observable<UserSettings>{
     return of(UserSettings);
   }
