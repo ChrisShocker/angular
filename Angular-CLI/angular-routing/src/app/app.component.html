@@ -329,5 +329,13 @@
 
 </div>
 
+<nav>
+  <ul>
+    <!-- add list to reference routes for user navigation -->
+    <li><a href="" [routerLink]="['/dashboard']" routerLinkActive="router-link-active" >Dashboard</a></li>
+    <li><a href="" [routerLink]="['/customer']" routerLinkActive="router-link-active" >Customer</a></li>
+  </ul>
+</nav>
+
 <!-- where router routes will be displayed -->
 <router-outlet></router-outlet>
