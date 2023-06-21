@@ -13,11 +13,16 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+  getSubscriptionTypes(): Observable<string[]> {
+    //simulate get request from a service
+    return of(['Service1', 'Service2', 'Service3']);
+  }
+
   //handle user object sent from form 
   //change Observable type to any, to handle whatever is posted from form
-  postUserSettingsForm(UserSettings: UserSettings): Observable<any>{
+  postUserSettingsForm(userSettings: UserSettings): Observable<any>{
     //http returns an observable, no type casting needed
-    return this.http.post('https://putsreq.com/H1az6Z0D7SnODXVzZGBW', UserSettings);
+    return this.http.post(this.putsReq, userSettings);
     //return of(UserSettings);
   }
 }
