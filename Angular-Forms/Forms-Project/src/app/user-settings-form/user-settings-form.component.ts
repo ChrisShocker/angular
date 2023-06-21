@@ -76,6 +76,7 @@ export class UserSettingsFormComponent implements OnInit {
 
   ngOnInit() {
     //this.changeName(this.tempUserSettings);
+    //call data service function to fill observable 
     this.subscriptionTypesFromService = this.dataService.getSubscriptionTypes();
   }
 

@@ -13,12 +13,12 @@
             <input id="name" name="name" class="form-control" placeholder="Please enter your Name"
                 [(ngModel)]="tempUserSettings.name" required pattern="[A-Z].*" minlength="3" maxlength="20" #classTest
                 #nameField="ngModel" [class.field-error]="form.submitted && nameField.invalid"
-                (blur)="onBlur(nameField)"/>
+                (blur)="onBlur(nameField)" />
             <!-- pattern defined a format for the input, [A-z].* = string must start with a capital -->
             <!-- add #classTest to display all current classes applied to the input -->
             <!-- add custom class binding from CSS: "field-error" and bind to it conditionally
                 only added to the input if: the form has been submitted:form.submitted and invalid: nameField.invalid  -->
-                <!-- add blur event to trigger OnBlur funciton an pass in custom parameter -->
+            <!-- add blur event to trigger OnBlur funciton an pass in custom parameter -->
 
             <!-- div remains hidden if form isn't submitted or nameField is valid -->
             <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
@@ -70,13 +70,13 @@
                 [(ngModel)]="tempUserSettings.subscriptionType">
                 <!-- use nfFor bound to an array of subscription types -->
                 <option *ngFor="let type of subscriptionTypesHard">{{type}}</option>
-                    
             </select>
+
             <select class="form-select" id="subscriptionTypes" name="subscriptionTypes" aria-label="subscription types"
                 [(ngModel)]="tempUserSettings.subscriptionType">
                 <!-- use nfFor bound to an array of subscription types -->
+                <!-- async pipe is used to let compiler know the attributes will be loaded post initial page loading -->
                 <option *ngFor="let types of subscriptionTypesFromService | async">{{types}}</option>
-                    
             </select>
         </div>
 
@@ -123,4 +123,3 @@
 <br>
 <h3>original user object</h3>
 {{originalUserSettings | json}}
-
