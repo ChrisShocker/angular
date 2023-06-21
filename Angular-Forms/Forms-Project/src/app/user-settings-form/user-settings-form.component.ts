@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserSettings } from '../data/user-settings';
 import { NgForm, NgModel } from '@angular/forms';
 import { DataService } from '../data/data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-settings-form',
@@ -11,8 +12,10 @@ import { DataService } from '../data/data.service';
 export class UserSettingsFormComponent implements OnInit {
   postError = false;
   postErrorMessage = '';
-  subscriptionTypes = ['one', 'two', 'three'];
-
+  subscriptionTypesHard = ['one', 'two', 'three'];
+  // to return the types from a data service:
+  // set as undefined since not init in constructor 
+  subscriptionTypesFromService: Observable<string[]> | undefined;
 
   originalUserSettings: UserSettings = {
     name: 'Milton',
@@ -30,10 +33,6 @@ export class UserSettingsFormComponent implements OnInit {
   //makes a simple copy, deep copy would require utility such as lodash deepClone()
   tempUserSettings: UserSettings = { ...this.originalUserSettings };
 
-  //test function 
-  changeName(tempUserSettings: UserSettings): void {
-    //tempUserSettings.name = "help";
-  }
 
 
   //if an error occurs from the http post
@@ -70,8 +69,14 @@ export class UserSettingsFormComponent implements OnInit {
     this.originalUserSettings = { ...temp };
   }
 
-  ngOnInit(): void {
-    this.changeName(this.tempUserSettings);
+  //test function 
+  changeName(tempUserSettings: UserSettings): void {
+    tempUserSettings.name = "help";
+  }
+
+  ngOnInit() {
+    //this.changeName(this.tempUserSettings);
+    this.subscriptionTypesFromService = this.dataService.getSubscriptionTypes();
   }
 
 }
