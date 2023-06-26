@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { DemoModule } from './demo.module';
 
 const routes: Routes = [
   { path: 'buttons', component: ButtonsComponent },
-  { path: '**', redirectTo: 'button' },
+  { path: '**', redirectTo: 'buttons' },
 ];
 
 @NgModule({

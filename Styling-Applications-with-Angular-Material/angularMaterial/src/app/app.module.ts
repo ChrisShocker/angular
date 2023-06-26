@@ -10,7 +10,7 @@ const routes: Routes = [
   // use lazy loading for demo module
   {
     path: 'demo', 
-    loadChildren: () => import('./demo/buttons/buttons.component').then(m => m.ButtonsComponent)
+    loadChildren: () => import('./demo/demo-routing.module').then(m => m.DemoRoutingModule)
   },
   { path: '**', redirectTo: 'demo' }
 ];
