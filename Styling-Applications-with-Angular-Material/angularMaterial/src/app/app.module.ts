@@ -6,6 +6,15 @@ import { MaterialModule } from './shared/material.module';
 //adding form module since Angular Materials has it as a dependency
 import { FormsModule } from '@angular/forms';
 
+
+
+
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent
