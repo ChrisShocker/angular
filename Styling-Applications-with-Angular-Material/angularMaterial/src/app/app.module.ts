@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //add routing
 import { Routes, RouterModule } from "@angular/router";
-import { ContactManagerAppComponent } from './contactManager/contact-manager-app.component';
 
 const routes: Routes = [
   // use lazy loading for demo module
@@ -18,8 +17,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ContactManagerAppComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
