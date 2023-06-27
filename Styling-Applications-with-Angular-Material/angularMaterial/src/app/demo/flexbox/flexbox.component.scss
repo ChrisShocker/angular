@@ -1,0 +1,19 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.flex-item{
+    width: 200px;
+    height: 150px;
+    margin: 5px;
+
+    background-color: tomato;
+    color:white;
+    font-size: 3em;
+    text-align: center;
+    line-height: 150px;
+}
