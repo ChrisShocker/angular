@@ -1,5 +1,7 @@
 <mat-drawer-container class="app-sidenav-container" autosize>
-    <mat-drawer #drawer class="app-sidenav" mode="side">
+    <!-- mat-elevation-z allows us to raise the elevenation of a component and cast a shadow
+        the higher the z value, the more elvation/shadow is cast -->
+    <mat-drawer #drawer class="app-sidenav mat-elevation-z4" mode="side" opened="true">
         <p *ngIf="showFiller">
             <mat-list>
                 <mat-list-item>Item 1</mat-list-item>
