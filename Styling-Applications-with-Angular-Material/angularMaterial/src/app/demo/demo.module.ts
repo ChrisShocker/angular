@@ -8,16 +8,20 @@ import { MaterialModule } from '../shared/material.module';
 
 //adding form module since Angular Materials has it as a dependency
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexboxComponent } from './flexbox/flexbox.component';
 
 @NgModule({
   declarations: [
-    ButtonsComponent
+    ButtonsComponent,
+    FlexboxComponent
   ],
   imports: [
     CommonModule,
     DemoRoutingModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    FlexLayoutModule
   ]
 })
 export class DemoModule { }
