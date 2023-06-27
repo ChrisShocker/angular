@@ -10,16 +10,16 @@
 .app-sidenav-content {
     display: flex;
     height: 100%;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
 
 .app-sidenav {
-    width: 240px;
+    width: 200px;
 }
 
 .app-sidenav-button {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 1em;
 }
