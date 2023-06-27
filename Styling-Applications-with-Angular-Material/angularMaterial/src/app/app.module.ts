@@ -12,7 +12,11 @@ const routes: Routes = [
     path: 'demo', 
     loadChildren: () => import('./demo/demo.module').then(m => m.DemoModule)
   },
-  { path: '**', redirectTo: 'demo' }
+  {
+    path: 'contactManager', 
+    loadChildren: () => import('./contact-manager/contact-manager.module').then(m => m.ContactManagerModule)
+  },
+  { path: '**', redirectTo: 'contactManager' }
 ];
 
 @NgModule({
