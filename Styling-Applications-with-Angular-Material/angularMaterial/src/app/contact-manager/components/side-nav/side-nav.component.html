@@ -1,10 +1,20 @@
 <mat-drawer-container class="app-sidenav-container" autosize>
     <mat-drawer #drawer class="app-sidenav" mode="side">
-        <p>Auto-resizing sidenav</p>
-        <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+        <p *ngIf="showFiller">
+            <mat-toolbar color="primary">
+                <span>Contacts</span>
+            </mat-toolbar>
+            <mat-list>
+                <mat-list-item>Item 1</mat-list-item>
+                <mat-list-item>Item 2</mat-list-item>
+                <mat-list-item>Item 3</mat-list-item>
+                <mat-list-item>Item 4</mat-list-item>
+            </mat-list>
+        </p>
         <button (click)="showFiller = !showFiller" mat-raised-button>
-            Toggle extra text
+            Contacts
         </button>
+
     </mat-drawer>
 
     <div class="app-sidenav-content">
