@@ -7,7 +7,22 @@
 <div *ngIf="user">
     <mat-card>
         <mat-card-content>
-            <h2>Simple card</h2>
+            <mat-card-header>
+                <mat-icon mat-card-avatar svgIcon="{{user.avatar}}"></mat-icon>
+                <mat-card-title>
+                    <h2>
+                        {{user.name}}
+                    </h2>
+                </mat-card-title>
+                <mat-card-subtitle>Birthday: {{user.birthDate | date:'d LLLL'}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                alt="Photo of a Shiba Inu">
+            <mat-card-content>
+                <p>
+                    {{user.bio}}
+                </p>
+            </mat-card-content>
         </mat-card-content>
     </mat-card>
 </div>
