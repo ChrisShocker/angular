@@ -44,4 +44,9 @@ export class UserService {
     return this._users.asObservable();
   }
 
+  getUserById(id: number){
+    //search dataStore for passed in ID and return it
+    return this.dataStore.users.find(user => user.id == id);
+  }
+
 }
