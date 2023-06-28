@@ -10,7 +10,10 @@
             <mat-nav-list>
                 <!-- since users is an observable we must use the | async  -->
                 <mat-list-item *ngFor="let user of users | async">
-                    <a matListItemTitle href="#">{{ user.name }}</a>
+                    <a matListItemTitle href="#">
+                        <mat-icon svgIcon="{{user.avatar}}"></mat-icon>
+                        {{ user.name }}
+                    </a>
                 </mat-list-item>
             </mat-nav-list>
         </p>
