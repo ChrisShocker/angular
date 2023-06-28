@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //add routing
 import { Routes, RouterModule } from "@angular/router";
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   // use lazy loading for demo module
@@ -26,7 +27,8 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    HttpClientModule
   ],
 
   providers: [],
