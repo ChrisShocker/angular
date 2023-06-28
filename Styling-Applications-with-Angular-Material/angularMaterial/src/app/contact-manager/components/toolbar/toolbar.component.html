@@ -1,3 +1,7 @@
 <mat-toolbar color="primary">
+    <!-- on button press emit a toggleSidenav event  -->
+    <button mat-button (click)="toggleSidenav.emit()">
+        <mat-icon>Menu</mat-icon>
+    </button>
     <span>Contact Manager</span>
 </mat-toolbar>

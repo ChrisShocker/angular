@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent {
+
+  // create new event to listen for
+  @Output() toggleSidenav = new EventEmitter<void>();
 
 }
