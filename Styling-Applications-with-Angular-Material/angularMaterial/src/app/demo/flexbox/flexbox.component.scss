@@ -1,0 +1,27 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+// @media can evaluate an expression to true of false and enact contained code
+//all and (max-width: 800px), evaulates to true if the the width of the container is less then 800
+@media all and (max-width: 800px) {
+    .flex-container {
+        justify-content: flex-start;
+    }
+}
+
+.flex-item{
+    width: 200px;
+    height: 150px;
+    margin: 5px;
+
+    background-color: tomato;
+    color:white;
+    font-size: 3em;
+    text-align: center;
+    line-height: 150px;
+}

@@ -2,18 +2,22 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './shared/material.module';
-//adding form module since Angular Materials has it as a dependency
-import { FormsModule } from '@angular/forms';
 
+//add routing
+import { Routes, RouterModule } from "@angular/router";
 
-
-
-
-
-
-
-
+const routes: Routes = [
+  // use lazy loading for demo module
+  {
+    path: 'demo', 
+    loadChildren: () => import('./demo/demo.module').then(m => m.DemoModule)
+  },
+  {
+    path: 'contactManager', 
+    loadChildren: () => import('./contact-manager/contact-manager.module').then(m => m.ContactManagerModule)
+  },
+  { path: '**', redirectTo: 'contactManager' }
+];
 
 @NgModule({
   declarations: [
@@ -22,9 +26,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule
+    RouterModule.forRoot(routes)
   ],
+
   providers: [],
   bootstrap: [AppComponent]
 })
