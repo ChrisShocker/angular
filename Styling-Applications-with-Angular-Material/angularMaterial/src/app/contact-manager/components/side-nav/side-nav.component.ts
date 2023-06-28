@@ -15,12 +15,15 @@ export class SideNavComponent {
   showFiller: boolean = false;
 
   constructor(private breakpointObserver: BreakpointObserver) {
+  }
+
+  ngOnInit(): void {
     //we can use BreakpointObserver to watch changes in the dom and react to them with observe
     this.breakpointObserver.observe([`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`])
       .subscribe((state: BreakpointState) => {
         this.isScreenSmall = state.matches;
       });
 
-  }
+  } 
 
 }
