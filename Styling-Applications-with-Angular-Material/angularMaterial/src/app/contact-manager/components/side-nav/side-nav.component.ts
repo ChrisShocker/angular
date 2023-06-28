@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
+import { Router } from '@angular/router';
 
 //define custom breakpoint width
 const SMALL_WIDTH_BREAKPOINT = 720;
@@ -22,7 +23,8 @@ export class SideNavComponent implements OnInit {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
     ) {
   }
 
@@ -39,7 +41,8 @@ export class SideNavComponent implements OnInit {
 
       //subscribe to the user service 
       this.users.subscribe(data => {
-        console.log("side-nav: " +data);
+        //if data exists, display the first item in the list
+        if (data.length > 0) this.router.navigate(['./contactManager', data[0].id])
       })
   } 
 
