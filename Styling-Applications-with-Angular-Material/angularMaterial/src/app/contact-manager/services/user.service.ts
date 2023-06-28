@@ -11,7 +11,6 @@ export class UserService {
   //prevent external components from manipulating our private data 
   private _users: BehaviorSubject<User[]>;
 
-
   //build data store
   private dataStore: {
     users: User[];
@@ -36,8 +35,9 @@ export class UserService {
       });
   }
 
+  //allow components to get user object
   get users(): Observable<User[]> {
     return this._users.asObservable();
   }
-  
+
 }
