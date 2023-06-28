@@ -1,9 +1,10 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
+import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
 
 //define custom breakpoint width
 const SMALL_WIDTH_BREAKPOINT = 720;
@@ -28,6 +29,10 @@ export class SideNavComponent implements OnInit {
     ) {
   }
 
+  //Create an event for the MatDrawer using #drawer
+  @ViewChild(MatDrawer)
+  drawer!: MatDrawer;
+
   ngOnInit(): void {
     //we can use BreakpointObserver to watch changes in the dom and react to them with observe
     this.breakpointObserver.observe([`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`])
@@ -47,8 +52,9 @@ export class SideNavComponent implements OnInit {
 
       //router exposes events as an observable, so we can subscribe to it
       this.router.events.subscribe( () =>{
+        //always close the drawer once the router has detected a change
         if(this.isScreenSmall){
-          //close sidenav
+          this.drawer.close();
         } 
       })
   } 
