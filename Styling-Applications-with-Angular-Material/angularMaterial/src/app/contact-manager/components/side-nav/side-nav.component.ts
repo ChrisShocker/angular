@@ -23,7 +23,6 @@ export class SideNavComponent {
       .subscribe((state: BreakpointState) => {
         this.isScreenSmall = state.matches;
       });
-
   } 
 
 }
