@@ -39,7 +39,7 @@ export class SideNavComponent implements OnInit {
 
       //subscribe to the user service 
       this.users.subscribe(data => {
-        console.log(data);
+        console.log("side-nav: " +data);
       })
   } 
 
