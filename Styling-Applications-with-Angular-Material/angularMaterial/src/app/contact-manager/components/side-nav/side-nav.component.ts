@@ -44,6 +44,13 @@ export class SideNavComponent implements OnInit {
         //if data exists, display the first item in the list
         if (data.length > 0) this.router.navigate(['./contactManager', data[0].id])
       })
+
+      //router exposes events as an observable, so we can subscribe to it
+      this.router.events.subscribe( () =>{
+        if(this.isScreenSmall){
+          //close sidenav
+        } 
+      })
   } 
 
 }
