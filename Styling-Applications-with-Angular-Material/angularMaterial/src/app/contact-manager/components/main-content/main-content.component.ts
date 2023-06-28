@@ -24,10 +24,11 @@ export class MainContentComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = params['id'];
       if (!id) id = 1;
-      //call userService function to get user by id
+      //subscribe to observable to get updated user data
       this.userService.users.subscribe(user => {
         if (user.length == 0) return;
         setTimeout(() => {
+          //call data service to lookup user object
           this.user = this.userService.getUserById(id);
         }, 500)
       });
