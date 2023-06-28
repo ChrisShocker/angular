@@ -19,6 +19,8 @@ const routes: Routes = [
   {
     path: '', component: ContactManagerAppComponent,
     children: [
+      // add path to handle a user.id
+      { path: ':id', component: MainContentComponent },
       { path: '', component: MainContentComponent }
     ]
 
