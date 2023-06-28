@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   // use lazy loading for demo module
@@ -37,7 +38,8 @@ const routes: Routes = [
     MaterialModule,
     FormsModule,
     FlexLayoutModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    HttpClientModule
   ],
   providers: [
     UserService
