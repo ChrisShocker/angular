@@ -10,7 +10,8 @@
             <mat-nav-list>
                 <!-- since users is an observable we must use the | async  -->
                 <mat-list-item *ngFor="let user of users | async">
-                    <a matListItemTitle href="#">
+                    <!-- naviagate to contact module for the person cliced -->
+                    <a matListItemTitle [routerLink]="['/contact-manager', user.id]">
                         <mat-icon svgIcon="{{user.avatar}}"></mat-icon>
                         {{ user.name }}
                     </a>
