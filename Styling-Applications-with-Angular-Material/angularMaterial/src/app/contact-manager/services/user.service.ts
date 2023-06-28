@@ -30,6 +30,10 @@ export class UserService {
     return this.http.get<User[]>(userAPIURL)
       .subscribe(data => {
         this.dataStore.users = data;
+        // provide alert when new data is available to listeining components
+        // use Object.assign to create a copy of the data so the original data location
+        // isn't sent to external components. Note: only send users back to callers
+        this._users.next(Object.assign({}, this.dataStore).users);
       }, error => {
         console.log(`error:  ${error}`);
       });
