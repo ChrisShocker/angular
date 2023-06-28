@@ -36,6 +36,11 @@ export class SideNavComponent implements OnInit {
       //initialize users obersablve to the exposed object from user service
       this.users = this.userService.users;
       this.userService.loadUsersFromAPI();
+
+      //subscribe to the user service 
+      this.users.subscribe(data => {
+        console.log(data);
+      })
   } 
 
 }
