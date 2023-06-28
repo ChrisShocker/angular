@@ -35,7 +35,7 @@ export class UserService {
         // isn't sent to external components. Note: only send users back to callers
         this._users.next(Object.assign({}, this.dataStore).users);
       }, error => {
-        console.log(`error:  ${error}`);
+        console.log(`error: ${error}`);
       });
   }
 
@@ -44,7 +44,7 @@ export class UserService {
     return this._users.asObservable();
   }
 
-  getUserById(id: number){
+  getUserById(id: number) {
     //search dataStore for passed in ID and return it
     return this.dataStore.users.find(user => user.id == id);
   }
