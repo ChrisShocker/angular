@@ -14,20 +14,23 @@ export class MainContentComponent implements OnInit {
 
   constructor(
     //add ActivatedRoute to get route params
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
     //add userService to lookup a user by ID
-    private service: UserService){
-
+    private userService: UserService) {
   }
 
   ngOnInit(): void {
     //subscribe to route to get id params 
-    this.route.params.subscribe(params =>{
-      const id = params['id'];
+    this.route.params.subscribe(params => {
+      let id = params['id'];
+      if (!id) id = 1;
       //call userService function to get user by id
-      this.user = this.service.getUserById(id);
-      
+      this.userService.users.subscribe(user => {
+        if (user.length == 0) return;
+        setTimeout(() => {
+          this.user = this.userService.getUserById(id);
+        }, 500)
+      });
     })
   }
-
 }
