@@ -1,5 +1,5 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 //define custom breakpoint width
 const SMALL_WIDTH_BREAKPOINT = 720;
@@ -9,7 +9,7 @@ const SMALL_WIDTH_BREAKPOINT = 720;
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent {
+export class SideNavComponent implements OnInit {
 
   public isScreenSmall: boolean = false;
   showFiller: boolean = false;
