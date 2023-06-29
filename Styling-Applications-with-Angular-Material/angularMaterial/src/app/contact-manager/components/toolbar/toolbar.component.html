@@ -12,5 +12,7 @@
 
     <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="openAddContactDialog()">New Contact</button>
+        <!-- Toolbar is in sidenav, so have to emit an event to parent sidenav -->
+        <button mat-menu-item (click)="toggleTheme.emit()">Toggle Theme</button>
     </mat-menu>
 </mat-toolbar>

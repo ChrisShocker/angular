@@ -57,6 +57,12 @@ export class SideNavComponent implements OnInit {
           this.drawer.close();
         } 
       })
-  } 
+  }
+
+  isDarkTheme: boolean = false;
+
+  toggleTheme(){
+    this.isDarkTheme = !this.isDarkTheme;
+  }
 
 }

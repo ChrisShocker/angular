@@ -14,6 +14,8 @@ export class ToolbarComponent {
   // create new event to listen for
   @Output() toggleSidenav = new EventEmitter<void>();
 
+  // create new event to listen for theme button clicks
+  @Output() toggleTheme = new EventEmitter<void>();
 
   constructor(
     private dialog: MatDialog,
