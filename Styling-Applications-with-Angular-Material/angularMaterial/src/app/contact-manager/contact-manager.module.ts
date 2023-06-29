@@ -8,7 +8,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { MaterialModule } from '../shared/material.module';
 
 //adding form module since Angular Materials has it as a dependency
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { UserService } from './services/user.service';
@@ -45,7 +45,8 @@ const routes: Routes = [
     FormsModule,
     FlexLayoutModule,
     RouterModule.forChild(routes),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     UserService
