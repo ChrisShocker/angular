@@ -25,19 +25,22 @@ export class NewContactDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<NewContactDialogComponent>,
     private userService: UserService
-    ){}
+  ) { }
 
   ngOnInit(): void {
     this.user = new User();
   }
 
   //bind the data passed from the html form to a new user object
-  save(): void{
+  save(): void {
     this.user.name = this.name.value!;
-    this.dialogRef.close(this.user);
+    //call userService to add a user
+    this.userService.addUser(this.user).then(user => {
+      this.dialogRef.close(user);
+    });
   }
 
-  dismiss(): void{
+  dismiss(): void {
     this.dialogRef.close(null);
   }
 
