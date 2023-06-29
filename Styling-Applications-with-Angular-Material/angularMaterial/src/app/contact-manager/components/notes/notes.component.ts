@@ -15,18 +15,21 @@ export class NotesComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['position', 'title', 'date'];
 
-  dataSource: MatTableDataSource<Note>;
+  dataSource!: MatTableDataSource<Note>;
 
-  constructor(){
-    this.dataSource = new MatTableDataSource<Note>;
+  constructor() {
 
   }
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
-  
+
   ngOnInit(): void {
-     this.dataSource = new MatTableDataSource<Note>(this.notes);
+    this.dataSource = new MatTableDataSource<Note>(this.notes);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
