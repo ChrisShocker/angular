@@ -1,18 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-new-contact-dialog',
   templateUrl: './new-contact-dialog.component.html',
   styleUrls: ['./new-contact-dialog.component.scss']
 })
-export class NewContactDialogComponent {
+export class NewContactDialogComponent implements OnInit {
 
+  user!: User;
+
+  constructor(private dialogRef: MatDialogRef<NewContactDialogComponent>){}
+
+  ngOnInit(): void {
+    this.user = new User();
+  }
+
+  //bind the data passed from the html form to a new user object
   save(): void{
-    console.log("Save");
+    this.dialogRef.close(this.user);
   }
 
   dismiss(): void{
-    console.log("Dismiss");
+    this.dialogRef.close(null);
   }
 
 }
