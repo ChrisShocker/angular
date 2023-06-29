@@ -1,7 +1,7 @@
 <mat-form-field>
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Filter By" #input>
-  </mat-form-field>
+</mat-form-field>
 
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
@@ -27,8 +27,15 @@
         <!-- iterate over the display columns from ts -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons aria-label="Select page of notes">
     </mat-paginator>
+
+
 </div>
