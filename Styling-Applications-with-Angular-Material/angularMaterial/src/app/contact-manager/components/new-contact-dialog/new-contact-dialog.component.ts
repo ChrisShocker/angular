@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class NewContactDialogComponent {
 
+  save(): void{
+    console.log("Save");
+  }
+
+  dismiss(): void{
+    console.log("Dismiss");
+  }
+
 }
