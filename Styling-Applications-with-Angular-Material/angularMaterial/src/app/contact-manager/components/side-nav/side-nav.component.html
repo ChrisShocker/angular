@@ -7,12 +7,16 @@
     <mat-drawer #drawer class="app-sidenav mat-elevation-z4" [mode]="isScreenSmall ? 'over' : 'side'"
         [opened]="!isScreenSmall">
         <p *ngIf="showFiller">
-            <mat-list>
-                <mat-list-item>Item 1</mat-list-item>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-list-item>Item 3</mat-list-item>
-                <mat-list-item>Item 4</mat-list-item>
-            </mat-list>
+            <mat-nav-list>
+                <!-- since users is an observable we must use the | async  -->
+                <mat-list-item *ngFor="let user of users | async">
+                    <!-- naviagate to contact module for the person clicked -->
+                    <a matListItemTitle [routerLink]="['/contactManager/', user.id]">
+                        <mat-icon svgIcon="{{user.avatar}}"></mat-icon>
+                        {{ user.name }}
+                    </a>
+                </mat-list-item>
+            </mat-nav-list>
         </p>
         <div class="app-sidenav-button">
             <button (click)="showFiller = !showFiller" mat-raised-button>
