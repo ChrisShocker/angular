@@ -49,4 +49,22 @@ export class UserService {
     return this.dataStore.users.find(user => user.id == id);
   }
 
+  //return a Promise of type User
+  addUser(user: User): Promise<User> {
+    return new Promise((resolver, reject) => {
+
+      //assign user an id that's greater then largest id by 1
+      user.id = this.dataStore.users.length + 1;
+
+      //add user to the dataStore
+      this.dataStore.users.push(user);
+
+      //notify subscribed components a change has occured to user object
+      this._users.next(Object.assign({}, this.dataStore).users);
+
+      //always resolve whatever was passed in
+      resolver(user);
+    })
+  }
+
 }

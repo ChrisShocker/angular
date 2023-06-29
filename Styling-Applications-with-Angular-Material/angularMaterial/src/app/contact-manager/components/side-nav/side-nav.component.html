@@ -1,4 +1,4 @@
-<mat-drawer-container class="app-sidenav-container" autosize>
+<mat-drawer-container class="app-sidenav-container" autosize [class.dark-theme]="isDarkTheme">
     <!-- mat-elevation-z allows us to raise the elevenation of a component and cast a shadow
         the higher the z value, the more elvation/shadow is cast
         Modes; over: floats over primary content , push: pushes primary content out of way, 
@@ -27,7 +27,8 @@
     </mat-drawer>
 
     <div class="app-sidenav-content">
-        <app-toolbar (toggleSidenav)="drawer.toggle()">
+        <!-- listen for toggleSidenav andtoggleTheme event -->
+        <app-toolbar (toggleSidenav)="drawer.toggle()" (toggleTheme)="toggleTheme()">
         </app-toolbar>
         <div class="sidenav-router-wrapper">
             <router-outlet></router-outlet>
