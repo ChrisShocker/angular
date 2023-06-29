@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../models/user';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-contact-dialog',
@@ -35,4 +36,14 @@ export class NewContactDialogComponent implements OnInit {
     this.dialogRef.close(null);
   }
 
+  // set name to Form control and validate only for required
+  name = new FormControl('', [Validators.required]);
+
+  getErrorMessage(): string {
+    if (this.name.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.name.hasError('required') ? 'Name is a required field' : '';
+  }
 }
