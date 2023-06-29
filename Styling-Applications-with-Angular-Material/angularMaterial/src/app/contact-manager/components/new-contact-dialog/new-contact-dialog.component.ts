@@ -29,6 +29,7 @@ export class NewContactDialogComponent implements OnInit {
 
   //bind the data passed from the html form to a new user object
   save(): void{
+    this.user.name = this.name.value!;
     this.dialogRef.close(this.user);
   }
 
