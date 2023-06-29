@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NewContactDialogComponent } from '../new-contact-dialog/new-contact-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,6 +18,12 @@ export class ToolbarComponent {
   }
 
   openAddContactDialog(): void {
-    // this.dialog.open()
+    //open dialog when clicked and pass in component to render
+    let dialogRef = this.dialog.open(NewContactDialogComponent);
+
+    dialogRef.afterClosed().subscribe( result =>{
+      console.log("Dialog closed: ", result);
+    })
+
   }
 }
