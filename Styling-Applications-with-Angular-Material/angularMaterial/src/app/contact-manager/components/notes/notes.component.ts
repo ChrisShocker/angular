@@ -14,14 +14,13 @@ export class NotesComponent implements OnInit {
   dataSource: MatTableDataSource<Note>;
 
   constructor(){
-    console.log("In Constructor ")
-    this.dataSource = new MatTableDataSource<Note>(this.notes);
+    this.dataSource = new MatTableDataSource<Note>;
 
   }
 
 
   ngOnInit(): void {
-    console.log("In init ")
+     this.dataSource = new MatTableDataSource<Note>(this.notes);
   }
 
 
