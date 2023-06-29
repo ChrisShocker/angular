@@ -4,8 +4,8 @@
 <div class="dialog-container">
     <mat-dialog-content>
         <mat-form-field>
-            <mat-label>Input</mat-label>
-            <input matInput>
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)]="user.name" required>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Select</mat-label>
@@ -15,8 +15,8 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field>
-            <mat-label>Textarea</mat-label>
-            <textarea matInput></textarea>
+            <mat-label>User Bio</mat-label>
+            <textarea matInput [(ngModel)]="user.bio"></textarea>
         </mat-form-field>
     </mat-dialog-content>
 </div>
