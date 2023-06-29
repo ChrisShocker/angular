@@ -19,8 +19,8 @@ export class NewContactDialogComponent implements OnInit {
     "svg-2",
     "svg-3",
     "svg-4",
-    "svg-5",
-  ]
+    "svg-5"
+  ];
 
   constructor(
     private dialogRef: MatDialogRef<NewContactDialogComponent>,
