@@ -11,6 +11,15 @@ export class NewContactDialogComponent implements OnInit {
 
   user!: User;
 
+  //avatars options
+  avatars = [
+    "svg-1",
+    "svg-2",
+    "svg-3",
+    "svg-4",
+    "svg-5",
+  ]
+
   constructor(private dialogRef: MatDialogRef<NewContactDialogComponent>){}
 
   ngOnInit(): void {
