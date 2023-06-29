@@ -1,1 +1,32 @@
-<p>new-contact-dialog works!</p>
+<h2 mat-dialog-title>Add New Contact</h2>
+
+<!-- main contact for dialog  -->
+<div class="dialog-container">
+    <mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Input</mat-label>
+            <input matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Select</mat-label>
+            <mat-select>
+                <mat-option value="one">First option</mat-option>
+                <mat-option value="two">Second option</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Textarea</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+    </mat-dialog-content>
+</div>
+
+<!-- availiable actions for the dialog -->
+<mat-dialog-actions>
+    <button mat-button color="primary" (click)="save()">
+        <mat-icon>save</mat-icon>Save
+    </button>
+    <button mat-button color="warn" (click)="dismiss()">
+        <mat-icon>cancel</mat-icon>Cancel
+    </button>
+</mat-dialog-actions>
