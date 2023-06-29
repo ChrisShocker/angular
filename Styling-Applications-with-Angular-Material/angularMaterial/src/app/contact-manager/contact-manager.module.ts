@@ -13,6 +13,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { Routes, RouterModule } from '@angular/router';
 import { UserService } from './services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NotesComponent } from './components/notes/notes.component';
 
 const routes: Routes = [
   // use lazy loading for demo module
@@ -33,7 +34,8 @@ const routes: Routes = [
     ContactManagerAppComponent,
     ToolbarComponent,
     MainContentComponent,
-    SideNavComponent
+    SideNavComponent,
+    NotesComponent
   ],
   imports: [
     CommonModule,
