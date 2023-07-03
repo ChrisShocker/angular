@@ -24,5 +24,8 @@ export class EventThumbnailComponent {
     this.eventClick.emit(this.event.name);
   }
 
+  logFoo() {
+    console.log("Called Child Component function logFoo()");
+  }
 
 }
