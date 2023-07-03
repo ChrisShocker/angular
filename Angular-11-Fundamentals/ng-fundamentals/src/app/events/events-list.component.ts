@@ -23,4 +23,9 @@ export class EventsListComponent {
     }
   }
 
+  //catcher for click events from child component
+  handleEventClicked(eventData: string): void{
+    console.log("Button event triggerend in parent component events-list " +eventData);
+  }
+
 }
