@@ -1,0 +1,14 @@
+<!-- one way binding interpolation -->
+<!-- look for object named event and access it's name parameter -->
+<h2>{{event.name}}</h2>
+<div class="well hoberwell thumbnail">
+    <h2>{{event.name}}</h2>
+    <div>Date: {{event.date}}</div>
+    <div>Time: {{event.time}}</div>
+    <div>Price: {{event.price | currency}}</div>
+    <div>
+        <span>Location: {{event.location.address}}</span>
+        <br>
+        <span>{{event.location.city}}, {{event.location.country}}</span>
+    </div>
+</div>

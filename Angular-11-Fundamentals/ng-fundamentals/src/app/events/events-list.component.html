@@ -1,18 +1,7 @@
 <div>
     <h1>Upcoming Angular Events</h1>
     <hr>
-    <!-- one way binding interpolation -->
-    <!-- look for object named event and access it's name parameter -->
-    <h2>{{event.name}}</h2>
-    <div class="well hoberwell thumbnail">
-        <h2>{{event.name}}</h2>
-        <div>Date: {{event.date}}</div>
-        <div>Time: {{event.time}}</div>
-        <div>Price: {{event.price | currency}}</div>
-        <div>
-            <span>Location: {{event.location.address}}</span>
-            <br>
-            <span>{{event.location.city}}, {{event.location.country}}</span>
-        </div>
-    </div>
+    <!-- render event thumbnail and pass in an event object for the child component to bind to -->
+    <!-- for the [event] expected in <event-thumbnail> pass in "event1" defined in <event-list> -->
+    <app-event-thumbnail [event]="event1"></app-event-thumbnail>
 </div>
