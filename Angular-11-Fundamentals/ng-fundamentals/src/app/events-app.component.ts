@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './events-app.component.html',
   styleUrls: ['./events-app.component.css']
 })
-export class AppComponent {
+export class EventsAppComponent {
   title = 'ng-fundamentals';
 }
