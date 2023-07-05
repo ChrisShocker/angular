@@ -28,4 +28,11 @@ export class EventThumbnailComponent {
     console.log("Called Child Component function logFoo()");
   }
 
+  //multiple classes can be returned back to the class calling binding
+  //classes can be returned in an array or a string
+  getNameClasses(): string{
+    return "bold white";
+    //return ["bold", "white"];
+  }
+
 }
