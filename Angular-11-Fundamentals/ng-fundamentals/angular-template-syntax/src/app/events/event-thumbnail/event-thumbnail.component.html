@@ -2,17 +2,21 @@
 <!-- look for object named event and access it's name parameter -->
 <div class="well hoberwell thumbnail">
     <!-- Safe navigation operator "?" prevents undefined errors from occuring -->
-    <h2>{{event?.name}}</h2>
+    <!-- using ngClass we can call a function to get a list of classes to apply to the element -->
+    <h2 [ngClass]="getNameClasses()">{{event?.name}}</h2>
     <img src="{{event?.imageUrl}}">
     <div>Date: {{event?.date}}</div>
     <!-- ngSwitch can be used to render elements based on specific criteria -->
-    <div [ngSwitch]="event?.time">
+    <!-- ngclass can be used to dynamically inject class based on equality conditions -->
+    <div [ngClass]="{red: event?.time ==='8:00 am', bold: event?.time === '8:00 am'}" [ngSwitch]="event?.time">
         Time: {{event?.time}}
         <span *ngSwitchCase="'8:00 am'">(Early Start)</span>
         <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
         <span *ngSwitchDefault>(Normal Start)</span>
     </div>
-    <div>Price: {{event?.price | currency}}</div>
+    <!-- A calss can be injected based on equality operators
+         Note: this is base HTML and not angular -->
+    <div [class.green]="event?.price > 0">Price: {{event?.price | currency}}</div>
     <!-- *ngIf can be used to render entire elements if they exist
          note: ngIf remove the entire element from DOM and doesn't just hide it
          this works great for elements that aren't rendered frequently -->

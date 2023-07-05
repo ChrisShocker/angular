@@ -7,3 +7,19 @@ img{
     min-height: 450px;
     max-height: 450px;
 }
+
+.green{
+    color: green !important;
+}
+
+.red{
+    color: red !important;
+}
+
+.white{
+    color: white;
+}
+
+.bold{
+    font-weight: bolder;
+}
