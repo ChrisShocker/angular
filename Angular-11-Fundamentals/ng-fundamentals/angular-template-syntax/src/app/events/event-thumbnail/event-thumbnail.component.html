@@ -5,7 +5,13 @@
     <h2>{{event?.name}}</h2>
     <img src="{{event?.imageUrl}}">
     <div>Date: {{event?.date}}</div>
-    <div>Time: {{event?.time}}</div>
+    <!-- ngSwitch can be used to render elements based on specific criteria -->
+    <div [ngSwitch]="event?.time">
+        Time: {{event?.time}}
+        <span *ngSwitchCase="'8:00 am'">(Early Start)</span>
+        <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
+        <span *ngSwitchDefault>(Normal Start)</span>
+    </div>
     <div>Price: {{event?.price | currency}}</div>
     <!-- *ngIf can be used to render entire elements if they exist
          note: ngIf remove the entire element from DOM and doesn't just hide it
