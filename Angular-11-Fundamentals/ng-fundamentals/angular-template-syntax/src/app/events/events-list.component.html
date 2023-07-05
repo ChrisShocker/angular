@@ -1,20 +1,7 @@
 <div>
-    <h1>
-        Passing data between Parent to Child and Child to Parent components
-    </h1>
-    <h2>Upcoming Angular Events</h2>
+    <h1>Upcoming Angular Events</h1>
     <!-- render event thumbnail and pass in an event object for the child component to bind to -->
     <!-- for the [event] expected in <event-thumbnail> pass in "event1" defined in <event-list> -->
     <!-- add event handler to parent to catch event emitted from child component event emitter -->
     <app-event-thumbnail [event]="event1" (eventClick)="handleEventClicked($event)"></app-event-thumbnail>
-
-    <hr>
-    <h1>
-        Calling Child Component Functions
-    </h1>
-    <h2>Upcoming Angular Events</h2>
-    <!-- we can creat a reference to a child component "#thumbnail" 
-         and use it to call child functions and variables that are public -->
-    <app-event-thumbnail #thumbnail [event]="event1"></app-event-thumbnail>
-    <button class="btn btn-primary" (click)="thumbnail.logFoo()">Call Child Function</button>
 </div>
