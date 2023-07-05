@@ -7,14 +7,19 @@
     <div>Date: {{event?.date}}</div>
     <div>Time: {{event?.time}}</div>
     <div>Price: {{event?.price | currency}}</div>
-    <!-- *ngIf can be used to render entire elements if they exist-->
+    <!-- *ngIf can be used to render entire elements if they exist
+         note: ngIf remove the entire element from DOM and doesn't just hide it
+         this works great for elements that aren't rendered frequently -->
     <div *ngIf="event.location">
         <!-- Safe naviation operator can be used anytime a parameter is allowed to be null -->
         <span>Location: {{event?.location?.address}}</span>
         <br>
         <span>{{event?.location?.city}}, {{event?.location?.country}}</span>
     </div>
-    <div *ngIf="event.onlineURL">Class URL: {{event?.onlineURL}}</div>
+    <!-- For items that will be rendered frequetly we can hide them if they don't exist
+         this provides better performance when compared to ngIf, if the item/element/component
+         is rendered frequetly  -->
+    <div [hidden]="!event?.onlineURL">Class URL: {{event?.onlineURL}}</div>
     <!-- create button and add click event -->
     <button class="btn btn-primary" (click)="handleClickMe()">Click Me!</button>
 </div>
