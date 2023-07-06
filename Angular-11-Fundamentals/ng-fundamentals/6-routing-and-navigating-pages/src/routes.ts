@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { EventDetailsComponent } from "./app/events/event-details/event-details.component";
 import { EventsListComponent } from "./app/events/events-list.component";
 import { CreateEventComponent } from "./app/events/create-event/create-event.component";
+import { Error404Component } from "./app/errors/error404.component";
 
 //adding the Routes type addes intellisense to our ts and compile time safety
 export const appRoutes: Routes = [
@@ -15,6 +16,8 @@ export const appRoutes: Routes = [
     //accept a url parameter on events path 
     {path: 'events/:id', component: EventDetailsComponent},
 
+    //route for error 404
+    {path: '404', component: Error404Component},
 
     //default route
     //pathMatch:prefix: redirect if url starts with specifed path string  
