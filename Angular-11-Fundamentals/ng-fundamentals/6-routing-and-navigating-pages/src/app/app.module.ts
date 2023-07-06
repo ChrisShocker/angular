@@ -14,7 +14,6 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
 import { Error404Component } from './errors/error404.component';
 import { EventRouteActivatorService } from './events/event-details/event-route-activator.service';
 
-
 @NgModule({
   declarations: [
     EventsAppComponent,
@@ -23,15 +22,36 @@ import { EventRouteActivatorService } from './events/event-details/event-route-a
     NavComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    Error404Component
+    Error404Component,
   ],
   imports: [
     BrowserModule,
     //use forRoot to import the routes from the routes we defined
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   // Service are included in the providers
-  providers: [EventService, ToastrService, EventRouteActivatorService],
-  bootstrap: [EventsAppComponent]
+  providers: [
+    EventService,
+    ToastrService,
+    EventRouteActivatorService,
+    //providers can be expressed longhand
+    {
+      //what we're providing for
+      provide: 'canDeactivateGuardEvent',
+      //what we're using to provide the service
+      useValue: checkDirtyState,
+    },
+  ],
+  bootstrap: [EventsAppComponent],
 })
-export class AppModule { }
+export class AppModule {}
+
+//should be defined in another file
+//prevent a user from leaving a modified page unless they connsent
+export function checkDirtyState(component:CreateEventComponent): boolean {
+  if(component.isDirty){
+    //html confirm dialog
+    return window.confirm('You have not saved this event, do you want to cancel?');
+  }
+  return true;
+}

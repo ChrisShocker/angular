@@ -9,7 +9,7 @@ import { EventRouteActivatorService } from "./app/events/event-details/event-rou
 export const appRoutes: Routes = [
     //path for creating an event
     //Note order matters, angular won't differentiate between /new and :id, whichever is defined first wins
-    {path: 'events/new', component: CreateEventComponent},
+    {path: 'events/new', component: CreateEventComponent, canDeactivate: ['canDeactivateGuardEvent']},
 
     //if the url path is 'events' pass/render the EventsListComponent
     {path: 'events', component: EventsListComponent},
