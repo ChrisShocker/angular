@@ -12,6 +12,7 @@ import { EventDetailsComponent } from './events/event-details/event-details.comp
 import { appRoutes } from 'src/routes';
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import { Error404Component } from './errors/error404.component';
+import { EventRouteActivatorService } from './events/event-details/event-route-activator.service';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { Error404Component } from './errors/error404.component';
     RouterModule.forRoot(appRoutes)
   ],
   // Service are included in the providers
-  providers: [EventService, ToastrService],
+  providers: [EventService, ToastrService, EventRouteActivatorService],
   bootstrap: [EventsAppComponent]
 })
 export class AppModule { }
