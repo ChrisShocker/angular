@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
+import { ToastrService } from '../common/toastr.service';
 
 declare let toastr: { success: (arg0: any) => void; };
 
@@ -11,8 +12,8 @@ declare let toastr: { success: (arg0: any) => void; };
 export class EventsListComponent implements OnInit{
   events!: any[];
 
-  // register/inject event service with events-list component
-  constructor(private eventService: EventService){
+  // register/inject event and toastr services with events-list component
+  constructor(private eventService: EventService, private toasterService: ToastrService){
   }
 
   //catcher for click events from child component
@@ -20,9 +21,9 @@ export class EventsListComponent implements OnInit{
     console.log("Button event triggerend in parent component events-list " + eventData);
   }
 
+  //when a thumbnail is clicked call toasterService success 
   handleThumbnailClick(eventName:any){
-    console.log("test");
-    toastr.success(eventName);
+    this.toasterService.success(eventName);
   }
 
   ngOnInit(){
