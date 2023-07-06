@@ -11,7 +11,7 @@ export class EventRouteActivatorService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot) {
     //create a boolean and cast Id result to boolean '!!'
     const eventExists: boolean = !!this.eventService.getEventById(
-      route.params['id']
+      +route.params['id']
     );
 
     //if event doesn't exist route to 404
