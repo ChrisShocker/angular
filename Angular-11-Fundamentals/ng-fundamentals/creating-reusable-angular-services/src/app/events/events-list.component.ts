@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
 
+declare let toastr: { success: (arg0: any) => void; };
+
 @Component({
   selector: 'app-events-list',
   templateUrl: './events-list.component.html',
@@ -16,6 +18,11 @@ export class EventsListComponent implements OnInit{
   //catcher for click events from child component
   handleEventClicked(eventData: string): void {
     console.log("Button event triggerend in parent component events-list " + eventData);
+  }
+
+  handleThumbnailClick(eventName:any){
+    console.log("test");
+    toastr.success(eventName);
   }
 
   ngOnInit(){

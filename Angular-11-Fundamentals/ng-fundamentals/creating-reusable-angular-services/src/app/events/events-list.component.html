@@ -5,7 +5,8 @@
          * means the directive is structural, it alters the structure of the DOM
          events is the name of the object to loop over 
          ngFor repeats the elements it's inserted into and all elements inside that element-->
-        <div *ngFor="let event of events" class="col-md-5">
+        <!-- add click event for each thumbnail rendered from ngFor -->
+        <div *ngFor="let event of events" class="col-md-5" (click)="handleThumbnailClick(event.name)">
             <!-- render event thumbnail and pass in an event object for the child component to bind to -->
             <!-- for the [event] expected in <event-thumbnail> pass in "event1" defined in <event-list> -->
             <!-- add event handler to parent to catch event emitted from child component event emitter -->
