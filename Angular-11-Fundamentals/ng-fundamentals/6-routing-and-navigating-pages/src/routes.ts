@@ -3,6 +3,7 @@ import { EventDetailsComponent } from "./app/events/event-details/event-details.
 import { EventsListComponent } from "./app/events/events-list.component";
 import { CreateEventComponent } from "./app/events/create-event/create-event.component";
 import { Error404Component } from "./app/errors/error404.component";
+import { EventRouteActivatorService } from "./app/events/event-details/event-route-activator.service";
 
 //adding the Routes type addes intellisense to our ts and compile time safety
 export const appRoutes: Routes = [
@@ -14,7 +15,7 @@ export const appRoutes: Routes = [
     {path: 'events', component: EventsListComponent},
 
     //accept a url parameter on events path 
-    {path: 'events/:id', component: EventDetailsComponent},
+    {path: 'events/:id', component: EventDetailsComponent , canActivate: [EventRouteActivatorService]},
 
     //route for error 404
     {path: '404', component: Error404Component},
