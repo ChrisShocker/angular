@@ -1,6 +1,7 @@
-<!-- one way binding interpolation -->
-<!-- look for object named event and access it's name parameter -->
-<div class="well hoberwell thumbnail">
+<!-- add routerLink for naviation to the events' id-->
+<div [routerLink]="['/events', event.id]" class="well hoberwell thumbnail">
+    <!-- one way binding interpolation -->
+    <!-- look for object named event and access it's name parameter -->
     <!-- Safe navigation operator "?" prevents undefined errors from occuring -->
     <!-- using ngClass we can call a function to get a list of classes to apply to the element -->
     <h2 [ngClass]="getNameClasses()">{{event?.name}}</h2>
@@ -28,7 +29,8 @@
         <br>
         <!-- we can also use angular [ngStyle=""] to directly inject styles, note the parameters are not
          referenced in the dom binding but in the {} -->
-        <span [ngStyle]="{'color':event?.location === 'someCondition' ? 'orange' : 'purple'}">{{event?.location?.city}}, {{event?.location?.country}}</span>
+        <span [ngStyle]="{'color':event?.location === 'someCondition' ? 'orange' : 'purple'}">{{event?.location?.city}},
+            {{event?.location?.country}}</span>
     </div>
     <!-- For items that will be rendered frequetly we can hide them if they don't exist
          this provides better performance when compared to ngIf, if the item/element/component
