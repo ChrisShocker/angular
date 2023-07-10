@@ -17,25 +17,25 @@
     </div>
     <!-- A class can be injected based on equality operators
          Note: this is base HTML and not angular -->
-    <div [class.green]="event?.price > 0">Price: {{event?.price | currency}}</div>
+    <div [class.green]="event?.price! > 0">Price: {{event?.price | currency}}</div>
     <!-- *ngIf can be used to render entire elements if they exist
          note: ngIf remove the entire element from DOM and doesn't just hide it
          this works great for elements that aren't rendered frequently -->
     <div *ngIf="event?.location">
         <!-- Safe navigation operator can be used anytime a parameter is allowed to be null -->
         <!-- styles can be injected using the style parameter with base html and conditions -->
-        <span [style.color]="event?.location === 'someCondition' ? 'purple' : 'orange'">Location:
+        <span [style.color]="event?.location?.address === 'someCondition' ? 'purple' : 'orange'">Location:
             {{event?.location?.address}}</span>
         <br>
         <!-- we can also use angular [ngStyle=""] to directly inject styles, note the parameters are not
          referenced in the dom binding but in the {} -->
-        <span [ngStyle]="{'color':event?.location === 'someCondition' ? 'orange' : 'purple'}">{{event?.location?.city}},
+        <span [ngStyle]="{'color':event?.location?.address}">{{event?.location?.city}},
             {{event?.location?.country}}</span>
     </div>
     <!-- For items that will be rendered frequetly we can hide them if they don't exist
          this provides better performance when compared to ngIf, if the item/element/component
          is rendered frequetly  -->
-    <div [hidden]="!event?.onlineURL">Class URL: {{event?.onlineURL}}</div>
+    <div [hidden]="!event?.onlineUrl">Class URL: {{event?.onlineUrl}}</div>
     <!-- create button and add click event -->
     <button class="btn btn-primary" (click)="handleClickMe()">Click Me!</button>
 </div>

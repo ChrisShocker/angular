@@ -1,5 +1,6 @@
 //Add input to allow component to expect a value to be passed in
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IEvent } from '../shared';
 
 @Component({
   selector: 'app-event-thumbnail',
@@ -9,7 +10,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class EventThumbnailComponent {
   //create an event object for component to bind to
   //add @input decorator to define the value will be passed in for the event (not js event)
-  @Input() event:any
+  @Input()
+  event!: IEvent;
 
   // To pass an event/change to a parent component:
   //  - @Output decorator must be used with an EventEmitter()
@@ -21,7 +23,7 @@ export class EventThumbnailComponent {
 
     //to pass the event to a parent component, the event must be emitted
     //only one value can be emitted from an event, object can also be emitted
-    this.eventClick.emit(this.event.name);
+    this.eventClick.emit(this.event!.name);
   }
 
   logFoo() {
