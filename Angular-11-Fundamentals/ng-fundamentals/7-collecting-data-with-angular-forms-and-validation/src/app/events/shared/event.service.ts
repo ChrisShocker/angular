@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { IEvent } from './event.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,15 +23,15 @@ export class EventService {
     return this.EVENTS.find(event => event.id === id);
   }
 
-  EVENTS = [
+  EVENTS: IEvent[] = [
     {
       id: 1,
       name: 'Angular Connect',
-      date: '9/26/2036',
+      date: new Date('9/26/2036'),
       time: '10:00 am',
       price: 599.99,
       imageUrl: '/assets/images/angularconnect-shield.png',
-      onlineURL: 'classWebsite.com',
+      onlineUrl: 'classWebsite.com',
       sessions: [
         {
           id: 1,
@@ -100,7 +101,7 @@ export class EventService {
     {
       id: 2,
       name: 'ng-nl',
-      date: '4/15/2037',
+      date: new Date('4/15/2037'),
       time: '9:00 am',
       price: 950.00,
       imageUrl: '/assets/images/ng-nl.png',
@@ -160,7 +161,7 @@ export class EventService {
     {
       id: 3,
       name: 'ng-conf 2037',
-      date: '5/4/2037',
+      date: new Date('5/4/2037'),
       time: '9:00 am',
       price: 759.00,
       imageUrl: '/assets/images/ng-conf.png',
@@ -242,7 +243,7 @@ export class EventService {
     {
       id: 4,
       name: 'UN Angular Summit',
-      date: '6/10/2037',
+      date: new Date('6/10/2037'),
       time: '8:00 am',
       price: 800.00,
       imageUrl: '/assets/images/basic-shield.png',
@@ -291,7 +292,7 @@ export class EventService {
     {
       id: 5,
       name: 'ng-vegas',
-      date: '2/10/2037',
+      date: new Date('2/10/2037'),
       time: '9:00 am',
       price: 400.00,
       imageUrl: '/assets/images/ng-vegas.png',
