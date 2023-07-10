@@ -1,3 +1,9 @@
+/* when a tab/list item is active change the color */
+li > a.active {
+    color: #F97924;
+}
+
+
 .nav.navbar-nav {
     font-size: 15px;
 }

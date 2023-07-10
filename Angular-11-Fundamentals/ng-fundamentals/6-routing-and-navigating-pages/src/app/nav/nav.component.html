@@ -8,7 +8,8 @@
             <ul class="nav navbar-nav">
                 <li>
                     <!-- add routerLink to make anchor link to events -->
-                    <a [routerLink]="['/events']">All Events</a>
+                    <!-- add routerLinkActive to add class when the list item is active -->
+                    <a [routerLink]="['/events']" routerLinkActive="active">All Events</a>
                 </li>
                 <li><a [routerLink]="['/events/new']">Create Event</a></li>
                 <li class="dropdown">
