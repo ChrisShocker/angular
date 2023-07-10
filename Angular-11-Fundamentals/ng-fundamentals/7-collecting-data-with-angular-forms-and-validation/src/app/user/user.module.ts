@@ -15,6 +15,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     RouterModule.forChild(userRoutes)
+  ],
+  providers: [
   ]
 })
 export class UserModule { }
