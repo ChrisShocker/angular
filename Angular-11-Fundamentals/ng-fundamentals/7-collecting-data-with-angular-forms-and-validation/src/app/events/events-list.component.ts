@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
 import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute, Route } from '@angular/router';
+import { IEvent } from './shared';
 
 declare let toastr: { success: (arg0: any) => void; };
 
@@ -11,7 +12,7 @@ declare let toastr: { success: (arg0: any) => void; };
   styleUrls: ['./events-list.component.css']
 })
 export class EventsListComponent implements OnInit{
-  events!: any;
+  events!: IEvent[];
 
   // register/inject event and toastr services with events-list component
   constructor(private eventService: EventService, private toasterService: ToastrService, private activatedRoute: ActivatedRoute){
