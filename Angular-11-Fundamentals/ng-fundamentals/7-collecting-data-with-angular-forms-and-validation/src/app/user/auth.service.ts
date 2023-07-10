@@ -2,15 +2,25 @@ import { Injectable } from '@angular/core';
 import { IUser } from './user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor() { }
+  constructor() {}
 
   currentUser!: IUser;
 
-  loginUser(userName: string, password: string){
+  loginUser(userName: string, password: string) {
+    //hard code a user for now
+    this.currentUser = {
+      id: 1,
+      userName: 'userName',
+      firstName: 'John',
+      lastName: 'Papa'
+    };
+  }
 
+  //fake an is authenticated call
+  isAuthenticated(){
+    return !!this.currentUser;
   }
 }
