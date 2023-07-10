@@ -11,6 +11,7 @@ export const appRoutes: Routes = [
     //Note order matters, angular won't differentiate between /new and :id, whichever is defined first wins
     //canDeactivate can be used to force a user to stay on a path unless we define a way for them to leave
     //can be used to guard against changes being lost by user
+    //note: this guard is caught and implemented in app.module
     {path: 'events/new', component: CreateEventComponent, canDeactivate: ['canDeactivateGuardEvent']},
 
     //if the url path is 'events' pass/render the EventsListComponent
