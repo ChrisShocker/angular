@@ -4,7 +4,7 @@ import { EventsListComponent } from './app/events/events-list.component';
 import { CreateEventComponent } from './app/events/create-event/create-event.component';
 import { Error404Component } from './app/errors/error404.component';
 import { EventRouteActivatorService } from './app/events/event-details/event-route-activator.service';
-import { EventListResolver } from './app/events/shared/events-list-resolver.service';
+import { EventListResolver } from './app/events/events-list-resolver.service';
 import { UserModule } from './app/user/user.module';
 
 //adding the Routes type addes intellisense to our ts and compile time safety

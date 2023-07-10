@@ -2,18 +2,22 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
+//implement barreling to reduce clutter
+import {
+  EventDetailsComponent,
+  EventService,
+  EventThumbnailComponent,
+  EventRouteActivatorService,
+  EventsListComponent,
+  CreateEventComponent
+}from './events/index';
+
 import { EventsAppComponent } from './events-app.component';
-import { EventsListComponent } from './events/events-list.component';
-import { EventThumbnailComponent } from './events/event-thumbnail/event-thumbnail.component';
 import { NavComponent } from './nav/nav.component';
-import { EventService } from './events/shared/event.service';
 import { ToastrService } from './common/toastr.service';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { appRoutes } from 'src/routes';
-import { CreateEventComponent } from './events/create-event/create-event.component';
 import { Error404Component } from './errors/error404.component';
-import { EventRouteActivatorService } from './events/event-details/event-route-activator.service';
-import { EventListResolver } from './events/shared/events-list-resolver.service';
+import { EventListResolver } from './events/events-list-resolver.service';
 import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
