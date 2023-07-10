@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,12 @@ export class EventService {
   constructor() { }
 
   getEvents() {
-    return this.EVENTS;
+    //Create a new observable of type "Subject"
+    let subject = new Subject();
+    //simulate an async request, don't return data until 100ms
+    setTimeout(() => {subject.next(this.EVENTS); subject.complete(); }, 100)
+    return subject;
+    //return this.EVENTS;
   }
 
   getEventById(id:number){

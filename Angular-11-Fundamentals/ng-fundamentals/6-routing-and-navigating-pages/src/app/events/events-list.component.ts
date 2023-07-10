@@ -10,7 +10,7 @@ declare let toastr: { success: (arg0: any) => void; };
   styleUrls: ['./events-list.component.css']
 })
 export class EventsListComponent implements OnInit{
-  events!: any[];
+  events!: any;
 
   // register/inject event and toastr services with events-list component
   constructor(private eventService: EventService, private toasterService: ToastrService){
@@ -27,6 +27,8 @@ export class EventsListComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.events = this.eventService.getEvents();
+    //since get events is now an observable we must subscribe to it
+    //note: since the type is now an observable, we must set the local variable in the subscribe method
+    this.eventService.getEvents().subscribe(events => {this.events = events});
   }
 }
