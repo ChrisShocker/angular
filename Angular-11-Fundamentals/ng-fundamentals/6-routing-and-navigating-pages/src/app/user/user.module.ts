@@ -12,7 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(userRoutes);
+    RouterModule.forChild(userRoutes)
   ]
 })
 export class UserModule { }
