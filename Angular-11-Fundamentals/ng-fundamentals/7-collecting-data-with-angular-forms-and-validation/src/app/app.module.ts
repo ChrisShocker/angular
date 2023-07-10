@@ -18,7 +18,6 @@ import { ToastrService } from './common/toastr.service';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
-import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { ProfileComponent } from './user/profile/profile.component';
     EventDetailsComponent,
     CreateEventComponent,
     Error404Component,
-    ProfileComponent,
   ],
   imports: [
     BrowserModule,
