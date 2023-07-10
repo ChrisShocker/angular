@@ -4,6 +4,7 @@ import { EventsListComponent } from "./app/events/events-list.component";
 import { CreateEventComponent } from "./app/events/create-event/create-event.component";
 import { Error404Component } from "./app/errors/error404.component";
 import { EventRouteActivatorService } from "./app/events/event-details/event-route-activator.service";
+import { EventListResolver } from "./app/events/shared/events-list-resolver.service";
 
 //adding the Routes type addes intellisense to our ts and compile time safety
 export const appRoutes: Routes = [
@@ -14,8 +15,10 @@ export const appRoutes: Routes = [
     //note: this guard is caught and implemented in app.module
     {path: 'events/new', component: CreateEventComponent, canDeactivate: ['canDeactivateGuardEvent']},
 
-    //if the url path is 'events' pass/render the EventsListComponent
-    {path: 'events', component: EventsListComponent},
+    //if the url path is 'events' pass/render the EventsListComponent.
+    //add resolver handler: before resolving route, call EventListResolver and resolve any data
+    //and once resolve is finished return the data in a parameter called events 
+    {path: 'events', component: EventsListComponent, resolve:{events:EventListResolver}},
 
     //accept a url parameter on events path 
     {path: 'events/:id', component: EventDetailsComponent , canActivate: [EventRouteActivatorService]},
