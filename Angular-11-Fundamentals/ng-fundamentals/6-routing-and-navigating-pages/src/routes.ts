@@ -44,6 +44,8 @@ export const appRoutes: Routes = [
   //pathMatch:full: redirect if url matches specified path string
   { path: '', redirectTo: '/events', pathMatch: 'full' },
 
+  //add a lazy load path for the user component
+  //this won't be loaded until the user navigates to this page/anchor 
   {
     //1. when a route starts with user
     path: 'user',
