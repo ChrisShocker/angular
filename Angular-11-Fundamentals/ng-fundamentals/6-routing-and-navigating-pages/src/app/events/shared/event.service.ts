@@ -11,8 +11,9 @@ export class EventService {
   getEvents() {
     //Create a new observable of type "Subject"
     let subject = new Subject();
-    //simulate an async request, don't return data until 100ms
-    setTimeout(() => {subject.next(this.EVENTS); subject.complete(); }, 100)
+    //simulate an async request, don't return data until 1000ms
+    //note: the 1 sec delay will load data post page display creating a delay, user will see an empty webpage
+    setTimeout(() => {subject.next(this.EVENTS); subject.complete(); }, 1000)
     return subject;
     //return this.EVENTS;
   }
