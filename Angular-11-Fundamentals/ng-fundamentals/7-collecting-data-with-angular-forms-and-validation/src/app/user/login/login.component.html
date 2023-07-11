@@ -5,20 +5,25 @@
     <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off">
         <div class="form-group">
             <label for="userName">User Name:</label>
-            <em *ngIf="userName?.invalid && userName?.touched">Required</em>
+            <em *ngIf="userName?.invalid && (userName?.touched || mouseOverLogin)">Required</em>
             <!-- ngModel with one way binding since there's nothing to display offhand
             ngModel requires a name attribute be defined -->
-            <input (ngModel)="userName" name="userName" id="userName" type="text" class="form-control" placeholder="User Name..." #userName="ngModel" required/>
+            <input (ngModel)="userName" name="userName" id="userName" type="text" class="form-control"
+                placeholder="User Name..." #userName="ngModel" required />
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <em *ngIf="password?.invalid && password?.touched">Required</em>
-            <input (ngModel)="password" name="password" id="password" type="password" class="form-control" placeholder="Password..." #password="ngModel" required/>
+            <em *ngIf="password?.invalid && (password?.touched || mouseOverLogin)">Required</em>
+            <input (ngModel)="password" name="password" id="password" type="password" class="form-control"
+                placeholder="Password..." #password="ngModel" required />
         </div>
 
-        <!-- login form parameters can be accessed and used to validate the form
+        <!-- since disabled buttons can't trigger events -->
+        <span (mouseenter)="mouseOverLogin=true" (mouseleave)="mouseOverLogin=false">
+            <!-- login form parameters can be accessed and used to validate the form
         here we access the buttons disabled property and set it to the form property invalid -->
-        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+        </span>
         <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
     </form>
 </div>
