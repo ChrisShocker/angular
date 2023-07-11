@@ -5,8 +5,9 @@ allows validation logic to be unit testable -->
     <h1>Edit Your Profile </h1>
     <hr>
     <div class="col-md-4">
-        <!-- bind form element to profileForm form component -->
-        <form [formGroup]="profileForm" autocomplete="off" novalidate>
+        <!-- bind form element to profileForm form component
+        on submit pass the prfileForm data to the saveProfile function -->
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
             <div class="form-group">
                 <label for="firstName">First Name:</label>
                 <!-- bind inputs to profileForm properties -->
@@ -21,7 +22,7 @@ allows validation logic to be unit testable -->
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-default">Cancel</button>
+            <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
         </form>
     </div>
 </div>

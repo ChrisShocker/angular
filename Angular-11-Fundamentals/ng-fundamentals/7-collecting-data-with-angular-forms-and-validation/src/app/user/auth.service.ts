@@ -19,8 +19,13 @@ export class AuthService {
     };
   }
 
-  //fake an is authenticated call
+  //fake an isAuthenticated call
   isAuthenticated(){
     return !!this.currentUser;
+  }
+
+  updateCurrentUser(firstName: string, lastName: string){
+    this.currentUser.firstName = firstName;
+    this.currentUser.lastName = lastName;
   }
 }
