@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+// This component uses template form validation 
+
   userName: string = 'user';
   password: string = 'password';
   mouseOverLogin!: boolean;
