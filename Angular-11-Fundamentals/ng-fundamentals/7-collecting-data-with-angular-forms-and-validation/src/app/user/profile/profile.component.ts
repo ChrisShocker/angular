@@ -56,4 +56,9 @@ export class ProfileComponent implements OnInit {
   cancel() {
     this.router.navigate(['events']);
   }
+
+  consoleLog(data:any){
+    console.log(data);
+  }
+
 }
