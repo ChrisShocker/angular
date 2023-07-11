@@ -12,6 +12,8 @@ export class ProfileComponent implements OnInit {
   // this form uses reactive form validation
 
   profileForm!: FormGroup;
+  private firstName!: FormControl;
+  private lastName!: FormControl;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -19,11 +21,11 @@ export class ProfileComponent implements OnInit {
     //create form control for each input on form
     //FormControl's first argument is what will be displayed in the html
     //FormControl's second argument is validators
-    let firstName = new FormControl(
+    this.firstName = new FormControl(
       this.authService.currentUser.firstName,
       Validators.required
     );
-    let lastName = new FormControl(
+    this.lastName = new FormControl(
       this.authService.currentUser.lastName,
       Validators.required
     );
@@ -31,14 +33,12 @@ export class ProfileComponent implements OnInit {
     //controls must be added to a form group
     this.profileForm = new FormGroup({
       //set propertirs for the form group
-      firstName: firstName,
-      lastName: lastName,
+      firstName: this.firstName,
+      lastName: this.lastName,
     });
   }
 
   saveProfile(formValues: any) {
-    console.log(formValues);
-
     //Testing: we could instantiate a profileCmmponent and stub the auth service to return valid or invalid then call saveProfile using a mach, can also access profileForm and run tests against it. 
 
     //user validators to control logic
@@ -55,6 +55,14 @@ export class ProfileComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['events']);
+  }
+
+  validateFirstName(): boolean{
+    return this.firstName.valid || this.firstName.untouched    
+  }
+
+  validateLastName(){
+    return this.lastName.valid || this.lastName.untouched    
   }
 
   consoleLog(data:any){

@@ -10,14 +10,14 @@ allows validation logic to be unit testable -->
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
             <!-- add error class if the firstName or LastName are invalid and touched -->
             <div class="form-group"
-                [ngClass]="{'error' : profileForm.controls['firstName'].invalid && profileForm.controls['firstName'].touched}">
+                [ngClass]="{'error' : !validateFirstName()}">
                 <label for="firstName">First Name:</label>
                 <!-- bind inputs to profileForm properties -->
                 <input formControlName="firstName" id="firstName" type="text" class="form-control"
                     placeholder="First Name..." is required/>
             </div>
             <!-- add error class if the firstName or LastName are invalid and touched -->
-            <div class="form-group" [ngClass]="{'error' : profileForm.controls['lastName'].invalid && profileForm.controls['lastName'].touched}">
+            <div class="form-group" [ngClass]="{'error' : !validateLastName()}">
                 <!-- bind inputs to profileForm properties -->
                 <label for="lastName">Last Name:</label>
                 <input formControlName="lastName" id="lastName" type="text" class="form-control"
