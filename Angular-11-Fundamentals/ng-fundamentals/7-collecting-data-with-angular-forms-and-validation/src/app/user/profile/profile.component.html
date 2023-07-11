@@ -8,17 +8,20 @@ allows validation logic to be unit testable -->
         <!-- bind form element to profileForm form component
         on submit pass the prfileForm data to the saveProfile function -->
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
-            <div class="form-group">
+            <!-- add error class if the firstName or LastName are invalid and touched -->
+            <div class="form-group"
+                [ngClass]="{'error' : profileForm.controls['firstName'].invalid && profileForm.controls['firstName'].touched}">
                 <label for="firstName">First Name:</label>
                 <!-- bind inputs to profileForm properties -->
                 <input formControlName="firstName" id="firstName" type="text" class="form-control"
-                    placeholder="First Name..." />
+                    placeholder="First Name..." is required/>
             </div>
-            <div class="form-group">
+            <!-- add error class if the firstName or LastName are invalid and touched -->
+            <div class="form-group" [ngClass]="{'error' : profileForm.controls['lastName'].invalid && profileForm.controls['lastName'].touched}">
                 <!-- bind inputs to profileForm properties -->
                 <label for="lastName">Last Name:</label>
                 <input formControlName="lastName" id="lastName" type="text" class="form-control"
-                    placeholder="Last Name..." />
+                    placeholder="Last Name..." is required/>
             </div>
 
             <button type="submit" class="btn btn-primary">Save</button>
