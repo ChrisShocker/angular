@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
@@ -18,8 +18,15 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     //create form control for each input on form
     //FormControl's first argument is what will be displayed in the html
-    let firstName = new FormControl(this.authService.currentUser.firstName);
-    let lastName = new FormControl(this.authService.currentUser.lastName);
+    //FormControl's second argument is validators
+    let firstName = new FormControl(
+      this.authService.currentUser.firstName,
+      Validators.required
+    );
+    let lastName = new FormControl(
+      this.authService.currentUser.lastName,
+      Validators.required
+    );
 
     //controls must be added to a form group
     this.profileForm = new FormGroup({
@@ -29,13 +36,24 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  saveProfile(formValues:any){
+  saveProfile(formValues: any) {
     console.log(formValues);
-    //call authSerivce to update user
-    this.authService.updateCurrentUser(formValues.firstName, formValues.lastName);
+
+    //Testing: we could instantiate a profileCmmponent and stub the auth service to return valid or invalid then call saveProfile using a mach, can also access profileForm and run tests against it. 
+
+    //user validators to control logic
+    //if the profileForm isn't valid don't do anything
+    if (this.profileForm.valid) {
+      //call authSerivce to update user
+      this.authService.updateCurrentUser(
+        formValues.firstName,
+        formValues.lastName
+      );
+      this.router.navigate(['events']);
+    }
   }
 
-  cancel(){
+  cancel() {
     this.router.navigate(['events']);
   }
 }
