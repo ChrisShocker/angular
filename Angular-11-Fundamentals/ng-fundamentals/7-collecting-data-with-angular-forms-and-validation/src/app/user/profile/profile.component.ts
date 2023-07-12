@@ -21,13 +21,14 @@ export class ProfileComponent implements OnInit {
     //create form control for each input on form
     //FormControl's first argument is what will be displayed in the html
     //FormControl's second argument is validators
+    //Multiple validators can be used if passed as an array
     this.firstName = new FormControl(
       this.authService.currentUser.firstName,
-      Validators.required
+      [Validators.required, Validators.pattern('[a-zA-Z].*')]
     );
     this.lastName = new FormControl(
       this.authService.currentUser.lastName,
-      Validators.required
+      [Validators.required, Validators.pattern('[a-zA-Z].*')]
     );
 
     //controls must be added to a form group
