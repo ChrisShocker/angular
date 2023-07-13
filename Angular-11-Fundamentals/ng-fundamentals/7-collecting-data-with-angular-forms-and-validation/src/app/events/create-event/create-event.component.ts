@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventService } from '../shared';
 
@@ -19,12 +19,13 @@ export class CreateEventComponent {
     this.router.navigate(['/events']);
   }
 
-  saveEvent(formValues: any) {
-    console.log(formValues);
+  saveEvent(formValues: NgForm) {
+    console.log("form values:", formValues);
     //if the shape of the formValues matches the event model, we can pass it directly to the service to be handled
-    this.eventService.saveEvent(formValues);
-    this.isDirty = false;
-    this.router.navigate(['/events']);
+    console.log("newEvent", this.newEvent);
+    // this.eventService.saveEvent(formValues);
+    // this.isDirty = false;
+    // this.router.navigate(['/events']);
   }
 
   cancel() {
