@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventService } from '../shared';
@@ -8,12 +8,17 @@ import { EventService } from '../shared';
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
 })
-export class CreateEventComponent {
-  newEvent: any;
-
+export class CreateEventComponent implements OnInit {
+  newEvent!: any;
   isDirty: boolean = true;
 
-  constructor(private router: Router, private eventService: EventService) {}
+  constructor(private router: Router, private eventService: EventService) {
+  }
+
+  ngOnInit(): void {
+    
+  }
+
 
   cancelButton() {
     this.router.navigate(['/events']);
@@ -22,10 +27,9 @@ export class CreateEventComponent {
   saveEvent(formValues: NgForm) {
     console.log("form values:", formValues);
     //if the shape of the formValues matches the event model, we can pass it directly to the service to be handled
-    console.log("newEvent", this.newEvent);
-    // this.eventService.saveEvent(formValues);
-    // this.isDirty = false;
-    // this.router.navigate(['/events']);
+    this.eventService.saveEvent(formValues);
+    this.isDirty = false;
+    this.router.navigate(['/events']);
   }
 
   cancel() {
