@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //implement barreling to reduce clutter
 import {
@@ -9,7 +10,7 @@ import {
   EventThumbnailComponent,
   EventRouteActivatorService,
   EventsListComponent,
-  CreateEventComponent
+  CreateEventComponent,
 }from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -32,8 +33,10 @@ import { AuthService } from './user/auth.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     //use forRoot to import the routes from the routes we defined
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes)
   ],
   // Service are included in the providers
   providers: [
