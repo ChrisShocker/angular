@@ -27,9 +27,10 @@ export class EventService {
   }
 
   saveEvent(eventData: any){
+    console.log("Event data", eventData);
     eventData.id = 999;
-    eventData.session = [];
-    this.EVENTS.push(eventData);
+    eventData.sessions = [];
+    this.EVENTS.push(eventData.form.value);
   }
 
 
