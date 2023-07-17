@@ -28,8 +28,10 @@ export class CreateSessionComponent implements OnInit {
     this.duration = new FormControl('', Validators.required);
     this.level = new FormControl('', Validators.required);
     this.abstract = new FormControl('', [
+      // validator array is just a list of functions to call for validation
       Validators.required,
-      Validators.maxLength(400)
+      Validators.maxLength(400),
+      this.restrictedWords,
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -39,19 +41,24 @@ export class CreateSessionComponent implements OnInit {
       level: this.level,
       abstract: this.abstract,
     });
-
   }
 
+  //custom validator function
+  private restrictedWords(control: FormControl): { [key: string]: any } | null {
+    return control.value.includes('foo') ? { restrictredWords: 'foo' } : null;
+  }
+
+  //catch form variables on submit and apply them to a session interface
   saveSession(formValues: any) {
     let newSession: ISession = {
       id: 1,
       name: formValues.name,
       presenter: formValues.presenter,
       duration: +formValues.duration,
-      level : formValues.level,
+      level: formValues.level,
       abstract: formValues.abstract,
-      voters: []
-    }
+      voters: [],
+    };
     console.log(newSession);
   }
 }
