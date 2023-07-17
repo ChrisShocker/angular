@@ -11,6 +11,7 @@ import {
   EventRouteActivatorService,
   EventsListComponent,
   CreateEventComponent,
+  CreateSessionComponent,
 }from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -20,7 +21,6 @@ import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
-import { CreateSessionComponent } from './events/create-session/create-session.component';
 
 @NgModule({
   declarations: [

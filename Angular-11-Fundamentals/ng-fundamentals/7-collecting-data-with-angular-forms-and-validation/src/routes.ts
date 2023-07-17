@@ -1,11 +1,15 @@
 import { Routes } from '@angular/router';
-import { EventDetailsComponent } from './app/events/event-details/event-details.component';
-import { EventsListComponent } from './app/events/events-list.component';
-import { CreateEventComponent } from './app/events/create-event/create-event.component';
 import { Error404Component } from './app/errors/error404.component';
-import { EventRouteActivatorService } from './app/events/event-details/event-route-activator.service';
-import { EventListResolver } from './app/events/events-list-resolver.service';
 import { UserModule } from './app/user/user.module';
+
+import {
+EventDetailsComponent,
+EventsListComponent,
+CreateEventComponent,
+EventRouteActivatorService,
+EventListResolver,
+CreateSessionComponent
+} from './app/events/index'
 
 //adding the Routes type addes intellisense to our ts and compile time safety
 export const appRoutes: Routes = [
@@ -35,6 +39,9 @@ export const appRoutes: Routes = [
     component: EventDetailsComponent,
     canActivate: [EventRouteActivatorService],
   },
+
+  //route to create new event sessions
+  { path: 'events/session/new', component: CreateSessionComponent },
 
   //route for error 404
   { path: '404', component: Error404Component },
