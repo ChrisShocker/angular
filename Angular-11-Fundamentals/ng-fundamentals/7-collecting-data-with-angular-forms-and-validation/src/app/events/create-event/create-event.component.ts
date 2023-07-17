@@ -12,20 +12,28 @@ export class CreateEventComponent implements OnInit {
   newEvent!: any;
   isDirty: boolean = true;
 
-  constructor(private router: Router, private eventService: EventService) {
-  }
+  constructor(private router: Router, private eventService: EventService) {}
 
   ngOnInit(): void {
-    
+    this.newEvent = {
+      name: 'Ng Spectacular',
+      date: '8/8/2028',
+      time: '10am',
+      price: 799.99,
+      address: '456 Happy st',
+      city: 'Felicity',
+      country: 'Angularistan',
+      onlineUrl: 'http://ngSpectacular.com',
+      imageUrl: 'http://ngSpectacular.com/logo.png',
+    };
   }
-
 
   cancelButton() {
     this.router.navigate(['/events']);
   }
 
   saveEvent(formValues: NgForm) {
-    console.log("form values:", formValues);
+    console.log('form values:', formValues);
     //if the shape of the formValues matches the event model, we can pass it directly to the service to be handled
     this.eventService.saveEvent(formValues);
     this.isDirty = false;
