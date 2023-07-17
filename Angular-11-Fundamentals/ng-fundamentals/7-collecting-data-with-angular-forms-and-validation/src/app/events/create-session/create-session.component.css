@@ -1,0 +1,26 @@
+em {
+    float:right;
+
+}
+
+.error input, .error select, .error textarea {
+    background-color: red;
+}
+
+/* style placeholder text
+no standard so each browser must be targeted with changes */
+.error ::-webkit-input-placeholder {
+    background-color: red;
+}
+
+.error ::-moz-placeholder {
+    background-color: red;
+}
+
+.error :-moz-placeholder {
+    background-color: red;
+}
+
+.error :-ms-input-placeholder {
+    background-color: red;
+}
