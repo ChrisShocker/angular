@@ -14,6 +14,8 @@ export class CreateEventComponent implements OnInit {
 
   constructor(private router: Router, private eventService: EventService) {}
 
+  //note: create an event to bind to for two way data binding.
+  //Form now acts as a create/edit form, create and edit should be in their own components
   ngOnInit(): void {
     this.newEvent = {
       name: 'Ng Spectacular',
