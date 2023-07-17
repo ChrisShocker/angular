@@ -9,6 +9,8 @@ import { EventService } from '../shared';
   styleUrls: ['./create-event.component.css'],
 })
 export class CreateEventComponent implements OnInit {
+// Example component for a template driven form 
+
   newEvent!: any;
   isDirty: boolean = true;
 
