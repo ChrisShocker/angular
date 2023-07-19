@@ -1,0 +1,33 @@
+<!-- This form uses template validation
+all the validation is done in the template instead of the component
+note: since the validation is implemented in the template it can't be unit tested -->
+
+<h1>Login</h1>
+<hr>
+<div class="col-md-4">
+    <!-- add local variable on form element to pass data to submitHandler -->
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" autocomplete="off">
+        <div class="form-group">
+            <label for="userName">User Name:</label>
+            <em *ngIf="userName?.invalid && (userName?.touched || mouseOverLogin)">Required</em>
+            <!-- ngModel with one way binding since there's nothing to display offhand
+            ngModel requires a name attribute be defined -->
+            <input (ngModel)="userName" name="userName" id="userName" type="text" class="form-control"
+                placeholder="User Name..." #userName="ngModel" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <em *ngIf="password?.invalid && (password?.touched || mouseOverLogin)">Required</em>
+            <input (ngModel)="password" name="password" id="password" type="password" class="form-control"
+                placeholder="Password..." #password="ngModel" required />
+        </div>
+
+        <!-- since disabled buttons can't trigger events -->
+        <span (mouseenter)="mouseOverLogin=true" (mouseleave)="mouseOverLogin=false">
+            <!-- login form parameters can be accessed and used to validate the form
+        here we access the buttons disabled property and set it to the form property invalid -->
+            <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary">Login</button>
+        </span>
+        <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
+    </form>
+</div>
