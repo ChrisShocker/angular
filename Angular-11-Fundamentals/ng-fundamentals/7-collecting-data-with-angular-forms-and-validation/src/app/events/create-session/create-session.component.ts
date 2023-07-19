@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ISession } from '../shared';
+import { ISession, restrictedWords } from '../shared/index';
 
 @Component({
   selector: 'app-create-session',
@@ -31,7 +31,7 @@ export class CreateSessionComponent implements OnInit {
       // validator array is just a list of functions to call for validation
       Validators.required,
       Validators.maxLength(400),
-      this.restrictedWords(['foo', 'bar']),
+      restrictedWords(['foo', 'bar']),
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -45,23 +45,6 @@ export class CreateSessionComponent implements OnInit {
 
   print(data: any) {
     console.log(data);
-  }
-
-  //custom validator function
-  private restrictedWords(words: any) {
-    return (control: FormControl): { [key: string]: any } | null => {
-
-      //pass validation of no words
-      if(!words) return null;
-
-      var invalidWords = words
-      //go through all words and check to see if restricted words exist
-      .map((wordData: any) => control.value.includes(wordData) ? wordData: null)
-      //filter out words that weren't null
-      .filter((restrictedWords: any) => restrictedWords != null)
-
-      return invalidWords && invalidWords.length > 0 ? { restrictedWords: invalidWords.join(', ') } : null;
-    };
   }
 
   //catch form variables on submit and apply them to a session interface
