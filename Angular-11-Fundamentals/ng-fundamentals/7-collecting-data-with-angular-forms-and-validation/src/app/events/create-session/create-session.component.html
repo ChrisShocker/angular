@@ -49,7 +49,7 @@
 
             <em
                 *ngIf="abstract.dirty && !abstract.errors?.['maxlength'] && !abstract.errors?.['required'] && abstract.errors?.['restrictedWords']">Restricted
-                Words </em>
+                Words: {{abstract.errors!['restrictedWords']}} </em>
 
             <textarea formControlName="abstract" id="abstract" rows=3 class="form-control"
                 placeholder="abstract..."></textarea>
