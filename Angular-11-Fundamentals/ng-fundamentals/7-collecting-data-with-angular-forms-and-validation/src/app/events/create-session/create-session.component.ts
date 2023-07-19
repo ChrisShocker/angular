@@ -31,7 +31,7 @@ export class CreateSessionComponent implements OnInit {
       // validator array is just a list of functions to call for validation
       Validators.required,
       Validators.maxLength(400),
-      this.restrictedWords,
+      this.restrictedWords
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -49,7 +49,7 @@ export class CreateSessionComponent implements OnInit {
 
   //custom validator function
   private restrictedWords(control: FormControl): { [key: string]: any } | null {
-    return control.value.includes('foo') ? { restrictredWords: 'foo' } : null;
+    return control.value.includes('foo') ? { restrictedWords: 'foo' } : null;
   }
 
   //catch form variables on submit and apply them to a session interface

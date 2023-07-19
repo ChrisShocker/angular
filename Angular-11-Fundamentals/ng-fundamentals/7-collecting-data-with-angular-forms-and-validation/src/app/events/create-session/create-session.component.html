@@ -45,16 +45,11 @@
             <label for="abstract">Abstract:</label>
             <em *ngIf="abstract.invalid && abstract.dirty && abstract.errors?.['required']">Required</em>
 
-            <!-- <em *ngIf="abstract.errors && abstract.errors['maxLength'] && abstract.dirty &&!abstract.errors?.['required']">Cannot Have More Then 400 characters</em> -->
-            <em *ngIf="print(abstract.errors)">Cannot Have More Then 400 characters</em>
+            <em *ngIf="abstract.errors && abstract.errors['maxlength']">Cannot Have More Then 400 characters</em>
 
-            <pre>
-                {{abstract | json}}
-            </pre>
-
-            <em *ngIf="abstract.errors && abstract.errors['maxlength'] ? print(abstract): false">Cannot Have More Then 400 characters</em>
-
-            <!-- <em *ngIf="abstract.dirty && abstract.errors &&  abstract.errors['maxLength'] && !abstract.errors!['restrictedWords'] && !abstract.errors?.['required']">Restricted Words </em> -->
+            <em
+                *ngIf="abstract.dirty && !abstract.errors?.['maxlength'] && !abstract.errors?.['required'] && abstract.errors?.['restrictedWords']">Restricted
+                Words </em>
 
             <textarea formControlName="abstract" id="abstract" rows=3 class="form-control"
                 placeholder="abstract..."></textarea>
