@@ -43,6 +43,10 @@ export class CreateSessionComponent implements OnInit {
     });
   }
 
+  print(data: any){
+    console.log(data);
+  }
+
   //custom validator function
   private restrictedWords(control: FormControl): { [key: string]: any } | null {
     return control.value.includes('foo') ? { restrictredWords: 'foo' } : null;
