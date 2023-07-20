@@ -1,10 +1,10 @@
-<!-- add routerLink for naviation to the events' id-->
+<!-- add routerLink for navigation to the events' id-->
 <div [routerLink]="['/events', event.id]" class="well hoberwell thumbnail">
     <!-- one way binding interpolation -->
     <!-- look for object named event and access it's name parameter -->
     <!-- Safe navigation operator "?" prevents undefined errors from occuring -->
     <!-- using ngClass we can call a function to get a list of classes to apply to the element -->
-    <h2 [ngClass]="getNameClasses()">{{event.name}}</h2>
+    <h2 [ngClass]="getNameClasses()">{{event.name | uppercase}}</h2>
     <img src="{{event.imageUrl}}">
     <div>Date: {{event.date}}</div>
     <!-- ngSwitch can be used to render elements based on specific criteria -->
