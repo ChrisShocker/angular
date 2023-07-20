@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ISession } from '../shared';
 
 @Component({
   selector: 'app-session-list',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./session-list.component.css']
 })
 export class SessionListComponent {
+  @Input() sessions!: ISession[];
+
+  constructor(){
+  }
 
 }
