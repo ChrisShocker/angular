@@ -22,6 +22,7 @@ import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
+import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-well.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SessionListComponent } from './events/session-list/session-list.compone
     Error404Component,
     CreateSessionComponent,
     SessionListComponent,
+    CollapsibleWellComponent,
   ],
   imports: [
     BrowserModule,
