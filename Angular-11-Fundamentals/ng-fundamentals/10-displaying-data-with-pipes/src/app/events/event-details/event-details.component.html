@@ -30,12 +30,22 @@
     </div>
 
     <div class="col-md-7">
-      <!-- [class.active] binds to active class -->
-      <button class="btn btn-default" [class.active]="filterBy === 'all'" (click)="filterBy='all'">All</button>
-      <button class="btn btn-default" [class.active]="filterBy === 'beginner'" (click)="filterBy='beginner'">Beginner</button>
-      <button class="btn btn-default" [class.active]="filterBy === 'intermediate'" (click)="filterBy='intermediate'">Intermediate</button>
-      <button class="btn btn-default" [class.active]="filterBy === 'advanced'" (click)="filterBy='advanced'">Advanced</button>
+      <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" [class.active]="sortBy ==='name'" (click)="sortBy='name'"> By Name</button>
+        <button class="btn btn-default" [class.active]="sortBy ==='votes'" (click)="sortBy='votes'"> By Name</button>
+      </div>
 
+      <!-- button group for filtering sessions -->
+      <div class="btn-group btn-group-sm">
+        <!-- [class.active] binds to active class -->
+        <button class="btn btn-default" [class.active]="filterBy === 'all'" (click)="filterBy='all'">All</button>
+        <button class="btn btn-default" [class.active]="filterBy === 'beginner'"
+          (click)="filterBy='beginner'">Beginner</button>
+        <button class="btn btn-default" [class.active]="filterBy === 'intermediate'"
+          (click)="filterBy='intermediate'">Intermediate</button>
+        <button class="btn btn-default" [class.active]="filterBy === 'advanced'"
+          (click)="filterBy='advanced'">Advanced</button>
+      </div>
     </div>
 
 
@@ -45,12 +55,12 @@
   </div>
 
   <!-- display sessions if addMode is false (not creating a session) -->
-  <app-session-list *ngIf="!addMode" [sessions]="event.sessions" [filterBy]="filterBy"></app-session-list>
+  <app-session-list *ngIf="!addMode" [sessions]="event.sessions" [filterBy]="filterBy" [sortBy]="sortBy"></app-session-list>
 
   <!-- display create session form if addMode is true -->
   <!-- bind to saveNewSession event and pass in event data (session object)
   catch event emitted from create-session component and handle it in event-details with cancelAddSession func -->
   <app-create-session *ngIf="addMode" (saveNewSession)="saveNewSession($event)"
-  (cancelAddSession)="cancelAddSession()"></app-create-session>
+    (cancelAddSession)="cancelAddSession()"></app-create-session>
 
 </div>

@@ -61,6 +61,8 @@ export class EventDetailsComponent implements OnInit {
 
   filterBy: string = 'all';
   filter() {
-
   }
+
+  sortBy: string = 'votes';
+
 }

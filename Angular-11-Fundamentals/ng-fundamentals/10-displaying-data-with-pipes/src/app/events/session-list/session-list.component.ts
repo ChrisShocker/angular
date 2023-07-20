@@ -14,6 +14,9 @@ export class SessionListComponent implements OnChanges {
   //this can easily be done by using OnChanges
   @Input() filterBy!: string;
 
+  @Input() sortBy!: string;
+
+  //array of sessions that can be filtered and sorted
   visibleSessions: ISession[] = [];
 
   //called everytime an input variable in component changes
@@ -37,5 +40,9 @@ export class SessionListComponent implements OnChanges {
         return session.level.toLocaleLowerCase() === filter;
       });
     }
+  }
+
+  sortSessions(){
+
   }
 }
