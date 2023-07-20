@@ -24,6 +24,7 @@ export class CreateSessionComponent implements OnInit {
   //Pass output from session child component back to parent event component 
   //using an EventEmitter
   @Output() saveNewSession = new EventEmitter();
+  @Output() cancelAddSession = new EventEmitter();
 
   ngOnInit() {
     //Note: FormControl parameters must be bound before declared in FormGroup
@@ -66,5 +67,10 @@ export class CreateSessionComponent implements OnInit {
 
     //emit the saveSession form data to subscriber 
     return this.saveNewSession.emit(newSession);
+  }
+
+  cancel(){
+    //emit a cancelAddSession event to parent component
+    this.cancelAddSession.emit()
   }
 }

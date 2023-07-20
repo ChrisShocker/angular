@@ -48,4 +48,9 @@ export class EventDetailsComponent implements OnInit{
     this.addMode = false;
   }
 
+  //remove/hide create session form
+  cancelAddSession(){
+    this.addMode = false; 
+  }
+
 }

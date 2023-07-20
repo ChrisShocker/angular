@@ -38,7 +38,9 @@
   <app-session-list *ngIf="!addMode" [sessions]="event.sessions"></app-session-list>
 
   <!-- display create session form if addMode is true -->
-  <!-- bind to saveNewSession event and pass in event data (session object) -->
-  <app-create-session *ngIf="addMode" (saveNewSession)="saveNewSession($event)"></app-create-session>
+  <!-- bind to saveNewSession event and pass in event data (session object)
+  catch event emitted from create-session component and handle it in event-details with cancelAddSession func -->
+  <app-create-session *ngIf="addMode" (saveNewSession)="saveNewSession($event)"
+  (cancelAddSession)="cancelAddSession()"></app-create-session>
 
 </div>
