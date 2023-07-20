@@ -1,39 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../shared/event.service';
-import {ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IEvent, ISession } from '../shared';
 
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css']
+  styleUrls: ['./event-details.component.css'],
 })
-export class EventDetailsComponent implements OnInit{
-
+export class EventDetailsComponent implements OnInit {
   event!: IEvent;
   addMode: boolean = false;
 
   //inject eventService
-  constructor(private eventService: EventService, private activatedRoute: ActivatedRoute){
-  }
+  constructor(
+    private eventService: EventService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     //instead of hard coding the url we can pass in the url parameter using activatedRoute
     //this.event = this.eventService.getEventById(1);
 
-    //use the actual url parameter from activated route 
+    //use the actual url parameter from activated route
     //note since the id isn't a string we must cast it to a number using '+'
-    this.event = this.eventService.getEventById(+this.activatedRoute.snapshot.params['id']);
+    this.event = this.eventService.getEventById(
+      +this.activatedRoute.snapshot.params['id']
+    );
   }
 
-  addSession(){
+  addSession() {
     this.addMode = true;
   }
 
   //save session object passed in, give largest id + 1
-  saveNewSession(session: ISession){
+  saveNewSession(session: ISession) {
     //get the current largest session id
-    const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id));
+    const nextId = Math.max.apply(
+      null,
+      this.event.sessions.map((s) => s.id)
+    );
 
     //set new session to largest session id + 1
     session.id = nextId + 1;
@@ -49,8 +55,12 @@ export class EventDetailsComponent implements OnInit{
   }
 
   //remove/hide create session form
-  cancelAddSession(){
-    this.addMode = false; 
+  cancelAddSession() {
+    this.addMode = false;
   }
 
+  filterBy: string = 'all';
+  filter() {
+
+  }
 }
