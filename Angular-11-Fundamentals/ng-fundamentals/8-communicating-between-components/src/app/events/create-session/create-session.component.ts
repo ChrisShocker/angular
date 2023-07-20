@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ISession, restrictedWords } from '../shared/index';
 
@@ -20,6 +20,10 @@ export class CreateSessionComponent implements OnInit {
   duration!: FormControl;
   level!: FormControl;
   abstract!: FormControl;
+
+  //Pass output from session child component back to parent event component 
+  //using an EventEmitter
+  @Output() saveNewSession = new EventEmitter();
 
   ngOnInit() {
     //Note: FormControl parameters must be bound before declared in FormGroup
@@ -59,5 +63,8 @@ export class CreateSessionComponent implements OnInit {
       voters: [],
     };
     console.log(newSession);
+
+    //emit the saveSession form data to subscriber 
+    return this.saveNewSession.emit(newSession);
   }
 }

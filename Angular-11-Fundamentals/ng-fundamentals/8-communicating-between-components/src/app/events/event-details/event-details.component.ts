@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../shared/event.service';
 import {ActivatedRoute } from '@angular/router';
-import { IEvent } from '../shared';
+import { IEvent, ISession } from '../shared';
 
 @Component({
   selector: 'app-event-details',
@@ -11,6 +11,7 @@ import { IEvent } from '../shared';
 export class EventDetailsComponent implements OnInit{
 
   event!: IEvent;
+  addMode: boolean = false;
 
   //inject eventService
   constructor(private eventService: EventService, private activatedRoute: ActivatedRoute){
@@ -25,5 +26,26 @@ export class EventDetailsComponent implements OnInit{
     this.event = this.eventService.getEventById(+this.activatedRoute.snapshot.params['id']);
   }
 
+  addSession(){
+    this.addMode = true;
+  }
+
+  //save session object passed in, give largest id + 1
+  saveNewSession(session: ISession){
+    //get the current largest session id
+    const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id));
+
+    //set new session to largest session id + 1
+    session.id = nextId + 1;
+
+    //push new session onto existing event session array
+    this.event.sessions.push(session);
+
+    //save event in eventService
+    this.eventService.updateEvent(this.event);
+
+    //reset Add Session ui
+    this.addMode = false;
+  }
 
 }
