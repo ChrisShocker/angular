@@ -1,1 +1,7 @@
-<p>collapsible-well works!</p>
+<div (click)="toggleContent()" class="well pointable">
+    <!-- note since the title is outside it will always display -->
+    <h4 class="well-title"> {{title}} </h4>
+    <!-- ng-content tells angular to pass in whatever content is already in the parent component -->
+    <ng-content *ngIf="isVisible">
+    </ng-content>
+</div>
