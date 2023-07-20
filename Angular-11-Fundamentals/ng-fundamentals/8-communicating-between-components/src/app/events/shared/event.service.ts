@@ -33,6 +33,15 @@ export class EventService {
     this.EVENTS.push(eventData.form.value);
   }
 
+  //update an existing event with new event data
+  updateEvent(event: any){
+    //find existing event with passed in event id
+    let index = this.EVENTS.findIndex(x => x.id = event.id);
+
+    //set existing event to new passed in event
+    this.EVENTS[index] = event;
+  }
+
 
   EVENTS: IEvent[] = [
     {

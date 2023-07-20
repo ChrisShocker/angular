@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ISession, restrictedWords } from '../shared/index';
 
@@ -21,17 +21,22 @@ export class CreateSessionComponent implements OnInit {
   level!: FormControl;
   abstract!: FormControl;
 
+  //Pass output from session child component back to parent event component 
+  //using an EventEmitter
+  @Output() saveNewSession = new EventEmitter();
+  @Output() cancelAddSession = new EventEmitter();
+
   ngOnInit() {
     //Note: FormControl parameters must be bound before declared in FormGroup
     this.name = new FormControl('', Validators.required);
     this.presenter = new FormControl('', Validators.required);
     this.duration = new FormControl('', Validators.required);
     this.level = new FormControl('', Validators.required);
+    // validator array is just a list of functions to call for validation
     this.abstract = new FormControl('', [
-      // validator array is just a list of functions to call for validation
       Validators.required,
       Validators.maxLength(400),
-      restrictedWords(['foo', 'bar']),
+      restrictedWords(['foo', 'bar'])
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -59,5 +64,13 @@ export class CreateSessionComponent implements OnInit {
       voters: [],
     };
     console.log(newSession);
+
+    //emit the saveSession form data to subscriber 
+    return this.saveNewSession.emit(newSession);
+  }
+
+  cancel(){
+    //emit a cancelAddSession event to parent component
+    this.cancelAddSession.emit()
   }
 }

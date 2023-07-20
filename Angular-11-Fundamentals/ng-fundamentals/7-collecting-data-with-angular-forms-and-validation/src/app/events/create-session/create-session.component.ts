@@ -27,8 +27,8 @@ export class CreateSessionComponent implements OnInit {
     this.presenter = new FormControl('', Validators.required);
     this.duration = new FormControl('', Validators.required);
     this.level = new FormControl('', Validators.required);
+    // validator array is just a list of functions to call for validation
     this.abstract = new FormControl('', [
-      // validator array is just a list of functions to call for validation
       Validators.required,
       Validators.maxLength(400),
       restrictedWords(['foo', 'bar']),
