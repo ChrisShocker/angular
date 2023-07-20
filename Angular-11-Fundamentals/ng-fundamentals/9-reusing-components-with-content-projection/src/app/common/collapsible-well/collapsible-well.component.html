@@ -1,7 +1,12 @@
 <div (click)="toggleContent()" class="well pointable">
     <!-- note since the title is outside it will always display -->
-    <h4 class="well-title"> {{title}} </h4>
+    <h4>
+        <!-- ng-content for the title -->
+        <!-- select works as an html selector (. # [attribute] etc) -->
+        <!-- bind to title class from session-list html -->
+        <ng-content select="[well-title]"></ng-content>
+    </h4>
     <!-- ng-content tells angular to pass in whatever content is already in the parent component -->
-    <ng-content *ngIf="isVisible">
+    <ng-content select="[well-body]" *ngIf="isVisible">
     </ng-content>
 </div>
