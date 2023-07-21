@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Form, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ISession, restrictedWords } from '../shared/index';
 
 @Component({
@@ -36,7 +36,7 @@ export class CreateSessionComponent implements OnInit {
     this.abstract = new FormControl('', [
       Validators.required,
       Validators.maxLength(400),
-      restrictedWords(['foo', 'bar'])
+      restrictedWords(['foo', 'bar']) as ValidatorFn
     ]);
 
     this.newSessionForm = new FormGroup({
