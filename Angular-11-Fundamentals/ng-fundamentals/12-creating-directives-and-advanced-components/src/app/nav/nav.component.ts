@@ -26,6 +26,7 @@ export class NavComponent {
       .searchSessions(searchTerm)
       .subscribe((sessions: ISession[]) => {
         this.foundSessions = sessions;
+        console.log(sessions);
       });
   }
 }
