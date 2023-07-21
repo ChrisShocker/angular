@@ -17,16 +17,19 @@ import {
 
 import { EventsAppComponent } from './events-app.component';
 import { NavComponent } from './nav/nav.component';
-import { TOASTR_TOKEN, Toastr } from './common/toastr.service';
+import { TOASTR_TOKEN, Toastr, JQ_TOKEN, CollapsibleWellComponent } from './common/index';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
-import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-well.component';
 
 //declare toaster in global scope
 let toastr:Toastr = (window as { [key: string]: any})['toastr'] as any;
+
+//declare toaster in global scope
+let jQuery:Toastr = (window as { [key: string]: any})['$'] as any;
+
 @NgModule({
   declarations: [
     EventsAppComponent,
