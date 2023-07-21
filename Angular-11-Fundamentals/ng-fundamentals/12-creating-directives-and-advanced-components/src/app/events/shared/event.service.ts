@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { IEvent } from './event.model';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, Subject, map } from 'rxjs';
+import { IEvent, ISession } from './event.model';
+import { SessionListComponent } from '../session-list/session-list.component';
 
 @Injectable({
   providedIn: 'root',
@@ -26,22 +27,45 @@ export class EventService {
     return this.EVENTS.find((event) => event.id === id)!;
   }
 
-  saveEvent(eventData: any){
-    console.log("Event data", eventData);
+  saveEvent(eventData: any) {
+    console.log('Event data', eventData);
     eventData.id = 999;
     eventData.sessions = [];
     this.EVENTS.push(eventData.form.value);
   }
 
   //update an existing event with new event data
-  updateEvent(event: any){
+  updateEvent(event: any) {
     //find existing event with passed in event id
-    let index = this.EVENTS.findIndex(x => x.id = event.id);
+    let index = this.EVENTS.findIndex((x) => (x.id = event.id));
 
     //set existing event to new passed in event
     this.EVENTS[index] = event;
   }
 
+  searchSessions(searchTerm: string) {
+    var term = searchTerm.toLocaleLowerCase();
+    var results: ISession[] = [];
+
+    this.EVENTS.forEach((event) => {
+      var matchingSessions = event.sessions.filter(
+        (session) => session.name.toLocaleLowerCase().indexOf(term) > -1
+      );
+      //map sessions to any type so we can add an eventId to it
+      matchingSessions = matchingSessions.map((session: any) => {
+        session.eventId = event.id;
+        return session;
+      });
+      results = results.concat(matchingSessions);
+    });
+    //since this function is expected to return an observable
+    //we can use an event emitter to simulate a web service
+    var emitter = new EventEmitter(true);
+    setTimeout(() => {
+      emitter.emit(results);
+    }, 100);
+    return emitter;
+  }
 
   EVENTS: IEvent[] = [
     {
