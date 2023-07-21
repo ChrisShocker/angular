@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+//Inject lets use seperate token decides type of construction param
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { TOASTR_TOKEN, Toastr } from 'src/app/common/toastr.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +18,12 @@ export class ProfileComponent implements OnInit {
   private lastName!: FormControl;
 
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    //let angular know to use TOASTR_TOKEN to look up service in injection registry
+    @Inject(TOASTR_TOKEN) private toastr: Toastr 
+    ) {
     
   }
 
@@ -53,6 +60,8 @@ export class ProfileComponent implements OnInit {
         formValues.firstName,
         formValues.lastName
       );
+      //call toastr service to display a notification to the user
+      this.toastr.success('Profile Saved!');
       this.router.navigate(['events']);
     }
   }
