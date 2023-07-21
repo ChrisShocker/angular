@@ -1,34 +1,15 @@
-import { Injectable } from '@angular/core';
+//use InjectionToken to tell angular about a dependency injection for the 
+//dependency registration
+import { InjectionToken } from '@angular/core';
 
-//declare toaster in global scope
-//this should be ok since this class access is limited to this class 
-declare let toastr: any;
+//InjectionToken takes a type, it's the type the service we're calling returns
+//the constructor takes in a string that's useful for debugging
+//Note: TOASTR_TOKEN is an object
+export let TOASTR_TOKEN = new InjectionToken<Toastr>('toastr');
 
-@Injectable({
-  providedIn: 'root'
-})
-
-export class ToastrService {
-
-  constructor() { }
-
-  //call success on the toastr object
-  success(message: string, title?: string) {
-    toastr.success(message, title);
-  }
-
-  //call info on the toastr object
-  info(message: string, title?: string) {
-    toastr.info(message, title);
-  }
-
-  //call warning on the toastr object
-  warning(message: string, title?: string) {
-    toastr.warning(message, title);
-  }
-
-  //call error on the toastr object
-  error(message: string, title?: string) {
-    toastr.error(message, title);
-  }
+export interface Toastr {
+  success(msg: string, title?: string): void;
+  info(msg: string, title?: string): void;
+  warning(msg: string, title?: string): void;
+  error(msg: string, title?: string): void;
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
-import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute, Route } from '@angular/router';
 import { IEvent } from './shared';
 
@@ -15,17 +14,12 @@ export class EventsListComponent implements OnInit{
   events!: IEvent[];
 
   // register/inject event and toastr services with events-list component
-  constructor(private eventService: EventService, private toasterService: ToastrService, private activatedRoute: ActivatedRoute){
+  constructor(private eventService: EventService, private activatedRoute: ActivatedRoute){
   }
 
   //catcher for click events from child component
   handleEventClicked(eventData: string): void {
     console.log("Button event triggerend in parent component events-list " + eventData);
-  }
-
-  //when a thumbnail is clicked call toasterService success 
-  handleThumbnailClick(eventName:any){
-    this.toasterService.success(eventName);
   }
 
   ngOnInit(){

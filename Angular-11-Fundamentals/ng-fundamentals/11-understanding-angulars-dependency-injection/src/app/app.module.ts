@@ -17,7 +17,7 @@ import {
 
 import { EventsAppComponent } from './events-app.component';
 import { NavComponent } from './nav/nav.component';
-import { ToastrService } from './common/toastr.service';
+import { TOASTR_TOKEN, Toastr } from './common/toastr.service';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
@@ -25,6 +25,8 @@ import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
 import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-well.component';
 
+//declare toaster in global scope
+let toastr:Toastr = (window as { [key: string]: any})['toastr'] as any;
 @NgModule({
   declarations: [
     EventsAppComponent,
@@ -49,7 +51,7 @@ import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-
   // Service are included in the providers
   providers: [
     EventService,
-    ToastrService,
+    {provide: TOASTR_TOKEN, useValue: toastr},
     EventRouteActivatorService,
     EventListResolver,
     // Note: providers are shared with other modules by default. Imports and desclarations arent, so we only have to declare providers in the app.module
