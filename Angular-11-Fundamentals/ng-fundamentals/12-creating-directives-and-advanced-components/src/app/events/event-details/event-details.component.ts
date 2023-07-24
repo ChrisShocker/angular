@@ -24,15 +24,19 @@ export class EventDetailsComponent implements OnInit {
 
     //use the actual url parameter from activated route
     //note since the id isn't a string we must cast it to a number using '+'
-    //since the route is just a snapshot: 
-    //  - updates aren't caught and rendered since the page is parameterized 
+    //since the route is just a snapshot:
+    //  - updates aren't caught and rendered since the page is parameterized
     //  - we must subscribe to an observable to get updates in real time
     // this.event = this.eventService.getEventById(
     //   +this.activatedRoute.snapshot.params['id']
     // );
 
-    this.activatedRoute.params.forEach( (params: Params) => {
-     this.event = this.eventService.getEventById(+params['id']) 
+    this.activatedRoute.params.forEach((params: Params) => {
+      // reset the event portion of the component only
+      this.event = this.eventService.getEventById(+params['id']);
+      //reset addmode to prevent users from getting stuck
+      //note: state must also must be reset when reactive to a pram change 
+      this.addMode = false;
     });
   }
 
@@ -67,9 +71,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   filterBy: string = 'all';
-  filter() {
-  }
+  filter() {}
 
   sortBy: string = 'votes';
-
 }
