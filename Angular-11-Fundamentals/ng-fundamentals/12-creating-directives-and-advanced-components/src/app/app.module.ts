@@ -23,6 +23,7 @@ import {
   JQ_TOKEN,
   CollapsibleWellComponent,
   SimpleModalComponent,
+  ModalTriggerDirective
 } from './common/index';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
@@ -50,6 +51,8 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     CollapsibleWellComponent,
     DurationPipe,
     SimpleModalComponent,
+    // directives go under declarations like components
+    ModalTriggerDirective
   ],
   imports: [
     BrowserModule,
