@@ -23,6 +23,7 @@ import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
+import { SimpleModalComponent } from './common/simple-modal/simple-modal.component';
 
 //declare toaster in global scope
 let toastr:Toastr = (window as { [key: string]: any})['toastr'] as any;
@@ -42,7 +43,8 @@ let jQuery:Toastr = (window as { [key: string]: any})['$'] as any;
     CreateSessionComponent,
     SessionListComponent,
     CollapsibleWellComponent,
-    DurationPipe
+    DurationPipe,
+    SimpleModalComponent
   ],
   imports: [
     BrowserModule,
