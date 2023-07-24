@@ -1,10 +1,14 @@
 <div class="row" *ngFor="let session of visibleSessions">
     <div class="col-md-1">
-        <!-- allow user to upvote a session:
+        <!-- app-upvote won't display if the user isn't logged in -->
+        <div *ngIf="authService.isAuthenticated()">
+            <!-- allow user to upvote a session:
             use vote event,
             get count of the votes for session,
             check if user has voted  -->
-        <app-upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)"></app-upvote>
+            <app-upvote (vote)="toggleVote(session)" [count]="session.voters.length"
+                [voted]="userHasVoted(session)"></app-upvote>
+        </div>
     </div>
     <div class="col-md-10">
         <app-collapsible-well>
