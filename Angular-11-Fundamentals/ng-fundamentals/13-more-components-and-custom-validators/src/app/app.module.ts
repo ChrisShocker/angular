@@ -14,7 +14,8 @@ import {
   CreateSessionComponent,
   DurationPipe,
   UpvoteComponent,
-  VoterService
+  VoterService,
+  LocationValidator
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -55,7 +56,8 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     SimpleModalComponent,
     // directives go under declarations like components
     ModalTriggerDirective,
-    UpvoteComponent
+    UpvoteComponent,
+    LocationValidator
   ],
   imports: [
     BrowserModule,
