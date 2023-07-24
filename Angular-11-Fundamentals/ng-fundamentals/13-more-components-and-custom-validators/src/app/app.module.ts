@@ -13,6 +13,7 @@ import {
   CreateEventComponent,
   CreateSessionComponent,
   DurationPipe,
+  UpvoteComponent
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -30,7 +31,6 @@ import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
-import { UpvoteComponent } from './events/upvote/upvote.component';
 
 //declare toaster in global scope
 let toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
