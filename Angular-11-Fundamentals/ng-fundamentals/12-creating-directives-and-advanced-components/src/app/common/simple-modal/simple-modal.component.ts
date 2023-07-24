@@ -9,15 +9,19 @@ import { JQ_TOKEN } from '../jQuery.service';
 export class SimpleModalComponent {
   @Input() title: string = '';
   @Input() elementId: string = '';
+  //add option to prevent modal from being closed on click
+  @Input() closeOnBodyClick: string = '';
   //use ViewChild to give a reference to the DOM node
   //ViewCildren could be used for a list inside an ngFor
   @ViewChild('modalContainer') containerElement!: ElementRef;
 
+  constructor(@Inject(JQ_TOKEN) private $: any) {}
 
-  constructor(@Inject(JQ_TOKEN) private $: any){}
-
-  closeModal(){
-    //call Jquery method to hide the modal
-    this.$(this.containerElement.nativeElement).modal('hide');
+  closeModal() {
+    //only close modal if option is true
+    if (this.closeOnBodyClick.toLocaleLowerCase() === 'true') {
+      //call Jquery method to hide the modal
+      this.$(this.containerElement.nativeElement).modal('hide');
+    }
   }
 }
