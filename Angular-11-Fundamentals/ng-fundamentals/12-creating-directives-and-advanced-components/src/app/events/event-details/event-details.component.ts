@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../shared/event.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { IEvent, ISession } from '../shared';
 
 @Component({
@@ -24,9 +24,16 @@ export class EventDetailsComponent implements OnInit {
 
     //use the actual url parameter from activated route
     //note since the id isn't a string we must cast it to a number using '+'
-    this.event = this.eventService.getEventById(
-      +this.activatedRoute.snapshot.params['id']
-    );
+    //since the route is just a snapshot: 
+    //  - updates aren't caught and rendered since the page is parameterized 
+    //  - we must subscribe to an observable to get updates in real time
+    // this.event = this.eventService.getEventById(
+    //   +this.activatedRoute.snapshot.params['id']
+    // );
+
+    this.activatedRoute.params.forEach( (params: Params) => {
+     this.event = this.eventService.getEventById(+params['id']) 
+    });
   }
 
   addSession() {
