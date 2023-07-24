@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class SimpleModalComponent {
 @Input() title: string = '';
+@Input() elementId: string = '';
 
 
 }

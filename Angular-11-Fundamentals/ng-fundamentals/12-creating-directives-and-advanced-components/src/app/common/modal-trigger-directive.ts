@@ -1,4 +1,4 @@
-import { Directive, OnInit, Inject, ElementRef } from '@angular/core';
+import { Directive, OnInit, Inject, ElementRef, Input } from '@angular/core';
 import { JQ_TOKEN } from './jQuery.service';
 
 @Directive({
@@ -8,8 +8,10 @@ import { JQ_TOKEN } from './jQuery.service';
 
 // directive attaches click event handler to whatever element it's created on
 export class ModalTriggerDirective implements OnInit {
-  //
+  // element being bound to
   private htmlElement!: HTMLElement;
+  // catch input from nav template
+  @Input('modal-trigger') modalId!: string;
 
   // use any since JQUERY API is complex
   // note: ElementRef provides a pointer to the element clicked that cuased directive to be created
@@ -22,8 +24,9 @@ export class ModalTriggerDirective implements OnInit {
     //whenever event is clicked call the modal
     this.htmlElement.addEventListener('click', (event) => {
       // call modal function from JQuery
-      // id is from simple-modal component
-      this.$('#simple-modal').modal({});
+      // id is from simple-modal component and binds to the html element id.
+      // since bound to an id, only one modal can exist in the applicaiton at a time.
+      this.$(`#${this.modalId}`).modal({});
     });
   }
 

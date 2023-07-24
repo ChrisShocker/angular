@@ -38,8 +38,9 @@
                 <div class="form-group">
                     <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Search Sessions">
                 </div>
-                <!-- directive example "modal-trigger" -->
-                <button class="btn btn-default" modal-trigger>
+                <!-- directive example "modal-trigger"
+                pass in an id to modal-trigger directive to define which modal we want-->
+                <button class="btn btn-default" modal-trigger="searchResults">
                     Search
                 </button>
             </form>
@@ -48,8 +49,11 @@
 </div>
 
 <!-- add content projection -->
-<app-simple-modal title="Matching Sessions">
+<!-- assign element ID to allow multiple modal instances -->
+<app-simple-modal elementId="searchResults" title="Matching Sessions">
     <div class="list-group">
         <a class="list-group-item" *ngFor="let session of foundSessions" [routerLink]="['/events', session.id]">{{session.name}}</a>
     </div>
 </app-simple-modal>
+<!-- example call with different modal id 
+<app-simple-modal elementId="userList" title="Matching Sessions"> -->
