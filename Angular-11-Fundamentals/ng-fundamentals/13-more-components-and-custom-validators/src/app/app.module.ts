@@ -30,6 +30,7 @@ import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
+import { UpvoteComponent } from './events/upvote/upvote.component';
 
 //declare toaster in global scope
 let toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
@@ -52,7 +53,8 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     DurationPipe,
     SimpleModalComponent,
     // directives go under declarations like components
-    ModalTriggerDirective
+    ModalTriggerDirective,
+    UpvoteComponent
   ],
   imports: [
     BrowserModule,
