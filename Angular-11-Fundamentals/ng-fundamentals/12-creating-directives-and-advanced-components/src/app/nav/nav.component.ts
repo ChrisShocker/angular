@@ -20,6 +20,7 @@ export class NavComponent {
     private eventService: EventService
   ) {}
 
+
   searchSessions(searchTerm: string) {
     //subscrive to an observable returned from the eventService
     return this.eventService
