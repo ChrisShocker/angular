@@ -62,6 +62,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
   providers: [
     EventService,
     { provide: TOASTR_TOKEN, useValue: toastr },
+    { provide: JQ_TOKEN, useValue: jQuery },
     EventRouteActivatorService,
     EventListResolver,
     // Note: providers are shared with other modules by default. Imports and desclarations arent, so we only have to declare providers in the app.module
