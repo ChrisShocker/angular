@@ -4,7 +4,7 @@
             use vote event,
             get count of the votes for session,
             check if user has voted  -->
-        <upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)"></upvote>
+        <app-upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)"></app-upvote>
     </div>
     <div class="col-md-10">
         <app-collapsible-well>
