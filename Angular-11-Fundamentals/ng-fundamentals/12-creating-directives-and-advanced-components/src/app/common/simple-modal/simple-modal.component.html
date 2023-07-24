@@ -1,5 +1,6 @@
 <!-- bind to elementId to allow multiple modal instances -->
-<div id="{{elementId}}" class="modal fade" tabindex="-1">
+<!-- create reference for ViewChild '#modalContainer' -->
+<div id="{{elementId}}" #modalContainer class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
              <div class="modal-header">
@@ -8,7 +9,7 @@
                 </button>
                 <h4 class="modal-title">{{title}}</h4>
              </div>
-             <div class="modal.body">
+             <div class="modal-body" (click)="closeModal()">
                 <!-- content projection  -->
                 <ng-content></ng-content>
              </div>
