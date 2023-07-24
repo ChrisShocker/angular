@@ -13,7 +13,8 @@ import {
   CreateEventComponent,
   CreateSessionComponent,
   DurationPipe,
-  UpvoteComponent
+  UpvoteComponent,
+  VoterService
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -69,6 +70,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
     EventRouteActivatorService,
+    VoterService,
     EventListResolver,
     // Note: providers are shared with other modules by default. Imports and desclarations arent, so we only have to declare providers in the app.module
     AuthService,
