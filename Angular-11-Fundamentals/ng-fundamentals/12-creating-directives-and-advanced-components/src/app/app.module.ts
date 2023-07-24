@@ -13,23 +13,28 @@ import {
   CreateEventComponent,
   CreateSessionComponent,
   DurationPipe,
-}from './events/index';
+} from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
 import { NavComponent } from './nav/nav.component';
-import { TOASTR_TOKEN, Toastr, JQ_TOKEN, CollapsibleWellComponent } from './common/index';
+import {
+  TOASTR_TOKEN,
+  Toastr,
+  JQ_TOKEN,
+  CollapsibleWellComponent,
+  SimpleModalComponent,
+} from './common/index';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
-import { SimpleModalComponent } from './common/simple-modal/simple-modal.component';
 
 //declare toaster in global scope
-let toastr:Toastr = (window as { [key: string]: any})['toastr'] as any;
+let toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
 
 //declare toaster in global scope
-let jQuery:Toastr = (window as { [key: string]: any})['$'] as any;
+let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
 
 @NgModule({
   declarations: [
@@ -44,19 +49,19 @@ let jQuery:Toastr = (window as { [key: string]: any})['$'] as any;
     SessionListComponent,
     CollapsibleWellComponent,
     DurationPipe,
-    SimpleModalComponent
+    SimpleModalComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     //use forRoot to import the routes from the routes we defined
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
   ],
   // Service are included in the providers
   providers: [
     EventService,
-    {provide: TOASTR_TOKEN, useValue: toastr},
+    { provide: TOASTR_TOKEN, useValue: toastr },
     EventRouteActivatorService,
     EventListResolver,
     // Note: providers are shared with other modules by default. Imports and desclarations arent, so we only have to declare providers in the app.module
@@ -75,10 +80,12 @@ export class AppModule {}
 
 //should be defined in another file
 //prevent a user from leaving a modified page unless they connsent
-export function checkDirtyState(component:CreateEventComponent): boolean {
-  if(component.isDirty){
+export function checkDirtyState(component: CreateEventComponent): boolean {
+  if (component.isDirty) {
     //html confirm dialog
-    return window.confirm('You have not saved this event, do you want to cancel?');
+    return window.confirm(
+      'You have not saved this event, do you want to cancel?'
+    );
   }
   return true;
 }
