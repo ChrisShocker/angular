@@ -1,4 +1,11 @@
 <div class="row" *ngFor="let session of visibleSessions">
+    <div class="col-md-1">
+        <!-- allow user to upvote a session:
+            use vote event,
+            get count of the votes for session,
+            check if user has voted  -->
+        <upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)"></upvote>
+    </div>
     <div class="col-md-10">
         <app-collapsible-well>
             <!-- we can give tages attributes i.e. well-title, that can be bound to -->
@@ -11,7 +18,7 @@
 
                 <h6>{{session.presenter}}</h6>
                 <span>Duration: {{session.duration | duration}}</span>
-                <br/>
+                <br />
                 <span>Level: {{session.level}}</span>
 
                 <p>{{session.abstract}}</p>
