@@ -30,9 +30,14 @@ export class EventService {
     .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])));
   }
 
-  getEventById(id: number): IEvent {
-    //add non-null assertion
-    return this.EVENTS.find((event) => event.id === id)!;
+
+  getEventById(id: number): Observable<IEvent>{
+    // //add non-null assertion
+    // return this.EVENTS.find((event) => event.id === id)!;
+
+    return this.http.get<IEvent>('/api/events/' +id)
+    .pipe(catchError(this.handleError<IEvent>('getEvents')));
+
   }
 
   //handle errors thrown by observables

@@ -33,10 +33,15 @@ export class EventDetailsComponent implements OnInit {
 
     this.activatedRoute.params.forEach((params: Params) => {
       // reset the event portion of the component only
-      this.event = this.eventService.getEventById(+params['id']);
-      //reset addmode to prevent users from getting stuck
-      //note: state must also must be reset when reactive to a pram change 
-      this.addMode = false;
+      this.eventService
+        .getEventById(+params['id'])
+        // subscribe and catch value coming from observable, which is an event
+        .subscribe((event: IEvent) => {
+          this.event = event;
+          //reset addmode to prevent users from getting stuck
+          //note: state must also must be reset when reactive to a pram change
+          this.addMode = false;
+        });
     });
   }
 
