@@ -68,28 +68,10 @@ export class EventService {
   //   this.EVENTS[index] = event;
   // }
 
+  //call server function to return data for sessions using url search query
   searchSessions(searchTerm: string) {
-    var term = searchTerm.toLocaleLowerCase();
-    var results: ISession[] = [];
-
-    this.EVENTS.forEach((event) => {
-      var matchingSessions = event.sessions.filter(
-        (session) => session.name.toLocaleLowerCase().indexOf(term) > -1
-      );
-      //map sessions to any type so we can add an eventId to it
-      matchingSessions = matchingSessions.map((session: any) => {
-        session.eventId = event.id;
-        return session;
-      });
-      results = results.concat(matchingSessions);
-    });
-    //since this function is expected to return an observable
-    //we can use an event emitter to simulate a web service
-    var emitter = new EventEmitter(true);
-    setTimeout(() => {
-      emitter.emit(results);
-    }, 100);
-    return emitter;
+      return this.http.get<ISession[]>('/api/sessions/search?search=' + searchTerm)
+      .pipe(catchError(this.handleError<ISession[]>('searchSessions')));
   }
 
   EVENTS: IEvent[] = [
