@@ -52,7 +52,7 @@ export class SessionListComponent implements OnChanges {
       //call a service to remove a voter
       //note the sessions have a list of voters by userName
       //call the authservice to get the current user
-      this.voterService.deleteVoter(
+      this.voterService.deleteVoter(this.eventId, 
         session,
         this.authService.currentUser.userName
       );

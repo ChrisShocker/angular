@@ -7,9 +7,15 @@ import { Observable, catchError, of } from 'rxjs';
 export class VoterService {
   constructor(private http: HttpClient) {}
 
-  deleteVoter(session: ISession, voterName: string) {
+  deleteVoter(eventId: number,session: ISession, voterName: string) {
     //filter out the userName from the voter array
     session.voters = session.voters.filter((voter) => voter !== voterName);
+
+    let url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
+    this.http
+      .delete(url)
+      .pipe(catchError(this.handleError('addVoter')))
+      .subscribe();
   }
 
   addVoter(eventId: number, session: ISession, voterName: string) {
@@ -17,9 +23,13 @@ export class VoterService {
     session.voters.push(voterName);
 
     let url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
-    let options = { headers: new HttpHeaders({'Content-Type' : 'application/json'})}
-    this.http.post(url, {}, options).pipe(catchError(this.handleError('addVoter')))
-    .subscribe();
+    let options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    this.http
+      .post(url, {}, options)
+      .pipe(catchError(this.handleError('addVoter')))
+      .subscribe();
   }
 
   userHasVoted(session: ISession, voterName: string) {
