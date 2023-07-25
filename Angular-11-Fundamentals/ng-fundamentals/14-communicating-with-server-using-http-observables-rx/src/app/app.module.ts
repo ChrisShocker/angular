@@ -9,7 +9,6 @@ import {
   EventDetailsComponent,
   EventService,
   EventThumbnailComponent,
-  EventRouteActivatorService,
   EventsListComponent,
   CreateEventComponent,
   CreateSessionComponent,
@@ -34,6 +33,7 @@ import { Error404Component } from './errors/error404.component';
 import { EventListResolver } from './events/events-list-resolver.service';
 import { AuthService } from './user/auth.service';
 import { SessionListComponent } from './events/session-list/session-list.component';
+import { EventResolver } from './events/event-resolver.service';
 
 //declare toaster in global scope
 let toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
@@ -73,7 +73,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     EventService,
     { provide: TOASTR_TOKEN, useValue: toastr },
     { provide: JQ_TOKEN, useValue: jQuery },
-    EventRouteActivatorService,
+    EventResolver,
     VoterService,
     EventListResolver,
     // Note: providers are shared with other modules by default. Imports and desclarations arent, so we only have to declare providers in the app.module

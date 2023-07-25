@@ -15,7 +15,7 @@ export class EventDetailsComponent implements OnInit {
   //inject eventService
   constructor(
     private eventService: EventService,
-    private activatedRoute: ActivatedRoute
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -31,17 +31,12 @@ export class EventDetailsComponent implements OnInit {
     //   +this.activatedRoute.snapshot.params['id']
     // );
 
-    this.activatedRoute.params.forEach((params: Params) => {
+    this.route.data.forEach((data) => {
       // reset the event portion of the component only
-      this.eventService
-        .getEventById(+params['id'])
-        // subscribe and catch value coming from observable, which is an event
-        .subscribe((event: IEvent) => {
-          this.event = event;
-          //reset addmode to prevent users from getting stuck
-          //note: state must also must be reset when reactive to a pram change
-          this.addMode = false;
-        });
+      this.event = data['event'];
+      //reset addmode to prevent users from getting stuck
+      //note: state must also must be reset when reactive to a pram change
+      this.addMode = false;
     });
   }
 

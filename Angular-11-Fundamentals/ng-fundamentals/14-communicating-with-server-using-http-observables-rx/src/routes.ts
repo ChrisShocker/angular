@@ -6,10 +6,10 @@ import {
 EventDetailsComponent,
 EventsListComponent,
 CreateEventComponent,
-EventRouteActivatorService,
 EventListResolver,
 CreateSessionComponent
 } from './app/events/index'
+import { EventResolver } from './app/events/event-resolver.service';
 
 //adding the Routes type addes intellisense to our ts and compile time safety
 export const appRoutes: Routes = [
@@ -37,7 +37,7 @@ export const appRoutes: Routes = [
   {
     path: 'events/:id',
     component: EventDetailsComponent,
-    canActivate: [EventRouteActivatorService],
+    resolve: {event: EventResolver},
   },
 
   //route to create new event sessions
