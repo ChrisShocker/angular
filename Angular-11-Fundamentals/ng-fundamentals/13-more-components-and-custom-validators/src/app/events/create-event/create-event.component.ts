@@ -28,7 +28,7 @@ export class CreateEventComponent implements OnInit {
       city: 'Felicity',
       country: 'Angularistan',
       onlineUrl: 'http://ngSpectacular.com',
-      imageUrl: 'http://ngSpectacular.com/logo.png',
+      imageUrl: 'https://i.imgur.com/T7cw0fS.jpg',
     };
   }
 
@@ -46,5 +46,9 @@ export class CreateEventComponent implements OnInit {
 
   cancel() {
     this.router.navigate(['/events']);
+  }
+
+  logger(data: any){
+    console.log(data);
   }
 }

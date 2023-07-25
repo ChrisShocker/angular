@@ -12,7 +12,7 @@ import { FormGroup, Validator, NG_VALIDATORS } from '@angular/forms';
 
 //build a validator for checking the location values on the create-event form
 export class LocationValidator implements Validator {
-  validate(formGroup: FormGroup): { [key: string]: any } {
+  validate(formGroup: FormGroup): any {
     //access address using indexor and target the DOM formGroup
     let addressControl = formGroup.controls['address'];
     let cityControl = formGroup.controls['city'];
@@ -31,9 +31,12 @@ export class LocationValidator implements Validator {
         countryControl.value) ||
       (onlineUrlControl && onlineUrlControl.value)
     ) {
-      return { vlaidateLocation: true };
-    } else {
-      return { validateLocation: false };
+      console.log('true');
+      return null;
+    } 
+    else {
+      console.log('false');
+      return { validateLocation: true };
     }
   }
 }
