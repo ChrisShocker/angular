@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 //implement barreling to reduce clutter
 import {
@@ -65,6 +66,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     ReactiveFormsModule,
     //use forRoot to import the routes from the routes we defined
     RouterModule.forRoot(appRoutes),
+    HttpClientModule
   ],
   // Service are included in the providers
   providers: [
