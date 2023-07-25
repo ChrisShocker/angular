@@ -57,4 +57,16 @@ export class AuthService {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
   }
+
+  checkAuthenticationStatus() {
+    let url: string = './api/currentIdentity';
+    return this.http.get(url).pipe(
+      // tap lets us return observables later and take actions on them 
+      tap((data) => {
+        if (data instanceof Object) {
+          this.currentUser = <IUser>data;
+        }
+      })
+    );
+  }
 }
