@@ -1,17 +1,19 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, Subject, catchError, map, of } from 'rxjs';
 import { IEvent, ISession } from './event.model';
 import { SessionListComponent } from '../session-list/session-list.component';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getEvents(): Observable<IEvent[]> {
+    /*
     //Create a new observable of type "Subject"
-    let subject = new Subject<IEvent[]>();
+      let subject = new Subject<IEvent[]>();
     //simulate an async request, don't return data until 1000ms
     //note: the 1 sec delay will load data post page display creating a delay, user will see an empty webpage
     setTimeout(() => {
@@ -20,11 +22,25 @@ export class EventService {
     }, 1000);
     return subject;
     //return this.EVENTS;
+    */
+
+    // instead of using a local EVENT data structure, use the http server we created
+    // note to interact with the server '/api' must be used for the proxy to catch it
+    return this.http.get<IEvent[]>('/api/events')
+    .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])));
   }
 
   getEventById(id: number): IEvent {
     //add non-null assertion
     return this.EVENTS.find((event) => event.id === id)!;
+  }
+
+  //handle errors thrown by observables
+  private handleError<T> (operation = 'operation', result?: T){
+    return (error: any): Observable<T> => {
+      console.error(error);
+      return of(result as T);
+    }
   }
 
   saveEvent(eventData: any) {
