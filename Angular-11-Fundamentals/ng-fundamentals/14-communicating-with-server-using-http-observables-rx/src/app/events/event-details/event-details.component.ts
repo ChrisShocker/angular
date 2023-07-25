@@ -59,7 +59,7 @@ export class EventDetailsComponent implements OnInit {
     this.event.sessions.push(session);
 
     //save event in eventService
-    this.eventService.updateEvent(this.event);
+    this.eventService.saveEvent(this.event).subscribe();
 
     //reset Add Session ui
     this.addMode = false;

@@ -58,14 +58,15 @@ export class EventService {
       .pipe(catchError(this.handleError<IEvent>('saveEvent')));
   }
 
-  //update an existing event with new event data
-  updateEvent(event: any) {
-    //find existing event with passed in event id
-    let index = this.EVENTS.findIndex((x) => (x.id = event.id));
+  //no longer needed since saveEvent will update an event with same ID
+  // //update an existing event with new event data
+  // updateEvent(event: any) {
+  //   //find existing event with passed in event id
+  //   let index = this.EVENTS.findIndex((x) => (x.id = event.id));
 
-    //set existing event to new passed in event
-    this.EVENTS[index] = event;
-  }
+  //   //set existing event to new passed in event
+  //   this.EVENTS[index] = event;
+  // }
 
   searchSessions(searchTerm: string) {
     var term = searchTerm.toLocaleLowerCase();
