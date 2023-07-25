@@ -16,6 +16,9 @@ export class SessionListComponent implements OnChanges {
   //this can easily be done by using OnChanges
   @Input() filterBy!: string;
 
+  //parameter passed from event details to get the event id
+  @Input() eventId!: number;
+
   //parameter passed from event details html to sort session lists
   @Input() sortBy!: string;
 
@@ -54,7 +57,7 @@ export class SessionListComponent implements OnChanges {
         this.authService.currentUser.userName
       );
     } else {
-      this.voterService.addVoter(session, this.authService.currentUser.userName);
+      this.voterService.addVoter(this.eventId, session, this.authService.currentUser.userName);
     }
     //update the list of sessions by voters 
     if(this.sortBy === 'votes'){

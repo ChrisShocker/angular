@@ -55,7 +55,9 @@
   </div>
 
   <!-- display sessions if addMode is false (not creating a session) -->
-  <app-session-list *ngIf="!addMode" [sessions]="event.sessions" [filterBy]="filterBy" [sortBy]="sortBy"></app-session-list>
+  <!-- event-details has access to the event.id that the session list needs
+  we can pass it by binding a varible to it in sessions-->
+  <app-session-list [eventId]="event.id" *ngIf="!addMode" [sessions]="event.sessions" [filterBy]="filterBy" [sortBy]="sortBy"></app-session-list>
 
   <!-- display create session form if addMode is true -->
   <!-- bind to saveNewSession event and pass in event data (session object)
