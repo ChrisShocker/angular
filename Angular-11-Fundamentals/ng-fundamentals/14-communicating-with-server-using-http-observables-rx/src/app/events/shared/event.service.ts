@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, Subject, catchError, map, of } from 'rxjs';
 import { IEvent, ISession } from './event.model';
 import { SessionListComponent } from '../session-list/session-list.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -26,33 +26,36 @@ export class EventService {
 
     // instead of using a local EVENT data structure, use the http server we created
     // note to interact with the server '/api' must be used for the proxy to catch it
-    return this.http.get<IEvent[]>('/api/events')
-    .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])));
+    return this.http
+      .get<IEvent[]>('/api/events')
+      .pipe(catchError(this.handleError<IEvent[]>('getEvents', [])));
   }
 
-
-  getEventById(id: number): Observable<IEvent>{
+  getEventById(id: number): Observable<IEvent> {
     // //add non-null assertion
     // return this.EVENTS.find((event) => event.id === id)!;
 
-    return this.http.get<IEvent>('/api/events/' +id)
-    .pipe(catchError(this.handleError<IEvent>('getEvents')));
-
+    return this.http
+      .get<IEvent>('/api/events/' + id)
+      .pipe(catchError(this.handleError<IEvent>('getEventById')));
   }
 
   //handle errors thrown by observables
-  private handleError<T> (operation = 'operation', result?: T){
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
       return of(result as T);
-    }
+    };
   }
 
   saveEvent(eventData: any) {
-    console.log('Event data', eventData);
-    eventData.id = 999;
-    eventData.sessions = [];
-    this.EVENTS.push(eventData.form.value);
+    let options = {
+      headers: new HttpHeaders({'Content-Type':'application/json'}),
+    };
+    console.log("eventData:", eventData);
+    return this.http
+      .post<IEvent>('/api/events', eventData, options)
+      .pipe(catchError(this.handleError<IEvent>('saveEvent')));
   }
 
   //update an existing event with new event data
