@@ -1,3 +1,4 @@
+//note naming testing files in this fasion is not recommended 
 import { SessionListComponent } from './session-list.component';
 import { ISession } from '../shared';
 
