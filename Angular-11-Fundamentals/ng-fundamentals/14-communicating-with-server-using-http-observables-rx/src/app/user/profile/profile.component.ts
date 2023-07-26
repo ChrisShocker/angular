@@ -17,29 +17,26 @@ export class ProfileComponent implements OnInit {
   private firstName!: FormControl;
   private lastName!: FormControl;
 
-
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router,
     //let angular know to use TOASTR_TOKEN to look up service in injection registry
-    @Inject(TOASTR_TOKEN) private toastr: Toastr 
-    ) {
-    
-  }
+    @Inject(TOASTR_TOKEN) private toastr: Toastr
+  ) {}
 
   ngOnInit() {
     //create form control for each input on form
     //FormControl's first argument is what will be displayed in the html
     //FormControl's second argument is validators
     //Multiple validators can be used if passed as an array
-    this.firstName = new FormControl(
-      this.authService.currentUser.firstName,
-      [Validators.required, Validators.pattern('[a-zA-Z].*')]
-    );
-    this.lastName = new FormControl(
-      this.authService.currentUser.lastName,
-      [Validators.required, Validators.pattern('[a-zA-Z].*')]
-    );
+    this.firstName = new FormControl(this.authService.currentUser.firstName, [
+      Validators.required,
+      Validators.pattern('[a-zA-Z].*'),
+    ]);
+    this.lastName = new FormControl(this.authService.currentUser.lastName, [
+      Validators.required,
+      Validators.pattern('[a-zA-Z].*'),
+    ]);
 
     //controls must be added to a form group
     this.profileForm = new FormGroup({
@@ -56,12 +53,12 @@ export class ProfileComponent implements OnInit {
     //if the profileForm isn't valid don't do anything
     if (this.profileForm.valid) {
       //call authSerivce to update user
-      this.authService.updateCurrentUser(
-        formValues.firstName,
-        formValues.lastName
-      );
+      this.authService
+        .updateCurrentUser(formValues.firstName, formValues.lastName)
+        .subscribe(() => {
+          this.toastr.success('Profile Saved!');
+        });
       //call toastr service to display a notification to the user
-      this.toastr.success('Profile Saved!');
       this.router.navigate(['events']);
     }
   }

@@ -53,15 +53,23 @@ export class AuthService {
     return !!this.currentUser;
   }
 
+  // call server to update user
   updateCurrentUser(firstName: string, lastName: string) {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
+    let url = '/api/users/' + this.currentUser.id;
+    let options: {} = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    };
+    let body = this.currentUser;
+
+    return this.http.put(url, body, options);
   }
 
   checkAuthenticationStatus() {
     let url: string = './api/currentIdentity';
     return this.http.get(url).pipe(
-      // tap lets us return observables later and take actions on them 
+      // tap lets us return observables later and take actions on them
       tap((data) => {
         if (data instanceof Object) {
           this.currentUser = <IUser>data;
