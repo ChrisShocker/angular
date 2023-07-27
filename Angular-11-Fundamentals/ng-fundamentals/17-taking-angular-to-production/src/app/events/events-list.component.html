@@ -1,0 +1,16 @@
+<div>
+    <h1>Upcoming Angular Events</h1>
+    <div class="row">
+        <!-- Add ngFor to render from each event the list of events 
+         * means the directive is structural, it alters the structure of the DOM
+         events is the name of the object to loop over 
+         ngFor repeats the elements it's inserted into and all elements inside that element-->
+        <!-- add click event for each thumbnail rendered from ngFor -->
+        <div *ngFor="let event of events" class="col-md-5">
+            <!-- render event thumbnail and pass in an event object for the child component to bind to -->
+            <!-- for the [event] expected in <event-thumbnail> pass in "event1" defined in <event-list> -->
+            <!-- add event handler to parent to catch event emitted from child component event emitter -->
+            <app-event-thumbnail [event]="event" (eventClick)="handleEventClicked($event)"></app-event-thumbnail>
+        </div>
+    </div>
+</div>
