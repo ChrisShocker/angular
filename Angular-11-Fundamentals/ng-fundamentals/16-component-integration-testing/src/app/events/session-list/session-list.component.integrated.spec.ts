@@ -47,9 +47,13 @@ describe('SessionListComponent', () => {
       ],
     });
 
+    //have angular create the component for us
     fixture = TestBed.createComponent(SessionListComponent);
+    //get handle to sessionComponent component created
     component = fixture.componentInstance;
+    //handle to debugger
     debugEl = fixture.debugElement;
+    //handle to html DOM
     element = fixture.nativeElement;
   });
 
