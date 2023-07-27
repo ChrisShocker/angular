@@ -1,0 +1,42 @@
+<!-- reactive forms are difference since all fields and validations is done in the component and not html.
+allows validation logic to be unit testable -->
+
+<div>
+    <h1>Edit Your Profile </h1>
+    <hr>
+    <div class="col-md-4">
+        <!-- bind form element to profileForm form component
+        on submit pass the prfileForm data to the saveProfile function -->
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate>
+            <!-- add error class if the firstName or LastName are invalid and touched -->
+            <div class="form-group" [ngClass]="{'error' : !validateFirstName()}">
+                <label for="firstName">First Name:</label>
+                <!-- display required if field is empty -->
+                <em *ngIf="!validateFirstName() && profileForm.controls['firstName'].errors!['required']">Required</em>
+                <!-- display first letter error if no letter 
+                We can directly check an error by referenceing it .errors!['errorToCheck'] -->
+                <em *ngIf="!validateFirstName() && profileForm.controls['firstName'].errors!['pattern']">Must start with a Letter</em>
+                <!-- bind inputs to profileForm properties -->
+                <input formControlName="firstName" id="firstName" type="text" class="form-control"
+                    placeholder="First Name..." is required />
+            </div>
+            <!-- add error class if the firstName or LastName are invalid and touched -->
+            <div class="form-group" [ngClass]="{'error' : !validateLastName()}">
+                <!-- bind inputs to profileForm properties -->
+                <label for="lastName">Last Name:</label>
+                <!-- display required if field is empty -->
+                <em *ngIf="!validateLastName() && profileForm.controls['lastName'].errors!['required']">Required</em>
+                <!-- display first letter error if no letter 
+                We can directly check an error by referenceing it .errors!['errorToCheck'] -->
+                <em *ngIf="!validateLastName() && profileForm.controls['lastName'].errors!['pattern']">Must start with a Letter</em>
+                <input formControlName="lastName" id="lastName" type="text" class="form-control"
+                    placeholder="Last Name..." is required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button (click)="cancel()" type="button" class="btn btn-default">Cancel</button>
+
+            <button (click)="logout()" type="button" class="btn btn-warning">Logout</button>
+        </form>
+    </div>
+</div>
