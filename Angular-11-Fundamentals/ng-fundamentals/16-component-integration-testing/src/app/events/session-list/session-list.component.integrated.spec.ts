@@ -5,6 +5,9 @@ import { SessionListComponent } from './session-list.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'src/app/user/auth.service';
 import { VoterService } from '../event-details';
+import { DurationPipe, ISession } from '../shared';
+import { CollapsibleWellComponent } from 'src/app/common';
+import { UpvoteComponent } from '../upvote/upvote.component';
 
 //integration tests allow us to also test a component's template
 describe('SessionListComponent', () => {
@@ -21,18 +24,65 @@ describe('SessionListComponent', () => {
     debugEl: DebugElement;
 
   beforeEach(() => {
+
+    //initialize mock services
+    //note the mock services need to implement all the functions required in the component they're from 
+    mockAuthService = { isAuthenticated: () => true, currentUser: { userName: 'Joe' } };
+    mockVoterService = { userHasVoted: () => true };
+
     //create angular component and angular testing module
     //mini module only for this test
     TestBed.configureTestingModule({
       //takes in an object that is the same specification as the app module
       //add everything the component would require from appmodule to function
-      declarations: [SessionListComponent],
+      declarations: [
+        SessionListComponent,
+        DurationPipe,
+        CollapsibleWellComponent,
+        UpvoteComponent
+      ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: VoterService, useValue: mockVoterService },
       ],
     });
+
+    fixture = TestBed.createComponent(SessionListComponent);
+    component = fixture.componentInstance;
+    debugEl = fixture.debugElement;
+    element = fixture.nativeElement;
   });
 
-  describe('initial display', () => {});
+  describe('initial display', () => {
+    it('should display the correct name', () => {
+      //note the componenent will need all the require inputs, outputs, variables, models, ngChanges, etc to work
+
+      component.sessions = [
+        {
+          id: 1,
+          name: 'Session 1',
+          presenter: 'Joe',
+          duration: 1,
+          level: 'beginner',
+          abstract: 'some abstract',
+          voters: ['john', 'bob']
+        }
+      ]
+
+      component.filterBy = 'all';
+      component.sortBy = 'name';
+      component.eventId = 4;
+
+      //call lifecyle method manually
+      component.ngOnChanges();
+
+      //change detection must be ran manully to kick off ngOnChanges
+      fixture.detectChanges();
+
+      //need to grap the specifc dev to get the {{session.name}}
+      //use textContent.toContain since it will only look for the text
+      expect(element.querySelector('[well-title]')?.textContent).toContain('Session 1');
+
+    })
+  });
 });
