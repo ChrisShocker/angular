@@ -1,13 +1,11 @@
 //note naming testing files in this fashion is not recommended
 
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { SessionListComponent } from './session-list.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'src/app/user/auth.service';
 import { VoterService } from '../event-details';
 import { DurationPipe, ISession } from '../shared';
-import { CollapsibleWellComponent } from 'src/app/common';
-import { UpvoteComponent } from '../upvote/upvote.component';
 import { By } from '@angular/platform-browser';
 
 //integration tests allow us to also test a component's template
@@ -38,14 +36,22 @@ describe('SessionListComponent', () => {
       //add everything the component would require from appmodule to function
       declarations: [
         SessionListComponent,
-        DurationPipe,
-        CollapsibleWellComponent,
-        UpvoteComponent
+        DurationPipe
+
+        // A deep integration test would inlcude a component and all of it's children
+        // A shallow integration test only tests the parent component
+        // The NO_ERRORS_SCHEMA can be used to ignore errors related to components not imported
+        // CollapsibleWellComponent,
+        // UpvoteComponent
       ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
         { provide: VoterService, useValue: mockVoterService },
       ],
+      schemas:[
+        // The NO_ERRORS_SCHEMA can be used to ignore errors related to components not imported
+        NO_ERRORS_SCHEMA
+      ]
     });
 
     //have angular create the component for us
