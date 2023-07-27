@@ -1,5 +1,5 @@
 //Inject lets use seperate token decides type of construction param
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -67,8 +67,8 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['events']);
   }
 
-  logout(){
-    this.authService.logout().subscribe( () => {
+  logout() {
+    this.authService.logout().subscribe(() => {
       this.router.navigate(['/user/login']);
       window.location.reload();
     });

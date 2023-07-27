@@ -14,12 +14,12 @@ import { FormGroup, Validator, NG_VALIDATORS } from '@angular/forms';
 export class LocationValidator implements Validator {
   validate(formGroup: FormGroup): any {
     //access address using indexor and target the DOM formGroup
-    let addressControl = formGroup.controls['address'];
-    let cityControl = formGroup.controls['city'];
-    let countryControl = formGroup.controls['country'];
+    const addressControl = formGroup.controls['address'];
+    const cityControl = formGroup.controls['city'];
+    const countryControl = formGroup.controls['country'];
     // Note since the URL is in a different formgroup then location
     //   we have to target it differently by going up one level
-    let onlineUrlControl = (<FormGroup>formGroup.root).controls['onlineUrl'];
+    const onlineUrlControl = (<FormGroup>formGroup.root).controls['onlineUrl'];
 
     //require a location or a url
     if (

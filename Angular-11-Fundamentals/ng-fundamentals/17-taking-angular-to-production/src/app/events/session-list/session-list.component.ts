@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ISession } from '../shared';
 import { AuthService } from 'src/app/user/auth.service';
 import { VoterService } from '../event-details/voter.service';
@@ -25,10 +25,10 @@ export class SessionListComponent implements OnChanges {
   //array of sessions that can be filtered and sorted
   visibleSessions: ISession[] = [];
 
-
-  constructor(protected authService: AuthService, private voterService: VoterService){
-
-  }
+  constructor(
+    protected authService: AuthService,
+    private voterService: VoterService
+  ) {}
 
   //called everytime an input variable in component changes
   ngOnChanges(): void {
@@ -52,21 +52,29 @@ export class SessionListComponent implements OnChanges {
       //call a service to remove a voter
       //note the sessions have a list of voters by userName
       //call the authservice to get the current user
-      this.voterService.deleteVoter(this.eventId, 
+      this.voterService.deleteVoter(
+        this.eventId,
         session,
         this.authService.currentUser.userName
       );
     } else {
-      this.voterService.addVoter(this.eventId, session, this.authService.currentUser.userName);
+      this.voterService.addVoter(
+        this.eventId,
+        session,
+        this.authService.currentUser.userName
+      );
     }
-    //update the list of sessions by voters 
-    if(this.sortBy === 'votes'){
+    //update the list of sessions by voters
+    if (this.sortBy === 'votes') {
       this.visibleSessions.sort(sortByVotesDescending);
     }
   }
 
-  userHasVoted(session: ISession){
-    return this.voterService.userHasVoted(session, this.authService.currentUser.userName);
+  userHasVoted(session: ISession) {
+    return this.voterService.userHasVoted(
+      session,
+      this.authService.currentUser.userName
+    );
   }
 
   filterSessions(filter: string) {

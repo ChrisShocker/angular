@@ -1,5 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Form, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { ISession, restrictedWords } from '../shared/index';
 
 @Component({
@@ -21,7 +26,7 @@ export class CreateSessionComponent implements OnInit {
   level!: FormControl;
   abstract!: FormControl;
 
-  //Pass output from session child component back to parent event component 
+  //Pass output from session child component back to parent event component
   //using an EventEmitter
   @Output() saveNewSession = new EventEmitter();
   @Output() cancelAddSession = new EventEmitter();
@@ -36,7 +41,7 @@ export class CreateSessionComponent implements OnInit {
     this.abstract = new FormControl('', [
       Validators.required,
       Validators.maxLength(400),
-      restrictedWords(['foo', 'bar']) as ValidatorFn
+      restrictedWords(['foo', 'bar']) as ValidatorFn,
     ]);
 
     this.newSessionForm = new FormGroup({
@@ -54,7 +59,7 @@ export class CreateSessionComponent implements OnInit {
 
   //catch form variables on submit and apply them to a session interface
   saveSession(formValues: any) {
-    let newSession: ISession = {
+    const newSession: ISession = {
       id: 1,
       name: formValues.name,
       presenter: formValues.presenter,
@@ -65,12 +70,12 @@ export class CreateSessionComponent implements OnInit {
     };
     console.log(newSession);
 
-    //emit the saveSession form data to subscriber 
+    //emit the saveSession form data to subscriber
     return this.saveNewSession.emit(newSession);
   }
 
-  cancel(){
+  cancel() {
     //emit a cancelAddSession event to parent component
-    this.cancelAddSession.emit()
+    this.cancelAddSession.emit();
   }
 }

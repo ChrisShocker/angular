@@ -1,7 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, Subject, catchError, map, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, catchError, of } from 'rxjs';
 import { IEvent, ISession } from './event.model';
-import { SessionListComponent } from '../session-list/session-list.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -49,10 +48,10 @@ export class EventService {
   }
 
   saveEvent(eventData: any) {
-    let options = {
-      headers: new HttpHeaders({'Content-Type':'application/json'}),
+    const options = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    console.log("eventData:", eventData);
+    console.log('eventData:', eventData);
     return this.http
       .post<IEvent>('/api/events', eventData, options)
       .pipe(catchError(this.handleError<IEvent>('saveEvent')));
@@ -70,7 +69,8 @@ export class EventService {
 
   //call server function to return data for sessions using url search query
   searchSessions(searchTerm: string) {
-      return this.http.get<ISession[]>('/api/sessions/search?search=' + searchTerm)
+    return this.http
+      .get<ISession[]>('/api/sessions/search?search=' + searchTerm)
       .pipe(catchError(this.handleError<ISession[]>('searchSessions')));
   }
 

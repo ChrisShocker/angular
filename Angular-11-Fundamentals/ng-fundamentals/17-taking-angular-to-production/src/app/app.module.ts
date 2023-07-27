@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 //implement barreling to reduce clutter
 import {
@@ -15,7 +15,7 @@ import {
   DurationPipe,
   UpvoteComponent,
   VoterService,
-  LocationValidator
+  LocationValidator,
 } from './events/index';
 
 import { EventsAppComponent } from './events-app.component';
@@ -26,7 +26,7 @@ import {
   JQ_TOKEN,
   CollapsibleWellComponent,
   SimpleModalComponent,
-  ModalTriggerDirective
+  ModalTriggerDirective,
 } from './common/index';
 import { appRoutes } from 'src/routes';
 import { Error404Component } from './errors/error404.component';
@@ -36,10 +36,10 @@ import { SessionListComponent } from './events/session-list/session-list.compone
 import { EventResolver } from './events/event-resolver.service';
 
 //declare toaster in global scope
-let toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
+const toastr: Toastr = (window as { [key: string]: any })['toastr'] as any;
 
 //declare toaster in global scope
-let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
+const jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
 
 @NgModule({
   declarations: [
@@ -58,7 +58,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     // directives go under declarations like components
     ModalTriggerDirective,
     UpvoteComponent,
-    LocationValidator
+    LocationValidator,
   ],
   imports: [
     BrowserModule,
@@ -66,7 +66,7 @@ let jQuery: Toastr = (window as { [key: string]: any })['$'] as any;
     ReactiveFormsModule,
     //use forRoot to import the routes from the routes we defined
     RouterModule.forRoot(appRoutes),
-    HttpClientModule
+    HttpClientModule,
   ],
   // Service are included in the providers
   providers: [

@@ -7,11 +7,11 @@ import { Observable, catchError, of } from 'rxjs';
 export class VoterService {
   constructor(private http: HttpClient) {}
 
-  deleteVoter(eventId: number,session: ISession, voterName: string) {
+  deleteVoter(eventId: number, session: ISession, voterName: string) {
     //filter out the userName from the voter array
     session.voters = session.voters.filter((voter) => voter !== voterName);
 
-    let url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
+    const url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
     this.http
       .delete(url)
       .pipe(catchError(this.handleError('addVoter')))
@@ -22,8 +22,8 @@ export class VoterService {
     //add the current voter to the session's voter array
     session.voters.push(voterName);
 
-    let url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
-    let options = {
+    const url: string = `/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`;
+    const options = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
     this.http
@@ -39,6 +39,7 @@ export class VoterService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
+      console.log(operation);
       console.error(error);
       return of(result as T);
     };

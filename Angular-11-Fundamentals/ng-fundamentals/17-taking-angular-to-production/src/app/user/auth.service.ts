@@ -21,11 +21,11 @@ export class AuthService {
     //   lastName: 'Papa'
     // };
 
-    let url: string = '/api/login';
-    let options: {} = {
+    const url: string = '/api/login';
+    const options: {} = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    let body: {} = { username: userName, password: password };
+    const body: {} = { username: userName, password: password };
 
     //use tap pipe to see data that comes back and act on it
     return (
@@ -33,7 +33,7 @@ export class AuthService {
         .post(url, body, options)
         .pipe(
           tap((data) => {
-            let someObj: any = data;
+            const someObj: any = data;
             const field = 'user';
             console.log(data);
             this.currentUser = someObj[field as keyof IUser];
@@ -58,16 +58,16 @@ export class AuthService {
     this.currentUser.firstName = firstName;
     this.currentUser.lastName = lastName;
 
-    let url = '/api/users/' + this.currentUser.id;
-    let options: {} = {
+    const url = '/api/users/' + this.currentUser.id;
+    const options: {} = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    let body = this.currentUser;
+    const body = this.currentUser;
     return this.http.put(url, body, options);
   }
 
   checkAuthenticationStatus() {
-    let url: string = './api/currentIdentity';
+    const url: string = './api/currentIdentity';
     return this.http.get(url).pipe(
       // tap lets us return observables later and take actions on them
       tap((data) => {
@@ -79,10 +79,10 @@ export class AuthService {
   }
 
   logout() {
-    let options: {} = {
+    const options: {} = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
-    let url = '/api/logout';
+    const url = '/api/logout';
     return this.http.post(url, {}, options);
   }
 }

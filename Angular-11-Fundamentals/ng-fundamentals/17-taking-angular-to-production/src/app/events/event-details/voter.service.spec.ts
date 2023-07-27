@@ -14,7 +14,7 @@ describe('VoterService', () => {
 
   describe('deleteVoter', () => {
     it('should remove the voter from the list of voters', () => {
-      var session = { id: 6, voters: ['joe', 'john'] };
+      const session = { id: 6, voters: ['joe', 'john'] };
       //note deleteVoter returns as observable, so mockHttp must be converted to return an observable
       mockHttp.delete.and.returnValue(of(false));
       voterService.deleteVoter(3, <ISession>session, 'joe');
@@ -24,12 +24,12 @@ describe('VoterService', () => {
     });
 
     it('should call the correct http.delete endpoint', () => {
-      var session = { id: 6, voters: ['joe', 'john'] };
+      const session = { id: 6, voters: ['joe', 'john'] };
       //note deleteVoter returns as observable, so mockHttp must be converted to return an observable
       mockHttp.delete.and.returnValue(of(false));
       voterService.deleteVoter(3, <ISession>session, 'joe');
 
-      let url: string = `/api/events/3/sessions/6/voters/joe`;
+      const url: string = `/api/events/3/sessions/6/voters/joe`;
 
       expect(mockHttp.delete).toHaveBeenCalledWith(url);
     });
@@ -37,13 +37,13 @@ describe('VoterService', () => {
 
   describe('addVoter', () => {
     it('should call the correct http.post endpoint', () => {
-      var session = { id: 6, voters: ['joe', 'john'] };
+      const session = { id: 6, voters: ['joe', 'john'] };
       //note deleteVoter returns as observable, so mockHttp must be converted to return an observable
       mockHttp.post.and.returnValue(of(false));
       voterService.addVoter(3, <ISession>session, 'joe');
 
       //note the post method takes in 3 options url, body{}, options{}
-      let url: string = `/api/events/3/sessions/6/voters/joe`;
+      const url: string = `/api/events/3/sessions/6/voters/joe`;
 
       //the body object can be empty, but the options can't, we can simulate an object by using jasmine.any(object),
       //this tells jasmine to expect some kind of object

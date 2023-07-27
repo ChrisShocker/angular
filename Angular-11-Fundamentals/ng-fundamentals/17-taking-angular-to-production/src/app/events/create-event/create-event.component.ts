@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EventService } from '../shared';
-import { subscribeOn } from 'rxjs';
 
 @Component({
   selector: 'app-create-event',

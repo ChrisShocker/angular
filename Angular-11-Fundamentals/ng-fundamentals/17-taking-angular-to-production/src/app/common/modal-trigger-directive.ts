@@ -22,7 +22,7 @@ export class ModalTriggerDirective implements OnInit {
 
   ngOnInit(): void {
     //whenever event is clicked call the modal
-    this.htmlElement.addEventListener('click', (event) => {
+    this.htmlElement.addEventListener('click', () => {
       // call modal function from JQuery
       // id is from simple-modal component and binds to the html element id.
       // since bound to an id, only one modal can exist in the applicaiton at a time.

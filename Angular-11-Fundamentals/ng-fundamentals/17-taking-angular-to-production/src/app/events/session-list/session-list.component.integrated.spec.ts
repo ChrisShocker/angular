@@ -5,7 +5,7 @@ import { SessionListComponent } from './session-list.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'src/app/user/auth.service';
 import { VoterService } from '../event-details';
-import { DurationPipe, ISession } from '../shared';
+import { DurationPipe } from '../shared';
 import { By } from '@angular/platform-browser';
 
 //integration tests allow us to also test a component's template
@@ -23,10 +23,12 @@ describe('SessionListComponent', () => {
     debugEl: DebugElement;
 
   beforeEach(() => {
-
     //initialize mock services
-    //note the mock services need to implement all the functions required in the component they're from 
-    mockAuthService = { isAuthenticated: () => true, currentUser: { userName: 'Joe' } };
+    //note the mock services need to implement all the functions required in the component they're from
+    mockAuthService = {
+      isAuthenticated: () => true,
+      currentUser: { userName: 'Joe' },
+    };
     mockVoterService = { userHasVoted: () => true };
 
     //create angular component and angular testing module
@@ -36,7 +38,7 @@ describe('SessionListComponent', () => {
       //add everything the component would require from appmodule to function
       declarations: [
         SessionListComponent,
-        DurationPipe
+        DurationPipe,
 
         // A deep integration test would inlcude a component and all of it's children
         // A shallow integration test only tests the parent component
@@ -48,10 +50,10 @@ describe('SessionListComponent', () => {
         { provide: AuthService, useValue: mockAuthService },
         { provide: VoterService, useValue: mockVoterService },
       ],
-      schemas:[
+      schemas: [
         // The NO_ERRORS_SCHEMA can be used to ignore errors related to components not imported
-        NO_ERRORS_SCHEMA
-      ]
+        NO_ERRORS_SCHEMA,
+      ],
     });
 
     //have angular create the component for us
@@ -66,7 +68,6 @@ describe('SessionListComponent', () => {
 
   describe('initial display', () => {
     it('should display the correct name', () => {
-
       //note the componenent will need all the require inputs, outputs, variables, models, ngChanges, etc to work
       component.sessions = [
         {
@@ -76,9 +77,9 @@ describe('SessionListComponent', () => {
           duration: 1,
           level: 'beginner',
           abstract: 'some abstract',
-          voters: ['john', 'bob']
-        }
-      ]
+          voters: ['john', 'bob'],
+        },
+      ];
 
       component.filterBy = 'all';
       component.sortBy = 'name';
@@ -92,9 +93,13 @@ describe('SessionListComponent', () => {
 
       //need to grap the specifc dev to get the {{session.name}}
       //use textContent.toContain since it will only look for the text
-      expect(element.querySelector('[well-title]')?.textContent).toContain('Session 1');
+      expect(element.querySelector('[well-title]')?.textContent).toContain(
+        'Session 1'
+      );
       //example for using the debug element to do the same above
-      expect(debugEl.query(By.css('[well-title]')).nativeElement.textContent).toContain('Session 1');
-    })
+      expect(
+        debugEl.query(By.css('[well-title]')).nativeElement.textContent
+      ).toContain('Session 1');
+    });
   });
 });
