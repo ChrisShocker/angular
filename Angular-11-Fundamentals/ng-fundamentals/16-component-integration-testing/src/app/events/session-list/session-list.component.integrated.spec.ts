@@ -1,4 +1,4 @@
-//note naming testing files in this fasion is not recommended
+//note naming testing files in this fashion is not recommended
 
 import { DebugElement } from '@angular/core';
 import { SessionListComponent } from './session-list.component';
@@ -8,6 +8,7 @@ import { VoterService } from '../event-details';
 import { DurationPipe, ISession } from '../shared';
 import { CollapsibleWellComponent } from 'src/app/common';
 import { UpvoteComponent } from '../upvote/upvote.component';
+import { By } from '@angular/platform-browser';
 
 //integration tests allow us to also test a component's template
 describe('SessionListComponent', () => {
@@ -18,9 +19,9 @@ describe('SessionListComponent', () => {
     fixture: ComponentFixture<SessionListComponent>,
     //handle to component we're testing
     component: SessionListComponent,
-    //template reference to work with template
+    //template wrapper around DOM reference to work with template
     element: HTMLElement,
-    //element for working with template
+    //element for working with template, wrapper around the DOM API that's angular aware
     debugEl: DebugElement;
 
   beforeEach(() => {
@@ -59,8 +60,8 @@ describe('SessionListComponent', () => {
 
   describe('initial display', () => {
     it('should display the correct name', () => {
-      //note the componenent will need all the require inputs, outputs, variables, models, ngChanges, etc to work
 
+      //note the componenent will need all the require inputs, outputs, variables, models, ngChanges, etc to work
       component.sessions = [
         {
           id: 1,
@@ -86,7 +87,8 @@ describe('SessionListComponent', () => {
       //need to grap the specifc dev to get the {{session.name}}
       //use textContent.toContain since it will only look for the text
       expect(element.querySelector('[well-title]')?.textContent).toContain('Session 1');
-
+      //example for using the debug element to do the same above
+      expect(debugEl.query(By.css('[well-title]')).nativeElement.textContent).toContain('Session 1');
     })
   });
 });
