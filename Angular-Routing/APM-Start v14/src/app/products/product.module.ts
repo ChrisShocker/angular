@@ -8,8 +8,8 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 
 let routes: Routes = [
-  { path: 'product', component: ProductListComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'product' },
+  { path: 'products', component: ProductListComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'products' },
 ];
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],
