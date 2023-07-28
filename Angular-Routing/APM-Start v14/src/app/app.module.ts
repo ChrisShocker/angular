@@ -18,13 +18,12 @@ import { RouterModule, Routes } from '@angular/router';
 
 //routes for application routing
 let routes: Routes = [
-
   // priority path
   { path: 'welcome', component: WelcomeComponent },
   // default path
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   // wildcard/catch all path
-  { path: '**', component: WelcomeComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
