@@ -14,6 +14,18 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
+import { RouterModule, Routes } from '@angular/router';
+
+//routes for application routing
+let routes: Routes = [
+
+  // priority path
+  { path: 'welcome', component: WelcomeComponent },
+  // default path
+  { path: '', pathMatch: 'full', redirectTo: 'welcome' },
+  // wildcard/catch all path
+  { path: '**', component: WelcomeComponent },
+];
 
 @NgModule({
   imports: [
@@ -22,13 +34,10 @@ import { MessageModule } from './messages/message.module';
     InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
     ProductModule,
     UserModule,
-    MessageModule
+    MessageModule,
+    RouterModule.forRoot(routes),
   ],
-  declarations: [
-    AppComponent,
-    WelcomeComponent,
-    PageNotFoundComponent
-  ],
-  bootstrap: [AppComponent]
+  declarations: [AppComponent, WelcomeComponent, PageNotFoundComponent],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
