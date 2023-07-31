@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Product } from './product';
 import { ProductService } from './product.service';
@@ -7,7 +8,8 @@ import { ProductService } from './product.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit
+{
   pageTitle = 'Product List';
   imageWidth = 50;
   imageMargin = 2;
@@ -15,10 +17,12 @@ export class ProductListComponent implements OnInit {
   errorMessage = '';
 
   _listFilter = '';
-  get listFilter(): string {
+  get listFilter(): string
+  {
     return this._listFilter;
   }
-  set listFilter(value: string) {
+  set listFilter(value: string)
+  {
     this._listFilter = value;
     this.filteredProducts = this.listFilter ? this.performFilter(this.listFilter) : this.products;
   }
@@ -26,11 +30,17 @@ export class ProductListComponent implements OnInit {
   filteredProducts: Product[] = [];
   products: Product[] = [];
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
+    // catch query parameters
+    this.listFilter = this.activatedRoute.snapshot.queryParamMap.get('filterBy') || '';
+    this.showImage = this.activatedRoute.snapshot.queryParamMap.get('showImage') === 'true';
+
     this.productService.getProducts().subscribe({
-      next: products => {
+      next: products =>
+      {
         this.products = products;
         this.filteredProducts = this.performFilter(this.listFilter);
       },
@@ -38,14 +48,15 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  performFilter(filterBy: string): Product[] {
+  performFilter(filterBy: string): Product[]
+  {
     filterBy = filterBy.toLocaleLowerCase();
     return this.products.filter((product: Product) =>
       product.productName.toLocaleLowerCase().indexOf(filterBy) !== -1);
   }
 
-  toggleImage(): void {
+  toggleImage(): void
+  {
     this.showImage = !this.showImage;
   }
-
 }

@@ -9,6 +9,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 let routes: Routes = [
   { path: 'products', component: ProductListComponent },
+  //placeholders can be added to routes to pass info between components
+  { path: 'products/:id', component: ProductDetailComponent },
+  { path: 'products/:id/edit', component: ProductEditComponent },
   { path: '', pathMatch: 'full', redirectTo: 'products' },
 ];
 @NgModule({
