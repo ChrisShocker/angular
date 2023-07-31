@@ -22,10 +22,11 @@ import { MessageModule } from './messages/message.module';
     HttpClientModule,
     InMemoryWebApiModule.forRoot(ProductData, { delay: 1000 }),
     //by importing the AppRoutingModule, the declarations have access to its routing directives for those components
-    AppRoutingModule,
     ProductModule,
     UserModule,
     MessageModule,
+    //note imports should be ordered so the wild card path is last
+    AppRoutingModule,
   ],
   declarations: [AppComponent, WelcomeComponent, PageNotFoundComponent],
   bootstrap: [AppComponent],
