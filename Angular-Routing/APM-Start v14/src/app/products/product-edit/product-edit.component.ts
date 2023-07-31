@@ -22,7 +22,13 @@ export class ProductEditComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.getProduct(Number(this.activatedRoute.snapshot.paramMap.get('id')));
+    // OnInit won't fire on route parameter changes
+    // to catch route parameter changes we use an observable
+    // this.getProduct(Number(this.activatedRoute.snapshot.paramMap.get('id')));
+    this.activatedRoute.paramMap.subscribe((params) =>
+    {
+      this.getProduct(Number(params.get('id')));
+    })
   }
 
 
