@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { MessageService } from '../../messages/message.service';
 
 import { Product, ProductResolved } from '../product';
+import { ProductData } from '../product-data';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -31,14 +33,20 @@ export class ProductEditComponent implements OnInit
     //   this.getProduct(Number(params.get('id')));
     // })
 
-    // use resolver instead
-    const resolvedData: ProductResolved = this.activatedRoute.snapshot.data['resolvedData'];
+    //wrap resolver in observable to catch route param changes
+    this.activatedRoute.data.subscribe(data =>
+    {
+      // use resolver instead
+      const resolvedData: ProductResolved = data['resolvedData'];
 
-    if (resolvedData.error)
-      this.errorMessage = resolvedData.error;
+      if (resolvedData.error)
+        this.errorMessage = resolvedData.error;
 
-    if (resolvedData.product)
-      this.onProductRetrieved(resolvedData.product);
+      if (resolvedData.product)
+        this.onProductRetrieved(resolvedData.product);
+
+    })
+
   }
 
   // use resolver
