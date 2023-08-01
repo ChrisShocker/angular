@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Product } from './product';
+import { Product, ProductResolved } from './product';
 import { ProductService } from './product.service';
 
 @Component({
@@ -18,18 +18,27 @@ export class ProductDetailComponent implements OnInit
 
   ngOnInit(): void
   {
-    //catch route params and pass to getter function
-    this.getProduct(Number(this.activatedRoute.snapshot.paramMap.get('id')));
+    // catch route params and pass to getter function
+    // this.getProduct(Number(this.activatedRoute.snapshot.paramMap.get('id')));
+
+    // use resolver instead of the activatedRoute to get id param
+    // access data using the key from the route path
+    const resolvedData: ProductResolved = this.activatedRoute.snapshot.data['resolvedData'];
+    if (resolvedData.error)
+      this.errorMessage = resolvedData.error;
+    if (resolvedData.product)
+      this.onProductRetrieved(resolvedData.product);
   }
 
 
-  getProduct(id: number): void
-  {
-    this.productService.getProduct(id).subscribe({
-      next: product => this.onProductRetrieved(product),
-      error: err => this.errorMessage = err
-    });
-  }
+  // use resolver to return the product instead of getter
+  // getProduct(id: number): void
+  // {
+  //   this.productService.getProduct(id).subscribe({
+  //     next: product => this.onProductRetrieved(product),
+  //     error: err => this.errorMessage = err
+  //   });
+  // }
 
   onProductRetrieved(product: Product): void
   {
