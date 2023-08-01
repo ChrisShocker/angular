@@ -36,7 +36,7 @@ export class ProductResolver implements Resolve<ProductResolved>{
       return of({ product: null, error: message });
     }
 
-    // catch and return all other errors
+    // return the product that matches id or return all other errors
     return this.productService.getProduct(+id)
       .pipe(
         map(product => ({ product: product })),
