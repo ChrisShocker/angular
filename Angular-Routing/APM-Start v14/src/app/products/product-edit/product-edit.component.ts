@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MessageService } from '../../messages/message.service';
 
-import { Product } from '../product';
+import { Product, ProductResolved } from '../product';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -25,20 +25,30 @@ export class ProductEditComponent implements OnInit
     // OnInit won't fire on route parameter changes
     // to catch route parameter changes we use an observable
     // this.getProduct(Number(this.activatedRoute.snapshot.paramMap.get('id')));
-    this.activatedRoute.paramMap.subscribe((params) =>
-    {
-      this.getProduct(Number(params.get('id')));
-    })
+
+    // this.activatedRoute.paramMap.subscribe((params) =>
+    // {
+    //   this.getProduct(Number(params.get('id')));
+    // })
+
+    // use resolver instead
+    const resolvedData: ProductResolved = this.activatedRoute.snapshot.data['resolvedData'];
+
+    if (resolvedData.error)
+      this.errorMessage = resolvedData.error;
+
+    if (resolvedData.product)
+      this.onProductRetrieved(resolvedData.product);
   }
 
-
-  getProduct(id: number): void
-  {
-    this.productService.getProduct(id).subscribe({
-      next: product => this.onProductRetrieved(product),
-      error: err => this.errorMessage = err
-    });
-  }
+  // use resolver
+  // getProduct(id: number): void
+  // {
+  //   this.productService.getProduct(id).subscribe({
+  //     next: product => this.onProductRetrieved(product),
+  //     error: err => this.errorMessage = err
+  //   });
+  // }
 
   onProductRetrieved(product: Product): void
   {
