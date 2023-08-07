@@ -6,22 +6,34 @@ import { Product } from '../product';
 @Component({
   templateUrl: './product-edit-tags.component.html'
 })
-export class ProductEditTagsComponent implements OnInit {
+export class ProductEditTagsComponent implements OnInit
+{
   errorMessage = '';
   newTags = '';
-  product = { id: 1, category: 'test', tags: ['test'] };
+  product!: Product;
 
   constructor(private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
+    // subscribe to parent's resolver to get product info
+    this.route.parent?.data.subscribe(data =>
+    {
+      // set product to resolvers returned product
+      this.product = data['resolvedData'].product;
+    })
   }
 
   // Add the defined tags
-  addTags(): void {
-    if (this.product) {
-      if (!this.newTags) {
+  addTags(): void
+  {
+    if (this.product)
+    {
+      if (!this.newTags)
+      {
         this.errorMessage = 'Enter the search keywords separated by commas and then press Add';
-      } else {
+      } else
+      {
         const tagArray = this.newTags.split(',');
         this.product.tags = this.product.tags ? this.product.tags.concat(tagArray) : tagArray;
         this.newTags = '';
@@ -31,7 +43,8 @@ export class ProductEditTagsComponent implements OnInit {
   }
 
   // Remove the tag from the array of tags.
-  removeTag(idx: number): void {
+  removeTag(idx: number): void
+  {
     this.product?.tags?.splice(idx, 1);
   }
 }
