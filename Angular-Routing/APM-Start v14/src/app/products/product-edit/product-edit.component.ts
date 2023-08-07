@@ -19,6 +19,9 @@ export class ProductEditComponent implements OnInit
 
   product: Product | null = null;
 
+  // keep track of data validation manually 
+  private dataIsValid: { [key: string]: boolean } = {};
+
   constructor(private productService: ProductService,
     private messageService: MessageService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
@@ -127,5 +130,28 @@ export class ProductEditComponent implements OnInit
 
     // Navigate back to the product list
     this.router.navigate(['/products']);
+  }
+
+  validate(): void
+  {
+    // clear validation object
+    this.dataIsValid = {};
+
+    // info tab validation checks
+    if (this.product && this.product.productName && this.product.productName.length >= 3 && this.product.productCode)
+    {
+      this.dataIsValid['info'] = true;
+    } else
+    {
+      this.dataIsValid['info'] = false;
+    }
+    // tags tab validation checks
+    if (this.product && this.product.category && this.product.category.length >= 3)
+    {
+      this.dataIsValid['tags'] = true;
+    } else
+    {
+      this.dataIsValid['tags'] = false;
+    }
   }
 }
