@@ -7,14 +7,25 @@ import { Product } from '../product';
 @Component({
   templateUrl: './product-edit-info.component.html'
 })
-export class ProductEditInfoComponent implements OnInit {
+export class ProductEditInfoComponent implements OnInit
+{
   @ViewChild(NgForm) productForm?: NgForm;
 
   errorMessage = '';
-  product = { id: 1, productName: 'test', productCode: 'test', description: 'test' };
+  product!: Product;
+
+
 
   constructor(private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void
+  {
+    //retrieve product data from parent's resolver
+    this.route.parent?.data.subscribe(data =>
+    {
+      // set product data product from subscription
+      // note 'resolvedData' is from the parents resolver (product.module.ts)
+      this.product = data['resolvedData'].product;
+    })
   }
 }
