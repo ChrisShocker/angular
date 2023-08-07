@@ -25,6 +25,7 @@ export class ProductEditInfoComponent implements OnInit
     {
 
       //reset form on init
+      //note: this will reset validation when the form is navigated to
       if (this.productForm)
       {
         this.productForm.reset();
