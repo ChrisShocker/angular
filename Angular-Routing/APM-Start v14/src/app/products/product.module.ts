@@ -11,28 +11,32 @@ import { ProductEditInfoComponent } from './product-edit/product-edit-info.compo
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
 
 let routes: Routes = [
-  { path: 'products', component: ProductListComponent },
-  //placeholders can be added to routes to pass info between components
-  { path: 'products/:id', component: ProductDetailComponent, resolve: { resolvedData: ProductResolver } },
   {
-    path: 'products/:id/edit', component: ProductEditComponent, resolve: { resolvedData: ProductResolver },
+    path: 'products', component: ProductListComponent,
     children: [
+      //placeholders can be added to routes to pass info between components
+      { path: ':id', component: ProductDetailComponent, resolve: { resolvedData: ProductResolver } },
       {
-        path: '',
-        redirectTo: 'info',
-        pathMatch: 'full'
+        path: ':id/edit', component: ProductEditComponent, resolve: { resolvedData: ProductResolver },
+        children: [
+          {
+            path: '',
+            redirectTo: 'info',
+            pathMatch: 'full'
+          },
+          {
+            path: 'info',
+            component: ProductEditInfoComponent
+          },
+          {
+            path: 'tags',
+            component: ProductEditTagsComponent
+          }
+        ]
       },
-      {
-        path: 'info',
-        component: ProductEditInfoComponent
-      },
-      {
-        path: 'tags',
-        component: ProductEditTagsComponent
-      }
+      { path: '', pathMatch: 'full', redirectTo: 'products' },
     ]
   },
-  { path: '', pathMatch: 'full', redirectTo: 'products' },
 ];
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(routes)],
