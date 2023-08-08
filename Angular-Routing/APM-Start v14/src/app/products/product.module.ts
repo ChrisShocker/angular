@@ -12,12 +12,16 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
 
 let routes: Routes = [
   {
-    path: 'products', component: ProductListComponent,
+    path: 'products',
     children: [
+      // add default route to higher component to handle routing 
+      { path: '', component: ProductListComponent },
       //placeholders can be added to routes to pass info between components
       { path: ':id', component: ProductDetailComponent, resolve: { resolvedData: ProductResolver } },
       {
+
         path: ':id/edit', component: ProductEditComponent, resolve: { resolvedData: ProductResolver },
+        // make all product routes children to componetless route
         children: [
           {
             path: '',
@@ -34,7 +38,6 @@ let routes: Routes = [
           }
         ]
       },
-      { path: '', pathMatch: 'full', redirectTo: 'products' },
     ]
   },
 ];
