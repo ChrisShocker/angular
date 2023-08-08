@@ -16,6 +16,8 @@ import { ProductModule } from './products/product.module';
 import { UserModule } from './user/user.module';
 import { MessageModule } from './messages/message.module';
 
+// Routing Animation
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 @NgModule({
   imports: [
     BrowserModule,
@@ -25,10 +27,11 @@ import { MessageModule } from './messages/message.module';
     ProductModule,
     UserModule,
     MessageModule,
-    //note imports should be ordered so the wild card path is last
+    BrowserAnimationsModule,
+    //note route imports should be ordered so the wild card path is last
     AppRoutingModule,
   ],
   declarations: [AppComponent, WelcomeComponent, PageNotFoundComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
