@@ -6,8 +6,10 @@
   <div class="card-body" *ngIf="product">
     <div class="wizard">
       <!-- add relative routing -->
-      <a [routerLink]="['info']" routerLinkActive="active">Basic Information</a>
-      <a [routerLink]="['tags']" routerLinkActive="active">Search Tags</a>
+      <a [routerLink]="['info']" routerLinkActive="active">Basic Information <span
+          [ngClass]="{'fa fa-exclamation': !isValid('info')}"></span></a>
+      <a [routerLink]="['tags']" routerLinkActive="active">Search Tags <span
+          [ngClass]="{'fa fa-exclamation': !isValid('tags')}"></span></a>
     </div>
     <!-- location for child templates to display -->
     <router-outlet></router-outlet>
