@@ -16,9 +16,14 @@ export class ProductEditComponent implements OnInit
 {
   pageTitle: string = 'Product Edit';
   errorMessage: string = '';
+  isSaved: boolean = false;
 
   currentProduct!: Product;
-  originalProduct: Product | null = null;
+  originalProduct!: Product;
+
+  constructor(private productService: ProductService,
+    private messageService: MessageService, private activatedRoute: ActivatedRoute, private router: Router) { }
+
 
   get product(): Product
   {
@@ -29,7 +34,10 @@ export class ProductEditComponent implements OnInit
   {
     this.currentProduct = value;
     // Clone the object to retain a copy using the spread operator '...'
-    this.originalProduct = { ...value };
+    if (this.originalProduct)
+    {
+      this.originalProduct = { ...value };
+    }
   }
 
   get isDirty(): boolean
@@ -38,11 +46,13 @@ export class ProductEditComponent implements OnInit
     return JSON.stringify(this.originalProduct) !== JSON.stringify(this.currentProduct);
   }
 
+  get productSaved(): boolean
+  {
+    return this.isSaved;
+  }
+
   // keep track of data validation manually 
   private dataIsValid: { [key: string]: boolean } = {};
-
-  constructor(private productService: ProductService,
-    private messageService: MessageService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void
   {
@@ -82,19 +92,19 @@ export class ProductEditComponent implements OnInit
 
   onProductRetrieved(product: Product): void
   {
-    this.originalProduct = product;
+    this.currentProduct = product;
 
-    if (!this.originalProduct)
+    if (!this.currentProduct)
     {
       this.pageTitle = 'No product found';
     } else
     {
-      if (this.originalProduct.id === 0)
+      if (this.currentProduct.id === 0)
       {
         this.pageTitle = 'Add Product';
       } else
       {
-        this.pageTitle = `Edit Product: ${this.originalProduct.productName}`;
+        this.pageTitle = `Edit Product: ${this.currentProduct.productName}`;
       }
     }
   }
@@ -119,18 +129,18 @@ export class ProductEditComponent implements OnInit
 
   saveProduct(): void
   {
-    if (this.originalProduct)
+    if (this.currentProduct)
     {
-      if (this.originalProduct.id === 0)
+      if (this.currentProduct.id === 0)
       {
-        this.productService.createProduct(this.originalProduct).subscribe({
-          next: () => this.onSaveComplete(`The new ${this.originalProduct?.productName} was saved`),
+        this.productService.createProduct(this.currentProduct).subscribe({
+          next: () => this.onSaveComplete(`The new ${this.currentProduct?.productName} was saved`),
           error: err => this.errorMessage = err
         });
       } else
       {
-        this.productService.updateProduct(this.originalProduct).subscribe({
-          next: () => this.onSaveComplete(`The updated ${this.originalProduct?.productName} was saved`),
+        this.productService.updateProduct(this.currentProduct).subscribe({
+          next: () => this.onSaveComplete(`The updated ${this.currentProduct?.productName} was saved`),
           error: err => this.errorMessage = err
         });
       }
@@ -146,7 +156,7 @@ export class ProductEditComponent implements OnInit
     {
       this.messageService.addMessage(message);
     }
-
+    this.isSaved = true;
     // Navigate back to the product list
     this.router.navigate(['/products']);
   }
@@ -168,7 +178,7 @@ export class ProductEditComponent implements OnInit
     this.dataIsValid = {};
 
     // info tab validation checks
-    if (this.originalProduct && this.originalProduct.productName && this.originalProduct.productName.length >= 3 && this.originalProduct.productCode)
+    if (this.currentProduct && this.currentProduct.productName && this.currentProduct.productName.length >= 3 && this.currentProduct.productCode)
     {
       this.dataIsValid['info'] = true;
     } else
@@ -176,7 +186,7 @@ export class ProductEditComponent implements OnInit
       this.dataIsValid['info'] = false;
     }
     // tags tab validation checks
-    if (this.originalProduct && this.originalProduct.category && this.originalProduct.category.length >= 3)
+    if (this.currentProduct && this.currentProduct.category && this.currentProduct.category.length >= 3)
     {
       this.dataIsValid['tags'] = true;
     } else
