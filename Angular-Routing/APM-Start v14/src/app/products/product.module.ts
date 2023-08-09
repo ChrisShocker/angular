@@ -9,10 +9,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductResolver } from './product-resolver.service';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
+import { AuthGuard } from '../user/auth.guard';
+import { ProductEditGuard } from './product-edit/product-edit.guard';
 
 let routes: Routes = [
   {
     path: 'products',
+    canActivate: [AuthGuard],
     children: [
       // add default route to higher component to handle routing 
       { path: '', component: ProductListComponent },
@@ -20,7 +23,9 @@ let routes: Routes = [
       { path: ':id', component: ProductDetailComponent, resolve: { resolvedData: ProductResolver } },
       {
 
-        path: ':id/edit', component: ProductEditComponent, resolve: { resolvedData: ProductResolver },
+        path: ':id/edit', component: ProductEditComponent,
+        canDeactivate: [ProductEditGuard],
+        resolve: { resolvedData: ProductResolver },
         // make all product routes children to componetless route
         children: [
           {
