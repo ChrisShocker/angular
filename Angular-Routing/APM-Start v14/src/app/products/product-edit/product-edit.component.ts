@@ -34,6 +34,7 @@ export class ProductEditComponent implements OnInit
 
   get isDirty(): boolean
   {
+    // compare strings, data must be in same order for both objects
     return JSON.stringify(this.originalProduct) !== JSON.stringify(this.currentProduct);
   }
 
