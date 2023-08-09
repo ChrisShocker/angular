@@ -17,11 +17,11 @@ export class AuthGuard implements CanActivate
     // provides access to router state
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
-    return this.checkLoggedIn();
+    return this.checkLoggedIn(state.url);
   }
 
   // use authService to check user login status
-  checkLoggedIn(): boolean
+  checkLoggedIn(url: string): boolean
   {
     if (this.authService.isLoggedIn)
     {
@@ -29,6 +29,7 @@ export class AuthGuard implements CanActivate
     }
     else
     {
+      this.authService.redirectUrl = url;
       this.router.navigate(['/login']);
       return false;
     }
