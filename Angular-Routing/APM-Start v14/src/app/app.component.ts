@@ -62,6 +62,11 @@ export class AppComponent
   {
     this.router.navigate([{ outlets: { popup: ['messages'] } }]);
     this.messageService.isDisplayed = !this.messageService.isDisplayed;
+    // reset secondary route
+    if (this.messageService.isDisplayed === false)
+    {
+      this.router.navigate([{ outlets: { popup: null } }]);
+    }
   }
 
   logOut(): void
