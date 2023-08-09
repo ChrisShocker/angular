@@ -14,10 +14,28 @@ import { ProductService } from '../product.service';
 })
 export class ProductEditComponent implements OnInit
 {
-  pageTitle = 'Product Edit';
-  errorMessage = '';
+  pageTitle: string = 'Product Edit';
+  errorMessage: string = '';
 
-  product: Product | null = null;
+  currentProduct!: Product;
+  originalProduct: Product | null = null;
+
+  get product(): Product
+  {
+    return this.currentProduct;
+  }
+
+  set product(value: Product)
+  {
+    this.currentProduct = value;
+    // Clone the object to retain a copy using the spread operator '...'
+    this.originalProduct = { ...value };
+  }
+
+  get isDirty(): boolean
+  {
+    return JSON.stringify(this.originalProduct) !== JSON.stringify(this.currentProduct);
+  }
 
   // keep track of data validation manually 
   private dataIsValid: { [key: string]: boolean } = {};
@@ -63,35 +81,35 @@ export class ProductEditComponent implements OnInit
 
   onProductRetrieved(product: Product): void
   {
-    this.product = product;
+    this.originalProduct = product;
 
-    if (!this.product)
+    if (!this.originalProduct)
     {
       this.pageTitle = 'No product found';
     } else
     {
-      if (this.product.id === 0)
+      if (this.originalProduct.id === 0)
       {
         this.pageTitle = 'Add Product';
       } else
       {
-        this.pageTitle = `Edit Product: ${this.product.productName}`;
+        this.pageTitle = `Edit Product: ${this.originalProduct.productName}`;
       }
     }
   }
 
   deleteProduct(): void
   {
-    if (!this.product || !this.product.id)
+    if (!this.originalProduct || !this.originalProduct.id)
     {
       // Don't delete, it was never saved.
-      this.onSaveComplete(`${this.product?.productName} was deleted`);
+      this.onSaveComplete(`${this.originalProduct?.productName} was deleted`);
     } else
     {
-      if (confirm(`Really delete the product: ${this.product.productName}?`))
+      if (confirm(`Really delete the product: ${this.originalProduct.productName}?`))
       {
-        this.productService.deleteProduct(this.product.id).subscribe({
-          next: () => this.onSaveComplete(`${this.product?.productName} was deleted`),
+        this.productService.deleteProduct(this.originalProduct.id).subscribe({
+          next: () => this.onSaveComplete(`${this.originalProduct?.productName} was deleted`),
           error: err => this.errorMessage = err
         });
       }
@@ -100,18 +118,18 @@ export class ProductEditComponent implements OnInit
 
   saveProduct(): void
   {
-    if (this.product)
+    if (this.originalProduct)
     {
-      if (this.product.id === 0)
+      if (this.originalProduct.id === 0)
       {
-        this.productService.createProduct(this.product).subscribe({
-          next: () => this.onSaveComplete(`The new ${this.product?.productName} was saved`),
+        this.productService.createProduct(this.originalProduct).subscribe({
+          next: () => this.onSaveComplete(`The new ${this.originalProduct?.productName} was saved`),
           error: err => this.errorMessage = err
         });
       } else
       {
-        this.productService.updateProduct(this.product).subscribe({
-          next: () => this.onSaveComplete(`The updated ${this.product?.productName} was saved`),
+        this.productService.updateProduct(this.originalProduct).subscribe({
+          next: () => this.onSaveComplete(`The updated ${this.originalProduct?.productName} was saved`),
           error: err => this.errorMessage = err
         });
       }
@@ -149,7 +167,7 @@ export class ProductEditComponent implements OnInit
     this.dataIsValid = {};
 
     // info tab validation checks
-    if (this.product && this.product.productName && this.product.productName.length >= 3 && this.product.productCode)
+    if (this.originalProduct && this.originalProduct.productName && this.originalProduct.productName.length >= 3 && this.originalProduct.productCode)
     {
       this.dataIsValid['info'] = true;
     } else
@@ -157,7 +175,7 @@ export class ProductEditComponent implements OnInit
       this.dataIsValid['info'] = false;
     }
     // tags tab validation checks
-    if (this.product && this.product.category && this.product.category.length >= 3)
+    if (this.originalProduct && this.originalProduct.category && this.originalProduct.category.length >= 3)
     {
       this.dataIsValid['tags'] = true;
     } else
