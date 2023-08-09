@@ -34,7 +34,15 @@
   </ul>
 </nav>
 <!-- add directive for anmiation -->
-<div class="container" [@slideInAnimation]="animationReference.isActivated ? animationReference.activatedRoute : ''">
-  <!-- add variable to bind to for animations  -->
-  <router-outlet #animationReference="outlet"></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-md-10"
+      [@slideInAnimation]="animationReference.isActivated ? animationReference.activatedRoute : ''">
+      <!-- add variable to bind to for animations  -->
+      <router-outlet #animationReference="outlet"></router-outlet>
+    </div>
+    <div class="col-md-2">
+      <router-outlet name="popup"></router-outlet>
+    </div>
+  </div>
 </div>
