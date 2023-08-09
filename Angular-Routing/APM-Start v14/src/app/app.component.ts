@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { slideInAnimation } from './app.animation';
 
 import { AuthService } from './user/auth.service';
 
@@ -7,24 +8,30 @@ import { AuthService } from './user/auth.service';
   selector: 'pm-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  animations: [slideInAnimation]
 })
-export class AppComponent {
+export class AppComponent
+{
   pageTitle = 'Acme Product Management';
 
-  get isLoggedIn(): boolean {
+  get isLoggedIn(): boolean
+  {
     return this.authService.isLoggedIn;
   }
 
-  get userName(): string {
-    if (this.authService.currentUser) {
+  get userName(): string
+  {
+    if (this.authService.currentUser)
+    {
       return this.authService.currentUser.userName;
     }
     return '';
   }
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
-  logOut(): void {
+  logOut(): void
+  {
     this.authService.logout();
     this.router.navigate(['/welcome']);
     console.log('Log out');
