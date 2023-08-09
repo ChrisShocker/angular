@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate
     // provides access to router state
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
-    return true;
+    return this.checkLoggedIn();
   }
 
   // use authService to check user login status
@@ -25,7 +25,6 @@ export class AuthGuard implements CanActivate
   {
     if (this.authService.isLoggedIn)
     {
-
       return true;
     }
     else

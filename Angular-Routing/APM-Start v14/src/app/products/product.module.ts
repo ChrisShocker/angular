@@ -9,10 +9,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductResolver } from './product-resolver.service';
 import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
 import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
+import { AuthGuard } from '../user/auth.guard';
 
 let routes: Routes = [
   {
     path: 'products',
+    canActivate: [AuthGuard],
     children: [
       // add default route to higher component to handle routing 
       { path: '', component: ProductListComponent },
