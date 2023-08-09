@@ -4,6 +4,8 @@ import { slideInAnimation } from './app.animation';
 
 import { AuthService } from './user/auth.service';
 
+import { MessageService } from './messages/message.service';
+
 @Component({
   selector: 'pm-root',
   templateUrl: './app.component.html',
@@ -16,7 +18,7 @@ export class AppComponent
   // variable to turn on loading spinner
   isLoading: boolean = true;
 
-  constructor(private authService: AuthService, private router: Router)
+  constructor(private authService: AuthService, private router: Router, private messageService: MessageService)
   {
     router.events.subscribe((routerEvent: Event) =>
     {
@@ -49,6 +51,22 @@ export class AppComponent
       return this.authService.currentUser.userName;
     }
     return '';
+  }
+
+  get isMessageDisplayed(): boolean
+  {
+    return this.messageService.isDisplayed;
+  }
+
+  displayMessages(): void
+  {
+    this.router.navigate([{ outlets: { popup: ['messages'] } }]);
+    this.messageService.isDisplayed = !this.messageService.isDisplayed;
+    // reset secondary route
+    if (this.messageService.isDisplayed === false)
+    {
+      this.router.navigate([{ outlets: { popup: null } }]);
+    }
   }
 
   logOut(): void
