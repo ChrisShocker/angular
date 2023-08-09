@@ -22,9 +22,15 @@
     <li class="nav-item" *ngIf="isLoggedIn">
       <a class="nav-link">Welcome {{ userName }}</a>
     </li>
-    <li class="nav-item">
-      <!-- activate secondary route -->
-      <a class="nav-link" [routerLink]="[{outlets: {popup: ['messages']}}]">Show Messages</a>
+    <li *ngIf="!isMessageDisplayed" class="nav-item">
+      <!-- activate secondary route, move logic to component -->
+      <!-- <a class="nav-link" [routerLink]="[{outlets: {popup: ['messages']}}]">Show Messages</a> -->
+      <a class="nav-link" (click)="displayMessages()">Show Messages</a>
+    </li>
+    <li *ngIf="isMessageDisplayed" class="nav-item">
+      <!-- activate secondary route, move logic to component -->
+      <!-- <a class="nav-link" [routerLink]="[{outlets: {popup: ['messages']}}]">Show Messages</a> -->
+      <a class="nav-link" (click)="displayMessages()">Hide Messages</a>
     </li>
     <li class="nav-item" *ngIf="!isLoggedIn">
       <a class="nav-link" [routerLink]="['/login']">Log In</a>
