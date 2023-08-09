@@ -9,7 +9,9 @@ export const slideInAnimation = trigger('slideInAnimation', [
     query(':enter, :leave', style({ position: 'fixed', width: '100%', zIndex: 2 }), { optional: true }),
     // group block executes in parallel
     group([
+      // enter selected any newly inserted elements 
       query(':enter', [
+        // animation sequence
         style({ transform: 'translateX(100%)' }),
         animate('0.5s ease-out', style({ transform: 'translateX(0%)' }))
       ], { optional: true }),
