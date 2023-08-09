@@ -14,8 +14,8 @@ let routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   // Router Module must be exported to allow other components access
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
