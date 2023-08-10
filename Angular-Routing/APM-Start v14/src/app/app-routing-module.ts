@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
+import { AuthGuard } from './user/auth.guard';
 
 //routes for application routing
 let routes: Routes = [
   // priority path
   { path: 'welcome', component: WelcomeComponent },
   // use .then to handle the returned promise from the observable for lazy loading
-  { path: 'products', loadChildren: () => import('./products/product.module').then(m => m.ProductModule)},
+  {
+    path: 'products',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./products/product.module').then(m => m.ProductModule)
+  },
   // default path
   { path: '', pathMatch: 'full', redirectTo: 'welcome' },
   // wildcard/catch all path
