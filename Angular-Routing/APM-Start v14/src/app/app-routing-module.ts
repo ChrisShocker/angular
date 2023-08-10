@@ -3,6 +3,7 @@ import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
+import { SelectiveStrategy } from './selective-strategy.service';
 
 //routes for application routing
 let routes: Routes = [
@@ -13,6 +14,8 @@ let routes: Routes = [
     path: 'products',
     // note: canLoad will block preloading
     canLoad: [AuthGuard],
+    // add preload identifier for selective loading 
+    data: {preload: true},
     loadChildren: () => import('./products/product.module').then(m => m.ProductModule)
   },
   // default path
@@ -22,7 +25,7 @@ let routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: SelectiveStrategy })],
   // Router Module must be exported to allow other components access
   exports: [RouterModule],
 })
