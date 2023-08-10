@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, Router, RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { AuthGuard } from './user/auth.guard';
@@ -11,6 +11,7 @@ let routes: Routes = [
   // use .then to handle the returned promise from the observable for lazy loading
   {
     path: 'products',
+    // note: canLoad will block preloading
     canLoad: [AuthGuard],
     loadChildren: () => import('./products/product.module').then(m => m.ProductModule)
   },
@@ -21,7 +22,7 @@ let routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true, preloadingStrategy: PreloadAllModules })],
   // Router Module must be exported to allow other components access
   exports: [RouterModule],
 })
