@@ -11,7 +11,7 @@ let routes: Routes = [
   // use .then to handle the returned promise from the observable for lazy loading
   {
     path: 'products',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () => import('./products/product.module').then(m => m.ProductModule)
   },
   // default path
