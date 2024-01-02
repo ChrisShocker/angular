@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { of, from, map, tap } from 'rxjs';
+import { of, from, map, tap, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +51,22 @@ export class AppComponent implements OnInit {
           console.log(`tap ${data}`);
         }),
         map((data) => data * 3)
+      )
+      .subscribe((data) => {
+        console.log(`map ${data}`);
+      });
+
+    // example take usage
+    // use take to limit the number of items returned from the input observable
+    // take emits an observable with only the number of items it took from the input observable
+    console.log('take example');
+    of(1, 2, 3, 4)
+      .pipe(
+        tap((data) => {
+          console.log(`tap ${data}`);
+        }),
+        map((data) => data * 3),
+        take(2)
       )
       .subscribe((data) => {
         console.log(`map ${data}`);
