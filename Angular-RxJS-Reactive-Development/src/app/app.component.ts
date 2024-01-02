@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { of, from, map } from 'rxjs';
+import { of, from, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -32,11 +32,26 @@ export class AppComponent implements OnInit {
     });
 
     // example map usage
+    // use map to modify every value
     console.log('map example');
     of(1, 2, 3, 4)
       .pipe(map((data) => data * 2))
       .subscribe((data) => {
         console.log(data);
+      });
+
+    // example tap usage
+    // use tap to view the data without changing it
+    console.log('tap example');
+    of(1, 2, 3, 4)
+      .pipe(
+        tap((data) => {
+          console.log(`tap ${data}`);
+        }),
+        map((data) => data * 3)
+      )
+      .subscribe((data) => {
+        console.log(`map ${data}`);
       });
   }
 }
