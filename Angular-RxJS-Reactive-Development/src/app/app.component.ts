@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
     });
 
     // example map usage
-    // use map to modify every value
+    // use map to modify every value from the input observable
+    // map returns and output observable with the mapped changes
     console.log('map example');
     of(1, 2, 3, 4)
       .pipe(map((data) => data * 2))
@@ -41,7 +42,8 @@ export class AppComponent implements OnInit {
       });
 
     // example tap usage
-    // use tap to view the data without changing it
+    // use tap to view the data without changing it or to add side effects
+    // tap emits an observable identical to its input observable
     console.log('tap example');
     of(1, 2, 3, 4)
       .pipe(
