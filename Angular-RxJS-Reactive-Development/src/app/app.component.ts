@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { of, from, map, tap, take } from 'rxjs';
+import { from, map, of, take, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
+  selector: 'pm-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Angular-RxJS-Reactive-Development';
-
+  pageTitle = 'Acme Product Management';
   ngOnInit(): void {
     /*
      example RxJS functions
