@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 import { Product } from './product';
 
@@ -13,7 +13,11 @@ export class ProductService {
   private suppliersUrl = 'api/suppliers';
 
   // declarative observable
+  // to map an array, map the array object then map the items in that object
+  // note the map will transform the element types, we must transform them back
   products$ = this.http.get<Product[]>(this.productsUrl).pipe(
+    map(products => )
+    ),
     tap((data) => console.log('Products: ', JSON.stringify(data))),
     catchError(this.handleError)
   );
