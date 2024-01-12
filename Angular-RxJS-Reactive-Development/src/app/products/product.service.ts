@@ -16,9 +16,22 @@ export class ProductService {
   // to map an array, map the array object then map the items in that object
   // note the map will transform the element types, we must transform them back
   products$ = this.http.get<Product[]>(this.productsUrl).pipe(
-    map(products => )
+    map((products) =>
+      products.map(
+        (product) =>
+          ({
+            // use spread operator to get existing product params
+            ...product,
+            // transform the params we want with a property :
+            price: product.price ? product.price * 1.5 : 0,
+            // set the searchKey nested array first element to the name of the product
+            searchKey: [product.productName],
+            // ensure proper type is returned using the 'as Product'
+          } as Product)
+      )
     ),
-    tap((data) => console.log('Products: ', JSON.stringify(data))),
+
+    tap((data) => console.log('Products; ', JSON.stringify(data))),
     catchError(this.handleError)
   );
 
