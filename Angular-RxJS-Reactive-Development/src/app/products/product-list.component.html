@@ -30,7 +30,10 @@
     </div>
 
     <div class="table-responsive">
-      <table class="table mb-0" *ngIf="productWithCategories$ | async">
+      <table
+        class="table mb-0"
+        *ngIf="productsSimpleFilter$ | async as products"
+      >
         <thead>
           <tr>
             <th>Product</th>
@@ -41,7 +44,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let product of productWithCategories$ | async">
+          <tr *ngFor="let product of productsSimpleFilter$ | async">
             <td>{{ product.productName }}</td>
             <td>{{ product.productCode }}</td>
             <td>{{ product.category }}</td>
