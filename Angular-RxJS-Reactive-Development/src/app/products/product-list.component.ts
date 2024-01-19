@@ -17,7 +17,7 @@ export class ProductListComponent {
   categories: ProductCategory[] = [];
 
   // declaritive observable that uses async and has error handeling
-  products$ = this.productService.products$.pipe(
+  productWithCategories$ = this.productService.productWithCategories$.pipe(
     catchError((err: string) => {
       this.errorMessage = err;
       return EMPTY;
