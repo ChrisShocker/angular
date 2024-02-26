@@ -28,6 +28,7 @@ export class ProductListComponent {
   // expose the value of the subject for other components to subscribe to
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
+  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display
   products$ = combineLatest([
     this.productService.productWithCategories$,
     this.categorySelectedAction$,
