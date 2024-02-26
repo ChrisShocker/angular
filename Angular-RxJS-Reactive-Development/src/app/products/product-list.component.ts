@@ -29,7 +29,7 @@ export class ProductListComponent {
   private categorySelectedSubject1 = new BehaviorSubject<number>(0);
   categorySelectedAction1$ = this.categorySelectedSubject1.asObservable();
 
-  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display, a BehaviourSubject can be used instead of a subject to set a initila value or a pipe with 'startWith() on the observable'
+  // Note: combineLatest doesn't set an initial value, and won't emit until each of it's input streams emit, subscribers will be given nothing to display, a BehaviourSubject can be used instead of a subject to set a initila value or a pipe with 'startWith() on the observable'
   products$ = combineLatest([
     this.productService.productWithCategories$,
     this.categorySelectedAction1$,
