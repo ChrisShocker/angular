@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
+  BehaviorSubject,
   EMPTY,
   Subject,
   catchError,
@@ -24,10 +25,14 @@ export class ProductListComponent {
   // expose the value of the subject for other components to subscribe to
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
-  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display, a behaviour subject can be used instead of a subject to set a initila value or a pipe with 'startWith() on the observable'
+  // a BehaviourSubject can be used instead to set the default value instead of startWith()
+  private categorySelectedSubject1 = new BehaviorSubject<number>(0);
+  categorySelectedAction1$ = this.categorySelectedSubject1.asObservable();
+
+  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display, a BehaviourSubject can be used instead of a subject to set a initila value or a pipe with 'startWith() on the observable'
   products$ = combineLatest([
     this.productService.productWithCategories$,
-    this.categorySelectedAction$.pipe(startWith(0)),
+    this.categorySelectedAction1$,
   ]).pipe(
     map(([products, selectedCategoryId]) =>
       products.filter((product) =>
@@ -55,17 +60,6 @@ export class ProductListComponent {
       return EMPTY;
     })
   );
-
-  // example filter with dereferenced array
-  // productsSimpleFilter$ = this.productService.productWithCategories$.pipe(
-  //   map((products) =>
-  //     products.filter((product) =>
-  //       this.selectedCategoryId
-  //         ? product.categoryId === this.selectedCategoryId
-  //         : true
-  //     )
-  //   )
-  // );
 
   constructor(
     private productService: ProductService,
