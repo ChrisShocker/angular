@@ -2,16 +2,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import {
   EMPTY,
-  Observable,
   Subject,
   catchError,
   combineLatest,
-  filter,
   map,
+  startWith,
 } from 'rxjs';
-import { ProductCategory } from '../product-categories/product-category';
-
-import { Product } from './product';
 import { ProductService } from './product.service';
 import { ProductCategoryService } from '../product-categories/product-category.service';
 
@@ -28,10 +24,10 @@ export class ProductListComponent {
   // expose the value of the subject for other components to subscribe to
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
-  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display
+  // Note: combineLatest doesn't set an initial value, so until one is emitted the subscribers will be given nothing to display, a behaviour subject can be used instead of a subject to set a initila value or a pipe with 'startWith() on the observable'
   products$ = combineLatest([
     this.productService.productWithCategories$,
-    this.categorySelectedAction$,
+    this.categorySelectedAction$.pipe(startWith(0)),
   ]).pipe(
     map(([products, selectedCategoryId]) =>
       products.filter((product) =>
