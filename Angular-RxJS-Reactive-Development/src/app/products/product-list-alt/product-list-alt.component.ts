@@ -1,17 +1,15 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EMPTY, Subscription, catchError } from 'rxjs';
-import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { error } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list-alt.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductListAltComponent {
   pageTitle = 'Products';
   errorMessage = '';
-  selectedProductId = 0;
 
   products$ = this.productService.products$.pipe(
     catchError((err) => {
@@ -22,6 +20,9 @@ export class ProductListAltComponent {
   sub!: Subscription;
 
   constructor(private productService: ProductService) {}
+
+  // Get current selected product to update UI
+  selectedProduct$ = this.productService.selectedProduct$;
 
   onSelected(productId: number): void {
     this.productService.productSelectionChange(productId);
