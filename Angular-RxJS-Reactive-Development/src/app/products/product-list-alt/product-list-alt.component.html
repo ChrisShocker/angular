@@ -12,7 +12,7 @@
         [ngClass]="{ active: product?.id === (selectedProduct$ | async)?.id }"
         (click)="onSelected(product.id)"
       >
-        {{ product.productName }} ({{ product.categoryId }})
+        {{ product.productName }} ({{ product.category }})
       </button>
     </div>
   </div>
