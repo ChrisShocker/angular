@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import {
+  BehaviorSubject,
   catchError,
   combineLatest,
   map,
@@ -19,6 +20,10 @@ import { ProductCategoryService } from '../product-categories/product-category.s
 export class ProductService {
   private productsUrl = 'api/products';
   private suppliersUrl = 'api/suppliers';
+  // create variable to hold selected product
+  private productSelectedSubject = new BehaviorSubject<number>(0);
+  // expose productSelected behaviour subject
+  productSelectedAction$ = this.productSelectedSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -66,10 +71,23 @@ export class ProductService {
     )
   );
 
-  selectedProduct$ = this.productWithCategories$.pipe(
-    map((products) => products.find((product) => product.id === 5)),
+  // first observable emits array of products
+  // second emits the selectedProductId
+  selectedProduct$ = combineLatest([
+    this.productWithCategories$,
+    this.productSelectedAction$,
+  ]).pipe(
+    map(([products, selectedProductId]) =>
+      products.find((product) => product.id === selectedProductId)
+    ),
     tap((product) => console.log('selectedProduct', product))
   );
+
+  // setter/helper function to update behaviourSubject
+  // in service when user chooses a different product
+  productSelectionChange(selectedProductId: number) {
+    this.productSelectedSubject.next(selectedProductId);
+  }
 
   private fakeProduct(): Product {
     return {
