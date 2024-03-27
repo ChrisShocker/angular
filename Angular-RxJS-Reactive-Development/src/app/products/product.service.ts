@@ -20,6 +20,11 @@ export class ProductService {
   private productsUrl = 'api/products';
   private suppliersUrl = 'api/suppliers';
 
+  constructor(
+    private http: HttpClient,
+    private productCategoryService: ProductCategoryService
+  ) {}
+
   // declarative observable
   // to map an array, map the array object then map the items in that object
   // note the map will transform the element types, we must transform them back
@@ -61,10 +66,10 @@ export class ProductService {
     )
   );
 
-  constructor(
-    private http: HttpClient,
-    private productCategoryService: ProductCategoryService
-  ) {}
+  selectedProduct$ = this.productWithCategories$.pipe(
+    map((products) => products.find((product) => product.id === 5)),
+    tap((product) => console.log('selectedProduct', product))
+  );
 
   private fakeProduct(): Product {
     return {
