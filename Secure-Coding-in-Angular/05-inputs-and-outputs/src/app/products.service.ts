@@ -8,15 +8,17 @@ export interface Product {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProducts(query: string): Observable<Product[]> {
     let url = new URL('https://example.com/api/products');
     url.searchParams.set('q', query);
-    return this.http.get<Product[]>(url.toString()).pipe(map(res => res || []));
+    // possible injection attack, need to protect against possible injections into the API or DB
+    return this.http
+      .get<Product[]>(url.toString())
+      .pipe(map((res) => res || []));
   }
 }
