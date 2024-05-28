@@ -9,7 +9,8 @@ import { BypassComponent } from './app/bypass/bypass.component';
 import { SearchComponent } from './app/search/search.component';
 
 bootstrapApplication(AppComponent, {
-  // search route is only route used in demo
+  // search route is used to demo Angular's built-in sanitization
+  // bypass route is used to demo how to bypass Angular's built-in sanitization
   providers: [
     importProvidersFrom(BrowserModule, FormsModule),
     provideRouter([
