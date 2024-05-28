@@ -9,14 +9,14 @@ import { BypassComponent } from './app/bypass/bypass.component';
 import { SearchComponent } from './app/search/search.component';
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, FormsModule),
-        provideRouter([
-            { path: 'search', component: SearchComponent },
-            { path: 'bypass', component: BypassComponent },
-            { path: 'build-dom', component: BuildDomComponent },
-            { path: '', redirectTo: 'search', pathMatch: 'full' }
-        ])
-    ]
-})
-  .catch(err => console.error(err));
+  // search route is only route used in demo
+  providers: [
+    importProvidersFrom(BrowserModule, FormsModule),
+    provideRouter([
+      { path: 'search', component: SearchComponent },
+      { path: 'bypass', component: BypassComponent },
+      { path: 'build-dom', component: BuildDomComponent },
+      { path: '', redirectTo: 'search', pathMatch: 'full' },
+    ]),
+  ],
+}).catch((err) => console.error(err));
