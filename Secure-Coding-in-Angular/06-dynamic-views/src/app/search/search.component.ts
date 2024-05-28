@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
       <p>You searched for</p>
 
       <!-- user entered data is directly displayed -->
-      <!-- would be a problem if Angular didn't sanitize values for us-->
+      <!-- would be a problem if Angular didn't sanitize values for us and remove unsafe markup-->
       <h2>Using property binding</h2>
       <p [innerHtml]="searchInput"></p>
     </ng-container>
