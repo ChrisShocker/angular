@@ -1,22 +1,32 @@
-import { AfterViewInit, Component, ElementRef, inject, Renderer2, SecurityContext, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  inject,
+  Renderer2,
+  SecurityContext,
+  ViewChild,
+} from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-    selector: 'app-build-dom',
-    template: `
+  selector: 'app-build-dom',
+  template: `
     <h2>Appending to DOM</h2>
     <div #dangerEl></div>
-    <hr/>
+    <hr />
     <div #sanitizedEl></div>
   `,
-    styles: [`
-  `],
-    standalone: true
+  styles: [``],
+  standalone: true,
 })
 export class BuildDomComponent implements AfterViewInit {
-
-  @ViewChild('dangerEl', { static: false }) private el!: ElementRef<HTMLElement>;
-  @ViewChild('sanitizedEl', { static: false }) private sanitizedEl!: ElementRef<HTMLElement>;
+  // Do shady DOM manipulation that prevents Angular's built-in sanitization
+  @ViewChild('dangerEl', { static: false })
+  private el!: ElementRef<HTMLElement>;
+  // Display sanitized DOM
+  @ViewChild('sanitizedEl', { static: false })
+  private sanitizedEl!: ElementRef<HTMLElement>;
   private renderer: Renderer2 = inject(Renderer2);
   private sanitizer: DomSanitizer = inject(DomSanitizer);
 
@@ -33,4 +43,3 @@ export class BuildDomComponent implements AfterViewInit {
     }
   }
 }
-
