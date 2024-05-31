@@ -8,14 +8,15 @@ export interface AuthState {
 
 const defaultAuthState: AuthState = {
   isAuthenticated: false,
-  role: 'enduser'
-}
+  role: 'enduser',
+};
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private authState:AuthState = defaultAuthState;
+  private authState: AuthState = defaultAuthState;
+  // track user that has logged in
   get isLoggedIn() {
     return this.authState.isAuthenticated;
   }
@@ -35,4 +36,3 @@ export class AuthService {
     this.authState = defaultAuthState;
   }
 }
-
