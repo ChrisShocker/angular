@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ROLE } from '../user.service';
 
-// more complex directive that has two inputs
+// more complex directive that has two inputs, doesn't support dyanmic roles currently
 @Directive({
   selector: '[appHasRole]',
   standalone: true,
@@ -32,6 +32,7 @@ export class HasRoleDirective implements OnChanges {
     this.userRole = userRole;
   }
 
+  // watch for any changes and update the view accordingly
   ngOnChanges(changes: SimpleChanges): void {
     if (
       changes['appHasRoleUserRole'].currentValue !==
