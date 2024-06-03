@@ -6,11 +6,12 @@ import { AppComponent } from './app/app.component';
 import { authInterceptor } from './app/auth.interceptor';
 
 bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule),
-        provideHttpClient(withInterceptors([
-            authInterceptor
-        ]))
-    ]
-})
-  .catch(err => console.error(err));
+  providers: [
+    importProvidersFrom(BrowserModule),
+    /**
+     * Import the incerceptor into the application
+     * Multiple interceptors can be used, and will be ran in the order they are provided
+     */
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
+}).catch((err) => console.error(err));
