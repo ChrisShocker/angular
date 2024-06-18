@@ -15,6 +15,7 @@ import { ProductService } from '../product.service';
 })
 export class ProductListAltComponent {
   pageTitle = 'Products';
+  // set error message to be an action stream to allow change detection to occur in the UI from OnPush detection strategy.
   private errorMessageSubject = new Subject<string>();
   errorMessage$ = this.errorMessageSubject.asObservable();
 
