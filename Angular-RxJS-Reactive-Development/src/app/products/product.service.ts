@@ -6,7 +6,10 @@ import {
   catchError,
   combineLatest,
   map,
+  merge,
   Observable,
+  scan,
+  Subject,
   tap,
   throwError,
 } from 'rxjs';
@@ -70,6 +73,21 @@ export class ProductService {
       )
     )
   );
+  // Reacting to Actions
+  // step 1: create an action stream to hold new product
+  private productInsertedSubject = new Subject<Product>();
+  // step 2: expose the stream
+  productInsertedAction$ = this.productInsertedSubject.asObservable();
+  // step 3: merge incoming data with existing data
+  productsWithAdd$ = merge(
+    this.productWithCategories$,
+    this.productInsertedAction$
+  ).pipe(
+    scan(
+      (acc, value) => (value instanceof Array ? [...value] : [...acc, value]),
+      [] as Product[]
+    )
+  );
 
   // first observable emits array of products
   // second emits the selectedProductId
@@ -87,6 +105,11 @@ export class ProductService {
   // in service when user chooses a different product
   productSelectionChange(selectedProductId: number) {
     this.productSelectedSubject.next(selectedProductId);
+  }
+
+  addProduct(newProduct?: Product) {
+    newProduct = newProduct || this.fakeProduct();
+    this.productInsertedSubject.next(newProduct);
   }
 
   private fakeProduct(): Product {
