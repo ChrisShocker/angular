@@ -9,6 +9,8 @@ import {
   merge,
   Observable,
   scan,
+  share,
+  shareReplay,
   Subject,
   tap,
   throwError,
@@ -71,8 +73,10 @@ export class ProductService {
             searchKey: [product.productName],
           } as Product)
       )
-    )
+    ),
+    shareReplay(1)
   );
+
   // Reacting to Actions
   // step 1: create an action stream to hold new product
   private productInsertedSubject = new Subject<Product>();
@@ -98,7 +102,8 @@ export class ProductService {
     map(([products, selectedProductId]) =>
       products.find((product) => product.id === selectedProductId)
     ),
-    tap((product) => console.log('selectedProduct', product))
+    tap((product) => console.log('selectedProduct', product)),
+    shareReplay(1)
   );
 
   // setter/helper function to update behaviourSubject

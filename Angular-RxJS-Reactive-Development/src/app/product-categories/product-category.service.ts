@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { throwError, Observable, catchError, tap } from 'rxjs';
+import { throwError, Observable, catchError, tap, shareReplay } from 'rxjs';
 import { ProductCategory } from './product-category';
 
 @Injectable({
@@ -10,10 +10,12 @@ import { ProductCategory } from './product-category';
 export class ProductCategoryService {
   private productCategoriesUrl = 'api/productCategories';
 
+  // shareReplay(1) will cache the last emitted value and replay it to new subscribers
   productCategories$ = this.http
     .get<ProductCategory[]>(this.productCategoriesUrl)
     .pipe(
       tap((data) => console.log('categories', JSON.stringify(data))),
+      shareReplay(1),
       catchError(this.handleError)
     );
 
