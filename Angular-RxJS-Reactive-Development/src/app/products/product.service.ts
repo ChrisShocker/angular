@@ -9,7 +9,6 @@ import {
   merge,
   Observable,
   scan,
-  share,
   shareReplay,
   Subject,
   tap,
