@@ -11,10 +11,16 @@ import { EMPTY, catchError } from 'rxjs';
 export class ProductDetailComponent {
   pageTitle = 'Product Detail';
   errorMessage = '';
-  productSuppliers: Supplier[] | null = null;
 
   // create stream to service selectedProduct to return a specific product
   product$ = this.productService.selectedProduct$.pipe(
+    catchError((error) => {
+      console.error(error);
+      return EMPTY;
+    })
+  );
+
+  productSuppliers$ = this.productService.selectedProductSuppliers$.pipe(
     catchError((error) => {
       console.error(error);
       return EMPTY;

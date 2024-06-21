@@ -18,6 +18,7 @@ import {
 import { Product } from './product';
 import { ProductCategoryService } from '../product-categories/product-category.service';
 import { SupplierService } from '../suppliers/supplier.service';
+import { Supplier } from '../suppliers/supplier';
 
 @Injectable({
   providedIn: 'root',
@@ -105,6 +106,20 @@ export class ProductService {
     ),
     tap((product) => console.log('selectedProduct', product)),
     shareReplay(1)
+  );
+
+  // combine selectedProduct stream with all suppliers stream
+  // filter suppliers by selected product supplierIds
+  selectedProductSuppliers$ = combineLatest([
+    this.selectedProduct$,
+    this.supplierService.suppliers$ as Observable<Supplier[]>,
+  ]).pipe(
+    // use map array destructuring to assign variable to emissions
+    map(([selectedProduct, suppliers]) =>
+      suppliers.filter((supplier) =>
+        selectedProduct?.supplierIds?.includes(supplier.id)
+      )
+    )
   );
 
   // setter/helper function to update behaviourSubject

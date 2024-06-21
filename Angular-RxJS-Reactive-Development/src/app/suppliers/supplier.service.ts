@@ -4,13 +4,13 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   throwError,
   Observable,
-  map,
   of,
-  concat,
   tap,
   concatMap,
   mergeMap,
   switchMap,
+  shareReplay,
+  catchError,
 } from 'rxjs';
 import { Supplier } from './supplier';
 
@@ -19,6 +19,13 @@ import { Supplier } from './supplier';
 })
 export class SupplierService {
   suppliersUrl = 'api/suppliers';
+
+  // get all suppliers at once and cache the data
+  suppliers$ = this.http.get<Supplier[]>(this.suppliersUrl).pipe(
+    tap((data) => console.log('suppliers', JSON.stringify(data))),
+    shareReplay(1),
+    catchError(this.handleError)
+  );
 
   // // mock observale to return a list of supplier ids
   // // inner observable emits a supplier
@@ -89,4 +96,9 @@ export class SupplierService {
     console.error(err);
     return throwError(() => errorMessage);
   }
+}
+function cactchError(
+  handleError: (err: HttpErrorResponse) => Observable<never>
+): import('rxjs').OperatorFunction<Supplier[], unknown> {
+  throw new Error('Function not implemented.');
 }
