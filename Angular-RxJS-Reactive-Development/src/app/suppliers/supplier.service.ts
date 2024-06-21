@@ -1,7 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
-import { throwError, Observable, map, of, concat, tap, concatMap } from 'rxjs';
+import {
+  throwError,
+  Observable,
+  map,
+  of,
+  concat,
+  tap,
+  concatMap,
+  mergeMap,
+  switchMap,
+} from 'rxjs';
 import { Supplier } from './supplier';
 
 @Injectable({
@@ -24,6 +34,19 @@ export class SupplierService {
     concatMap((id) => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
   );
 
+  // use mergeMap, to subscribe to and flatten inner observables and emit results in parallel
+  suppliersWithMergeMap$ = of(1, 5, 8).pipe(
+    tap((id) => console.log('mergeMap source Observable', id)),
+    mergeMap((id) => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+  );
+
+  // user switchMap when we only care about the inner observable emitting the last value
+  // switchMap will unsub from previous inner observable subscription, or combine the results
+  suppliersWithSwitchMap$ = of(1, 5, 8).pipe(
+    tap((id) => console.log('switchMap source observable', id)),
+    switchMap((id) => this.http.get<Supplier>(`${this.suppliersUrl}/${id}`))
+  );
+
   constructor(private http: HttpClient) {
     // // manually subscribe to the observable with a nested observable subscription
     // // THIS IS BAD PRACTICE
@@ -35,6 +58,19 @@ export class SupplierService {
     // Notice they will be console logged in order
     this.suppliersWithConcatMap$.subscribe((item) =>
       console.log('concatMap result ', item)
+    );
+
+    // subscribe and log the results of mergeMap
+    // Notice mergeMap sends all requests in parallel and won't be in a specific order
+    this.suppliersWithMergeMap$.subscribe((item) =>
+      console.log('mergeMap result ', item)
+    );
+
+    // subscribe and log the results of switchMap
+    // only the last value subscribed to will be emitted
+    // prior subbed to inner observables will be unsubscribed from automatically as new inner obvservables are subscribed to
+    this.suppliersWithSwitchMap$.subscribe((item) =>
+      console.log('switchMap result ', item)
     );
   }
 
