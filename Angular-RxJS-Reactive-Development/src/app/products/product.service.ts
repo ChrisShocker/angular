@@ -108,6 +108,7 @@ export class ProductService {
     shareReplay(1)
   );
 
+  // Get it all example using combineLatest
   // combine selectedProduct stream with all suppliers stream
   // filter suppliers by selected product supplierIds
   selectedProductSuppliers$ = combineLatest([
