@@ -2,7 +2,7 @@
            we can use the as to alias product$ as product 
            to prevent changing all the existing references -->
 <div class="card" *ngIf="product$ | async as product">
-  <div class="card-header">
+  <div class="card-header" *ngIf="pageTitle$ | async as pageTitle">
     {{ pageTitle }}
   </div>
 
