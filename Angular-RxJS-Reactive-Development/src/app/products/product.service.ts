@@ -5,12 +5,16 @@ import {
   BehaviorSubject,
   catchError,
   combineLatest,
+  filter,
+  forkJoin,
   map,
   merge,
   Observable,
+  of,
   scan,
   shareReplay,
   Subject,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
@@ -111,15 +115,49 @@ export class ProductService {
   // Get it all example using combineLatest
   // combine selectedProduct stream with all suppliers stream
   // filter suppliers by selected product supplierIds
-  selectedProductSuppliers$ = combineLatest([
-    this.selectedProduct$,
-    this.supplierService.suppliers$ as Observable<Supplier[]>,
-  ]).pipe(
-    // use map array destructuring to assign variable to emissions
-    map(([selectedProduct, suppliers]) =>
-      suppliers.filter((supplier) =>
-        selectedProduct?.supplierIds?.includes(supplier.id)
-      )
+  // selectedProductSuppliers$ = combineLatest([
+  //   this.selectedProduct$,
+  //   this.supplierService.suppliers$ as Observable<Supplier[]>,
+  // ]).pipe(
+  //   // use map array destructuring to assign variable to emissions
+  //   map(([selectedProduct, suppliers]) =>
+  //     suppliers.filter((supplier) =>
+  //       selectedProduct?.supplierIds?.includes(supplier.id)
+  //     )
+  //   )
+  // );
+
+  // just in time approach using switchMap and forkJoin using coPilot
+  // selectedProductSuppliers$ = this.selectedProduct$.pipe(
+  //   // switchMap to switch to a new observable
+  //   // forkJoin to combine the emissions of the selected product with the suppliers
+  //   switchMap((selectedProduct) =>
+  //     selectedProduct
+  //       ? forkJoin(
+  //           selectedProduct.supplierIds?.map((supplierId) =>
+  //             this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)
+  //           ) || []
+  //         )
+  //       : []
+  //   )
+  // );
+
+  // just in time approach using switchMap and forkJoin using class example
+  selectedProductSuppliers$ = this.selectedProduct$.pipe(
+    filter((product) => Boolean(product)),
+    switchMap((selectedProduct) => {
+      if (selectedProduct?.supplierIds) {
+        return forkJoin(
+          selectedProduct.supplierIds.map((supplierId) =>
+            this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)
+          )
+        );
+      } else {
+        return of([]);
+      }
+    }),
+    tap((suppliers) =>
+      console.log('product suppliers', JSON.stringify(suppliers))
     )
   );
 
