@@ -5,14 +5,24 @@ import {
   BehaviorSubject,
   catchError,
   combineLatest,
+  filter,
+  forkJoin,
   map,
+  merge,
   Observable,
+  of,
+  scan,
+  shareReplay,
+  Subject,
+  switchMap,
   tap,
   throwError,
 } from 'rxjs';
 
 import { Product } from './product';
 import { ProductCategoryService } from '../product-categories/product-category.service';
+import { SupplierService } from '../suppliers/supplier.service';
+import { Supplier } from '../suppliers/supplier';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +37,8 @@ export class ProductService {
 
   constructor(
     private http: HttpClient,
-    private productCategoryService: ProductCategoryService
+    private productCategoryService: ProductCategoryService,
+    private supplierService: SupplierService
   ) {}
 
   // declarative observable
@@ -68,6 +79,23 @@ export class ProductService {
             searchKey: [product.productName],
           } as Product)
       )
+    ),
+    shareReplay(1)
+  );
+
+  // Reacting to Actions
+  // step 1: create an action stream to hold new product
+  private productInsertedSubject = new Subject<Product>();
+  // step 2: expose the stream
+  productInsertedAction$ = this.productInsertedSubject.asObservable();
+  // step 3: merge incoming data with existing data
+  productsWithAdd$ = merge(
+    this.productWithCategories$,
+    this.productInsertedAction$
+  ).pipe(
+    scan(
+      (acc, value) => (value instanceof Array ? [...value] : [...acc, value]),
+      [] as Product[]
     )
   );
 
@@ -80,13 +108,68 @@ export class ProductService {
     map(([products, selectedProductId]) =>
       products.find((product) => product.id === selectedProductId)
     ),
-    tap((product) => console.log('selectedProduct', product))
+    tap((product) => console.log('selectedProduct', product)),
+    shareReplay(1)
+  );
+
+  // Get it all example using combineLatest
+  // combine selectedProduct stream with all suppliers stream
+  // filter suppliers by selected product supplierIds
+  // selectedProductSuppliers$ = combineLatest([
+  //   this.selectedProduct$,
+  //   this.supplierService.suppliers$ as Observable<Supplier[]>,
+  // ]).pipe(
+  //   // use map array destructuring to assign variable to emissions
+  //   map(([selectedProduct, suppliers]) =>
+  //     suppliers.filter((supplier) =>
+  //       selectedProduct?.supplierIds?.includes(supplier.id)
+  //     )
+  //   )
+  // );
+
+  // just in time approach using switchMap and forkJoin using coPilot
+  // selectedProductSuppliers$ = this.selectedProduct$.pipe(
+  //   // switchMap to switch to a new observable
+  //   // forkJoin to combine the emissions of the selected product with the suppliers
+  //   switchMap((selectedProduct) =>
+  //     selectedProduct
+  //       ? forkJoin(
+  //           selectedProduct.supplierIds?.map((supplierId) =>
+  //             this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)
+  //           ) || []
+  //         )
+  //       : []
+  //   )
+  // );
+
+  // just in time approach using switchMap and forkJoin using class example
+  selectedProductSuppliers$ = this.selectedProduct$.pipe(
+    filter((product) => Boolean(product)),
+    switchMap((selectedProduct) => {
+      if (selectedProduct?.supplierIds) {
+        return forkJoin(
+          selectedProduct.supplierIds.map((supplierId) =>
+            this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)
+          )
+        );
+      } else {
+        return of([]);
+      }
+    }),
+    tap((suppliers) =>
+      console.log('product suppliers', JSON.stringify(suppliers))
+    )
   );
 
   // setter/helper function to update behaviourSubject
   // in service when user chooses a different product
   productSelectionChange(selectedProductId: number) {
     this.productSelectedSubject.next(selectedProductId);
+  }
+
+  addProduct(newProduct?: Product) {
+    newProduct = newProduct || this.fakeProduct();
+    this.productInsertedSubject.next(newProduct);
   }
 
   private fakeProduct(): Product {
