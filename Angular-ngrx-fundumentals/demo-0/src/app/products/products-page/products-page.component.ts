@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { sumProducts } from 'src/app/utils/sum-products';
-import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { Store } from '@ngrx/store';
-import { state } from '@angular/animations';
 import {
   ProductsApiActions,
   ProductsPageActions,
 } from '../state/products.actions';
+import {
+  selectProducts,
+  selectProductsLoading,
+  selectProductsShowProductCode,
+  selectProductsTotal,
+} from '../state/products.selectors';
 
 @Component({
   selector: 'app-products-page',
@@ -16,14 +19,12 @@ import {
 })
 export class ProductsPageComponent {
   // use the store state of the products
-  products$ = this.store.select((state: any) => state.products.products);
-  total = 0;
+  products$ = this.store.select(selectProducts);
+  total$ = this.store.select(selectProductsTotal);
   // use the store state of the loading
-  loading$ = this.store.select((state: any) => state.products.loading);
+  loading$ = this.store.select(selectProductsLoading);
   // use the store state of the showProductCode
-  showProductCode$ = this.store.select(
-    (state: any) => state.products.showProductCode
-  );
+  showProductCode$ = this.store.select(selectProductsShowProductCode);
   errorMessage = '';
 
   // the store must be injected into the component
@@ -45,7 +46,6 @@ export class ProductsPageComponent {
         this.store.dispatch(
           ProductsApiActions.productsLoadSuccess({ products })
         );
-        this.total = sumProducts(products);
       },
       error: (error) => (this.errorMessage = error),
     });
