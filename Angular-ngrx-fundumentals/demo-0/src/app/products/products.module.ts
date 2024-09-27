@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { StoreModule } from '@ngrx/store';
 import { productsReducer } from './state/products.reducer';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { productsReducer } from './state/products.reducer';
     ReactiveFormsModule,
     // The store must be imported using the forFeature method in feature modules.
     StoreModule.forFeature('products', productsReducer),
+    EffectsModule.forFeature([]),
   ],
 })
 export class ProductsModule {}
