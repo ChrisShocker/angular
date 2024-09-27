@@ -4,6 +4,10 @@ import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { Store } from '@ngrx/store';
 import { state } from '@angular/animations';
+import {
+  ProductsApiActions,
+  ProductsPageActions,
+} from '../state/products.actions';
 
 @Component({
   selector: 'app-products-page',
@@ -11,9 +15,11 @@ import { state } from '@angular/animations';
   styleUrls: ['./products-page.component.css'],
 })
 export class ProductsPageComponent {
-  products: Product[] = [];
+  // use the store state of the products
+  products$ = this.store.select((state: any) => state.products.products);
   total = 0;
-  loading = true;
+  // use the store state of the loading
+  loading$ = this.store.select((state: any) => state.products.loading);
   // use the store state of the showProductCode
   showProductCode$ = this.store.select(
     (state: any) => state.products.showProductCode
@@ -32,11 +38,14 @@ export class ProductsPageComponent {
   }
 
   getProducts() {
+    this.store.dispatch(ProductsPageActions.loadProducts());
     this.productsService.getAll().subscribe({
       next: (products) => {
-        this.products = products;
+        // add the products to the store
+        this.store.dispatch(
+          ProductsApiActions.productsLoadSuccess({ products })
+        );
         this.total = sumProducts(products);
-        this.loading = false;
       },
       error: (error) => (this.errorMessage = error),
     });
@@ -45,6 +54,6 @@ export class ProductsPageComponent {
   toggleShowProductCode() {
     // dispact an action to trigger the productsReducer
     //  to update the state of the checkbox
-    this.store.dispatch({ type: '[Products Page] Toggle Product Code' });
+    this.store.dispatch(ProductsPageActions.toggleShowProductCode());
   }
 }
