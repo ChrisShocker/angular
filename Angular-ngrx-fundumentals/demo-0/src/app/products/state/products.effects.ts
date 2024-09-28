@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProductsService } from '../products.service';
 import { ProductsApiActions, ProductsPageActions } from './products.actions';
-import { concatMap, map } from 'rxjs';
+import { catchError, concatMap, EMPTY, map, of } from 'rxjs';
 
 @Injectable()
 export class ProductsEffects {
@@ -18,13 +18,14 @@ export class ProductsEffects {
       ofType(ProductsPageActions.loadProducts),
       // concatMap maps over emitted actions calls an angular service and mergs the result observables into a single stream we can use
       concatMap(() =>
-        this.productsService
-          .getAll()
-          .pipe(
-            map((products) =>
-              ProductsApiActions.productsLoadSuccess({ products })
-            )
+        this.productsService.getAll().pipe(
+          map((products) =>
+            ProductsApiActions.productsLoadSuccess({ products })
+          ),
+          catchError((error) =>
+            of(ProductsApiActions.productsLoadFail({ message: error }))
           )
+        )
       )
     )
   );

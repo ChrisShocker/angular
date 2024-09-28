@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ProductsPageActions } from '../state/products.actions';
 import {
   selectProducts,
+  selectProductsErrorMessage,
   selectProductsLoading,
   selectProductsShowProductCode,
   selectProductsTotal,
@@ -21,7 +22,7 @@ export class ProductsPageComponent {
   loading$ = this.store.select(selectProductsLoading);
   // use the store state of the showProductCode
   showProductCode$ = this.store.select(selectProductsShowProductCode);
-  errorMessage = '';
+  errorMessage$ = this.store.select(selectProductsErrorMessage);
 
   // the store must be injected into the component
   constructor(private store: Store) {

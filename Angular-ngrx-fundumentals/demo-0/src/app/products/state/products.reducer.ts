@@ -6,12 +6,14 @@ export interface ProductsState {
   showProductCode: boolean;
   loading: boolean;
   products: Product[];
+  errorMessage: string;
 }
 
 const initialState: ProductsState = {
   showProductCode: true,
   loading: false,
   products: [],
+  errorMessage: '',
 };
 
 export const productsReducer = createReducer(
@@ -30,11 +32,20 @@ export const productsReducer = createReducer(
   on(ProductsPageActions.loadProducts, (state) => ({
     ...state,
     loading: true,
+    products: [],
+    errorMessage: '',
   })),
   // on load success, update the products in the store and set loading to false
   on(ProductsApiActions.productsLoadSuccess, (state, { products }) => ({
     ...state,
     products: products,
+    loading: false,
+  })),
+  // on load fail, set the error message and set loading to false
+  on(ProductsApiActions.productsLoadFail, (state, { message }) => ({
+    ...state,
+    products: [],
+    errorMessage: message,
     loading: false,
   }))
 );
