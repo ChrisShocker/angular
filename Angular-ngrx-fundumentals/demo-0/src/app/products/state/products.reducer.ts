@@ -53,12 +53,41 @@ export const productsReducer = createReducer(
     errorMessage: '',
     loading: true,
   })),
+  // we do not mutate state, never use push or anything to modify the state,
+  // doing so would violate the immutability of the store
   on(ProductsApiActions.productAddedSuccess, (state, { product }) => ({
     ...state,
     products: [...state.products, product],
     loading: false,
   })),
   on(ProductsApiActions.productAddedFail, (state, { message }) => ({
+    ...state,
+    errorMessage: message,
+    loading: false,
+  })),
+  on(ProductsApiActions.productUpdatedSuccess, (state, { product }) => ({
+    ...state,
+    loading: false,
+    products: state.products.map((item) =>
+      item.id === product.id ? product : item
+    ),
+  })),
+  on(ProductsApiActions.productUpdatedFail, (state, { message }) => ({
+    ...state,
+    errorMessage: message,
+    loading: false,
+  })),
+  on(ProductsPageActions.deleteProduct, (state) => ({
+    ...state,
+    errorMessage: '',
+    loading: true,
+  })),
+  on(ProductsApiActions.productDeletedSuccess, (state, { id }) => ({
+    ...state,
+    loading: false,
+    products: state.products.filter((item) => item.id !== id),
+  })),
+  on(ProductsApiActions.productDeletedFail, (state, { message }) => ({
     ...state,
     errorMessage: message,
     loading: false,
