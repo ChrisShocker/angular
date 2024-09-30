@@ -15,6 +15,12 @@ import {
 
 @Injectable()
 export class ProductsEffects {
+  ngrxOnInitEffects() {
+    // use lifecycle hook to catch case when the component is initialized
+    // catches case where data hasn't been initialized yet and we need to load it
+    return ProductsPageActions.loadProducts();
+  }
+
   constructor(
     private actions: Actions,
     private productsService: ProductsService

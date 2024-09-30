@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductsState } from './products.reducer';
 import { sumProducts } from 'src/app/utils/sum-products';
+import { getRouterSelectors } from '@ngrx/router-store';
 
 /**
  * Selectors are pure functions that return slices of the store state.
@@ -42,8 +43,12 @@ export const selectProductsErrorMessage = createSelector(
   (productsState) => productsState.errorMessage
 );
 
+// use NgRx router selectors to select the route params
+export const { selectRouteParams } = getRouterSelectors();
+
 // create a selector to select a product by id
-export const selectProductById = (id: string) =>
-  createSelector(selectProducts, (products) =>
-    products.find((product) => product.id === parseInt(id))
-  );
+export const selectProductById = createSelector(
+  selectProducts,
+  selectRouteParams,
+  (products, { id }) => products.find((product) => product.id === parseInt(id))
+);

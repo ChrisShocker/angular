@@ -31,10 +31,6 @@ export class ProductsPageComponent {
     });
   }
 
-  ngOnInit() {
-    this.store.dispatch(ProductsPageActions.loadProducts());
-  }
-
   toggleShowProductCode() {
     // dispact an action to trigger the productsReducer
     //  to update the state of the checkbox

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Product } from '../product.model';
 import { ProductsService } from '../products.service';
 import { Store } from '@ngrx/store';
@@ -11,14 +11,11 @@ import { selectProductById } from '../state/products.selectors';
   styleUrls: ['./product-page.component.css'],
 })
 export class ProductPageComponent {
-  product$ = this.store.select(
-    selectProductById(this.activatedRoute.snapshot.params['id'])
-  );
+  product$ = this.store.select(selectProductById);
 
   constructor(
     private productsService: ProductsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private store: Store
   ) {}
 
