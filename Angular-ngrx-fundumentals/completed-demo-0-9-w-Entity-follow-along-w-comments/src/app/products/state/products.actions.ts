@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Product } from '../product.model';
+import { Update } from '@ngrx/entity';
 
 // Create all the actions to track for the products page
 export const ProductsPageActions = createActionGroup({
@@ -22,7 +23,8 @@ export const ProductsApiActions = createActionGroup({
     'Products Loaded Fail': props<{ message: string }>(),
     'Product Added Success': props<{ product: Product }>(),
     'Product Added Fail': props<{ message: string }>(),
-    'Product Updated Success': props<{ product: Product }>(),
+    // Make ts happy by converting from a generic type to a Update<Product> type
+    'Product Updated Success': props<{ update: Update<Product> }>(),
     'Product Updated Fail': props<{ message: string }>(),
     'Product Deleted Success': props<{ id: number }>(),
     'Product Deleted Fail': props<{ message: string }>(),

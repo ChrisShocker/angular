@@ -68,7 +68,12 @@ export class ProductsEffects {
       // Use concatMap to elimate race conditions and wait for the previous action to complete
       concatMap(({ product }) =>
         this.productsService.update(product).pipe(
-          map(() => ProductsApiActions.productUpdatedSuccess({ product })),
+          // use new update object, 1st arg is the id of the product, 2nd arg is the changes to the product
+          map(() =>
+            ProductsApiActions.productUpdatedSuccess({
+              update: { id: product.id, changes: product },
+            })
+          ),
           catchError((error) =>
             of(ProductsApiActions.productUpdatedFail({ message: error }))
           )
