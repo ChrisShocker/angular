@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Product } from '../product.model';
-import { ProductsService } from '../products.service';
 import { Store } from '@ngrx/store';
 import { selectProductById } from '../state/products.selectors';
 import { ProductsPageActions } from '../state/products.actions';
@@ -14,11 +12,7 @@ import { ProductsPageActions } from '../state/products.actions';
 export class ProductPageComponent {
   product$ = this.store.select(selectProductById);
 
-  constructor(
-    private productsService: ProductsService,
-    private router: Router,
-    private store: Store
-  ) {}
+  constructor(private store: Store) {}
 
   addProduct(product: Product) {
     // this.productsService.add(product).subscribe(this.goToProductsPage);
@@ -33,6 +27,4 @@ export class ProductPageComponent {
   deleteProduct(id: number) {
     this.store.dispatch(ProductsPageActions.deleteProduct({ id }));
   }
-
-  goToProductsPage = () => this.router.navigate(['/products']);
 }
