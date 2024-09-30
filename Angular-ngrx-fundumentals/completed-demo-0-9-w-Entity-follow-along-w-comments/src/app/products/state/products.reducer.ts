@@ -121,3 +121,8 @@ export const productsReducer = createReducer(
     loading: false,
   }))
 );
+
+const { selectAll, selectEntities } = adapter.getSelectors();
+
+export const selectProductEntities = selectEntities;
+export const selectAllProducts = selectAll;

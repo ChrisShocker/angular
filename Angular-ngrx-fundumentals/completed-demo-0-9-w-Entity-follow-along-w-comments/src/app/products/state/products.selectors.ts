@@ -2,6 +2,8 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ProductsState } from './products.reducer';
 import { sumProducts } from 'src/app/utils/sum-products';
 import { getRouterSelectors } from '@ngrx/router-store';
+// use entity adapter from reducer
+import * as fromProducts from './products.reducer';
 
 /**
  * Selectors are pure functions that return slices of the store state.
@@ -11,13 +13,21 @@ import { getRouterSelectors } from '@ngrx/router-store';
 
 // create a feature selector to select the products state
 // takes in the string 'products' which is the name of feature state in the store
+// use enetity adapter to get the products
 export const selectProductsState =
-  createFeatureSelector<ProductsState>('products');
+  createFeatureSelector<fromProducts.ProductsState>('products');
 
 // create a selector to select the products from the products state
 export const selectProducts = createSelector(
   selectProductsState,
-  (productsState) => productsState.products
+  // Use entity adapter to get all the products
+  fromProducts.selectAllProducts
+);
+
+export const selectProductsEntities = createSelector(
+  selectProductsState,
+  // Use entity adapter to get all the products
+  fromProducts.selectProductEntities
 );
 
 // create a selector to select the products loading state
@@ -48,7 +58,8 @@ export const { selectRouteParams } = getRouterSelectors();
 
 // create a selector to select a product by id
 export const selectProductById = createSelector(
-  selectProducts,
+  selectProductsEntities,
   selectRouteParams,
-  (products, { id }) => products.find((product) => product.id === parseInt(id))
+  // use dictionary from entity to find the product by id
+  (productsEntities, { id }) => productsEntities[id]
 );
