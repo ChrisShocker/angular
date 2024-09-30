@@ -10,6 +10,12 @@
       [showProductCode]="showProductCode$ | async"
       (toggleProductCode)="toggleShowProductCode()"
     ></app-products-list>
+    <app-products-list
+      [total]="total$ | async"
+      [products]="productsFromComponentStore$ | async"
+      [showProductCode]="showProductCode$ | async"
+      (toggleProductCode)="toggleShowProductCode()"
+    ></app-products-list>
   </div>
 </div>
 
