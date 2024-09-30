@@ -36,13 +36,13 @@ export const productsReducer = createReducer(
     errorMessage: '',
   })),
   // on load success, update the products in the store and set loading to false
-  on(ProductsApiActions.productsLoadSuccess, (state, { products }) => ({
+  on(ProductsApiActions.productsLoadedSuccess, (state, { products }) => ({
     ...state,
     products: products,
     loading: false,
   })),
   // on load fail, set the error message and set loading to false
-  on(ProductsApiActions.productsLoadFail, (state, { message }) => ({
+  on(ProductsApiActions.productsLoadedFail, (state, { message }) => ({
     ...state,
     products: [],
     errorMessage: message,

@@ -11,7 +11,9 @@ import {
   map,
   mergeMap,
   of,
+  tap,
 } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProductsEffects {
@@ -21,13 +23,8 @@ export class ProductsEffects {
     return ProductsPageActions.loadProducts();
   }
 
-  constructor(
-    private actions: Actions,
-    private productsService: ProductsService
-  ) {}
-
   loadProducts$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       // actions we want to listen for
       // when the loadProducts action is dispatched this effect will run
       ofType(ProductsPageActions.loadProducts),
@@ -37,10 +34,10 @@ export class ProductsEffects {
       exhaustMap(() =>
         this.productsService.getAll().pipe(
           map((products) =>
-            ProductsApiActions.productsLoadSuccess({ products })
+            ProductsApiActions.productsLoadedSuccess({ products })
           ),
           catchError((error) =>
-            of(ProductsApiActions.productsLoadFail({ message: error }))
+            of(ProductsApiActions.productsLoadedFail({ message: error }))
           )
         )
       )
@@ -48,7 +45,7 @@ export class ProductsEffects {
   );
 
   addProduct$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(ProductsPageActions.addProduct),
       // We use mergeMap to merge the result of the service call into the stream
       // mergeMap is used when the order of the emitted values is not important
@@ -66,14 +63,12 @@ export class ProductsEffects {
   );
 
   updateProduct$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(ProductsPageActions.updateProduct),
       // Use concatMap to elimate race conditions and wait for the previous action to complete
       concatMap(({ product }) =>
         this.productsService.update(product).pipe(
-          map((product) =>
-            ProductsApiActions.productUpdatedSuccess({ product })
-          ),
+          map(() => ProductsApiActions.productUpdatedSuccess({ product })),
           catchError((error) =>
             of(ProductsApiActions.productUpdatedFail({ message: error }))
           )
@@ -83,7 +78,7 @@ export class ProductsEffects {
   );
 
   deleteProduct$ = createEffect(() =>
-    this.actions.pipe(
+    this.actions$.pipe(
       ofType(ProductsPageActions.deleteProduct),
       mergeMap(({ id }) =>
         this.productsService.delete(id).pipe(
@@ -95,4 +90,25 @@ export class ProductsEffects {
       )
     )
   );
+
+  redirectToProductsPage = createEffect(
+    // listen for product success actions only
+    () =>
+      this.actions$.pipe(
+        ofType(
+          ProductsApiActions.productAddedSuccess,
+          ProductsApiActions.productUpdatedSuccess,
+          ProductsApiActions.productDeletedSuccess
+        ),
+        tap(() => this.router.navigate(['/products']))
+      ),
+    // don't return/dispatch any actions, only listen for them
+    { dispatch: false }
+  );
+
+  constructor(
+    private actions$: Actions,
+    private productsService: ProductsService,
+    private router: Router
+  ) {}
 }

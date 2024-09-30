@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { Product } from '../product.model';
 import { Store } from '@ngrx/store';
-import { selectProductById } from '../state/products.selectors';
+import {
+  selectProductById,
+  selectProductsErrorMessage,
+  selectProductsLoading,
+} from '../state/products.selectors';
 import { ProductsPageActions } from '../state/products.actions';
 
 @Component({
@@ -11,6 +15,8 @@ import { ProductsPageActions } from '../state/products.actions';
 })
 export class ProductPageComponent {
   product$ = this.store.select(selectProductById);
+  loading$ = this.store.select(selectProductsLoading);
+  errorMessage$ = this.store.select(selectProductsErrorMessage);
 
   constructor(private store: Store) {}
 

@@ -25,11 +25,7 @@ export class ProductsPageComponent {
   errorMessage$ = this.store.select(selectProductsErrorMessage);
 
   // the store must be injected into the component
-  constructor(private store: Store) {
-    this.store.subscribe((store) => {
-      console.log('Store:', store);
-    });
-  }
+  constructor(private store: Store) {}
 
   toggleShowProductCode() {
     // dispact an action to trigger the productsReducer
