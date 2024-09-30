@@ -5,11 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSpaYarp();
+// data for api
 builder.Services.AddSingleton<HouseRepository>();
 builder.Services.AddSingleton<BidRepository>();
 builder.Services.AddSingleton<UserRepository>();
 
+// registers views to hoop up up to MVC views
 builder.Services.AddControllersWithViews();
+// adds support for identity cookie
 builder.Services.AddAuthentication()
     .AddCookie(o =>
     {
@@ -26,6 +29,8 @@ builder.Services.AddAuthentication()
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline, API endpoints
+// [Authorize] decorator prevents unauthorized access to the endpoint (uses identity cookie)
 app.MapGet("/houses", [Authorize](HouseRepository repo) => repo.GetAll());
 app.MapGet("/houses/{id:int}", [Authorize](int id, HouseRepository repo) => repo.GetHouse(id));
 app.MapPost("/houses", [Authorize] (House house, HouseRepository repo) =>
