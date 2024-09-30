@@ -11,8 +11,11 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <!-- configure the path to the SPA root folder -->
     <SpaRoot>..\frontend\</SpaRoot>
+    <!-- configure the base url to use for reverse proxy -->
     <SpaClientUrl>http://localhost:4200</SpaClientUrl>
+    <!-- command to start reverse proxy -->
     <SpaLaunchCommand>ng serve</SpaLaunchCommand>
   </PropertyGroup>
 

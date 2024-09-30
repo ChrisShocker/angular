@@ -1,4 +1,6 @@
+<!-- only render if the user has claims else force the login -->
 <ng-container *ngIf="userClaims$ | async as userClaims; else noAuth">
+  <!-- only render if the user is authenticated -->
   <div *ngIf="authenticated; else noAuth">
     Hi {{ nameClaim }} !
     <div>

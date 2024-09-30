@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// reverse proxy for spa to enable strict cookies 
 builder.Services.AddSpaYarp();
 // data for api
 builder.Services.AddSingleton<HouseRepository>();
@@ -16,8 +17,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAuthentication()
     .AddCookie(o =>
     {
-        //Prevents overwrites from subdomains
+        //Prevents overwrites from subdomains with custom cookie name
         o.Cookie.Name = "__Host-spa";
+        // enable strict same site policy
         o.Cookie.SameSite = SameSiteMode.Strict;
         o.Events.OnRedirectToLogin = (context) =>
         {
@@ -48,6 +50,7 @@ app.MapPost("houses/{id:int}/bids", [Authorize] (Bid bid, BidRepository repo) =>
 
 app.MapControllers();
 
+// use the reverse proxy for the spa
 app.UseSpaYarp();
 
 app.Run();

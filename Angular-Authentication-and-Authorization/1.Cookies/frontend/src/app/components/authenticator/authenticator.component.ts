@@ -24,10 +24,13 @@ export class AuthenticatorComponent implements OnInit {
     this.userClaims$.subscribe((c) => {
       let claim = c.find((claim) => claim.type === 'name');
       this.nameClaim = claim ? claim.value : '';
+      // convienience property to check if user is authenticated
       this.authenticated = c.length > 0;
     });
   }
 
+  // get user Claims
+  // slide=false is used to allow the cookie to expire by not renewing the token expiration
   getUserClaims() {
     this.userClaims$ = this.http.get<UserClaim[]>(
       '/account/getUserClaims?slide=false'
