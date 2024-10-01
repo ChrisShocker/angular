@@ -12,10 +12,13 @@ builder.Services.AddSingleton<HouseRepository>();
 builder.Services.AddSingleton<BidRepository>();
 
 builder.Services.AddBff(o => o.ManagementBasePath = "/account")
+// reserve memory space for each user where claims and access tokens are stored
+// instead of having it all in the identity cookie
     .AddServerSideSessions();
 
 builder.Services.AddAuthentication(o =>
     {
+        // set authentication schemes
         o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         o.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
         o.DefaultSignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
@@ -30,8 +33,10 @@ builder.Services.AddAuthentication(o =>
             return Task.CompletedTask;
         };
     })
+    // Add OpenIdConnect authentication
     .AddOpenIdConnect(options =>
     {
+        // url to the identity server
         options.Authority = "https://localhost:5001";
 
         options.ClientId = "angular";

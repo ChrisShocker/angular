@@ -7,7 +7,9 @@ public static class Config
     public static IEnumerable<IdentityResource> IdentityResources =>
         new IdentityResource[]
         {
+            // requested to get identity token 
             new IdentityResources.OpenId(),
+            // requested to get user profile
             new IdentityResources.Profile(),
         };
 
@@ -28,6 +30,7 @@ public static class Config
                 PostLogoutRedirectUris = { "https://localhost:7180/signout-callback-oidc" },
 
                 AlwaysIncludeUserClaimsInIdToken = true,
+                // scopes client can request
                 AllowedScopes = { "openid", "profile" }
             },
         };
