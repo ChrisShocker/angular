@@ -1,0 +1,16 @@
+<!-- only render if the user has claims else force the login -->
+<ng-container *ngIf="userClaims$ | async as userClaims; else noAuth">
+  <!-- only render if the user is authenticated -->
+  <div *ngIf="authenticated; else noAuth">
+    Hi {{ nameClaim }} !
+    <div>
+      <a class="mt-3 btn btn-secondary btn-sm" href="/account/logout">
+        Log out
+      </a>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noAuth>
+  <a class="btn btn-primary" href="/account/Login">Log in</a>
+</ng-template>

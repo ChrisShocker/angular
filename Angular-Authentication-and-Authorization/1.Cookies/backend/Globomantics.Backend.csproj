@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.SpaYarp" Version="2.0.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- configure the path to the SPA root folder -->
+    <SpaRoot>..\frontend\</SpaRoot>
+    <!-- configure the base url to use for reverse proxy -->
+    <SpaClientUrl>http://localhost:4200</SpaClientUrl>
+    <!-- command to start reverse proxy -->
+    <SpaLaunchCommand>ng serve</SpaLaunchCommand>
+  </PropertyGroup>
+
+</Project>
