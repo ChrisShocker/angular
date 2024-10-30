@@ -6,7 +6,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Duende.IdentityServer" Version="6.3.6"/>
+        <PackageReference Include="Duende.IdentityServer" Version="6.3.6" />
+        <PackageReference Include="ReportGenerator" Version="5.3.11" />
     </ItemGroup>
 
 
