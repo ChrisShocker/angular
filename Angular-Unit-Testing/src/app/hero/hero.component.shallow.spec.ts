@@ -36,6 +36,7 @@ describe('HeroComponent (shallow tests)', () => {
     );
 
     // Using debugElement to query the DOM anchor element, same as above
+    // the debugElement can be used to access directives
     expect(
       fixture.debugElement.query(By.css('a')).nativeElement.textContent
     ).toContain('SuperDude');
