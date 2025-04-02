@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, take, tap } from 'rxjs';
+import { catchError, EMPTY, Observable, take, tap, throwError } from 'rxjs';
 import { Product } from './product';
+import { HttpErrorService } from '../utilities/http-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class ProductService {
 
   // Angular 14+ inject dependency injection
   private http = inject(HttpClient);
+  private errorService = inject(HttpErrorService);
 
   /**
    * // constructor based depedency injection
@@ -19,11 +21,20 @@ export class ProductService {
    */
 
   getProducts$(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl);
+    return this.http
+      .get<Product[]>(this.productsUrl)
+      .pipe(catchError((error) => this.handleErrors(error)));
   }
 
   getProductById$(id: number): Observable<Product> {
     const url = `${this.productsUrl + '/' + id}`;
-    return this.http.get<Product>(url);
+    return this.http
+      .get<Product>(url)
+      .pipe(catchError((error) => this.handleErrors(error)));
+  }
+
+  private handleErrors(error: HttpErrorResponse) {
+    const formattedError = this.errorService.formatError(error);
+    return throwError(() => formattedError);
   }
 }
