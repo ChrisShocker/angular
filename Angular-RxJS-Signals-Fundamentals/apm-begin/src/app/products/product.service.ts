@@ -35,6 +35,7 @@ export class ProductService {
 
   private handleErrors(error: HttpErrorResponse) {
     const formattedError = this.errorService.formatError(error);
+    // we can use the throwError which returns an observable, no more EMPTY
     return throwError(() => formattedError);
   }
 }
