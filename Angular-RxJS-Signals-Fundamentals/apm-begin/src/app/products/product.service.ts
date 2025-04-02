@@ -18,9 +18,12 @@ export class ProductService {
    *  constructor(private http: HttpClient){}
    */
 
-  getProducts(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(this.productsUrl)
-      .pipe(tap(() => console.log('in http.get')));
+  getProducts$(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.productsUrl);
+  }
+
+  getProductById$(id: number): Observable<Product> {
+    const url = `${this.productsUrl + '/' + id}`;
+    return this.http.get<Product>(url);
   }
 }
