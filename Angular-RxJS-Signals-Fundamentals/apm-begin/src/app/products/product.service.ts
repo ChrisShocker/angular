@@ -6,6 +6,7 @@ import {
   map,
   Observable,
   of,
+  switchMap,
   take,
   tap,
   throwError,
@@ -32,6 +33,15 @@ export class ProductService {
    *  constructor(private http: HttpClient){}
    */
 
+  // use a switchMap to cancel all prior subscriptions
+  getProductById$(id: number): Observable<Product> {
+    const productUrl = this.productsUrl + '/' + id;
+    return this.http.get<Product>(productUrl).pipe(
+      switchMap((product) => this.getProductWithReviews(product)),
+      catchError((err) => this.handleErrors(err))
+    );
+  }
+
   private getProductWithReviews(product: Product): Observable<Product> {
     if (product.hasReviews) {
       return this.http
@@ -48,13 +58,6 @@ export class ProductService {
   getProducts$(): Observable<Product[]> {
     return this.http
       .get<Product[]>(this.productsUrl)
-      .pipe(catchError((error) => this.handleErrors(error)));
-  }
-
-  getProductById$(id: number): Observable<Product> {
-    const url = `${this.productsUrl + '/' + id}`;
-    return this.http
-      .get<Product>(url)
       .pipe(catchError((error) => this.handleErrors(error)));
   }
 
