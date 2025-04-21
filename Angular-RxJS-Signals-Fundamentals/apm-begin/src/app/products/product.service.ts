@@ -6,6 +6,7 @@ import {
   map,
   Observable,
   of,
+  shareReplay,
   switchMap,
   take,
   tap,
@@ -33,9 +34,15 @@ export class ProductService {
    *  constructor(private http: HttpClient){}
    */
 
-  readonly products$ = this.http
-    .get<Product[]>(this.productsUrl)
-    .pipe(catchError((error) => this.handleErrors(error)));
+  readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
+    tap((p) => {
+      console.log(JSON.stringify(p));
+    }),
+    // shareReplay location matters, operators above are executed before cache and not executed on next sub
+    shareReplay(1),
+    // operators below are executed on every subscription
+    catchError((error) => this.handleErrors(error))
+  );
 
   // use a switchMap to cancel all prior subscriptions
   getProductById$(id: number): Observable<Product> {
