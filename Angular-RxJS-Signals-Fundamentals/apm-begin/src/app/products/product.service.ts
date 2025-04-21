@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
+  BehaviorSubject,
   catchError,
   EMPTY,
   map,
@@ -29,10 +30,10 @@ export class ProductService {
   private errorService = inject(HttpErrorService);
   private reviewService = inject(ReviewService);
 
-  /**
-   * // constructor based depedency injection
-   *  constructor(private http: HttpClient){}
-   */
+  private productSelectedSubject = new BehaviorSubject<number | undefined>(
+    undefined
+  );
+  readonly productSelected$ = this.productSelectedSubject.asObservable();
 
   readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
     tap((p) => {
@@ -66,11 +67,9 @@ export class ProductService {
     } else return of(product);
   }
 
-  // getProducts$(): Observable<Product[]> {
-  //   return this.http
-  //     .get<Product[]>(this.productsUrl)
-  //     .pipe(catchError((error) => this.handleErrors(error)));
-  // }
+  productSelected(selectedProductId: number) {
+    this.productSelectedSubject.next(selectedProductId);
+  }
 
   private handleErrors(error: HttpErrorResponse) {
     const formattedError = this.errorService.formatError(error);
