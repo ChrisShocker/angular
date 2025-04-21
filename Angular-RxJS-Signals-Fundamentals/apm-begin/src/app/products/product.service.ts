@@ -33,6 +33,10 @@ export class ProductService {
    *  constructor(private http: HttpClient){}
    */
 
+  readonly products$ = this.http
+    .get<Product[]>(this.productsUrl)
+    .pipe(catchError((error) => this.handleErrors(error)));
+
   // use a switchMap to cancel all prior subscriptions
   getProductById$(id: number): Observable<Product> {
     const productUrl = this.productsUrl + '/' + id;
@@ -55,11 +59,11 @@ export class ProductService {
     } else return of(product);
   }
 
-  getProducts$(): Observable<Product[]> {
-    return this.http
-      .get<Product[]>(this.productsUrl)
-      .pipe(catchError((error) => this.handleErrors(error)));
-  }
+  // getProducts$(): Observable<Product[]> {
+  //   return this.http
+  //     .get<Product[]>(this.productsUrl)
+  //     .pipe(catchError((error) => this.handleErrors(error)));
+  // }
 
   private handleErrors(error: HttpErrorResponse) {
     const formattedError = this.errorService.formatError(error);
