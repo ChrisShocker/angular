@@ -4,6 +4,7 @@ import {
   BehaviorSubject,
   catchError,
   EMPTY,
+  filter,
   map,
   Observable,
   of,
@@ -30,11 +31,6 @@ export class ProductService {
   private errorService = inject(HttpErrorService);
   private reviewService = inject(ReviewService);
 
-  private productSelectedSubject = new BehaviorSubject<number | undefined>(
-    undefined
-  );
-  readonly productSelected$ = this.productSelectedSubject.asObservable();
-
   readonly products$ = this.http.get<Product[]>(this.productsUrl).pipe(
     tap((p) => {
       console.log(JSON.stringify(p));
@@ -43,6 +39,27 @@ export class ProductService {
     shareReplay(1),
     // operators below are executed on every subscription
     catchError((error) => this.handleErrors(error))
+  );
+
+  private productSelectedSubject = new BehaviorSubject<number | undefined>(
+    undefined
+  );
+  readonly productSelected$ = this.productSelectedSubject.asObservable();
+
+  productSelected(selectedProductId: number) {
+    this.productSelectedSubject.next(selectedProductId);
+  }
+
+  readonly product$ = this.productSelected$.pipe(
+    // filter out null and undefined values
+    filter(Boolean),
+    switchMap((id) => {
+      const productUrl = this.productsUrl + '/' + id;
+      return this.http.get<Product>(productUrl).pipe(
+        switchMap((product) => this.getProductWithReviews(product)),
+        catchError((err) => this.handleErrors(err))
+      );
+    })
   );
 
   // use a switchMap to cancel all prior subscriptions
@@ -65,10 +82,6 @@ export class ProductService {
           })
         );
     } else return of(product);
-  }
-
-  productSelected(selectedProductId: number) {
-    this.productSelectedSubject.next(selectedProductId);
   }
 
   private handleErrors(error: HttpErrorResponse) {
