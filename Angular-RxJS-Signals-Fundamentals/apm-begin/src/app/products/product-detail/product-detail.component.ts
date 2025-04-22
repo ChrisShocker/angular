@@ -1,63 +1,35 @@
-import {
-  Component,
-  inject,
-  Input,
-  OnChanges,
-  OnDestroy,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { NgIf, NgFor, CurrencyPipe } from '@angular/common';
+import { NgIf, NgFor, CurrencyPipe, CommonModule } from '@angular/common';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { catchError, EMPTY, Subscription } from 'rxjs';
+import { catchError, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'pm-product-detail',
   templateUrl: './product-detail.component.html',
   standalone: true,
-  imports: [NgIf, NgFor, CurrencyPipe],
+  imports: [NgIf, NgFor, CurrencyPipe, CommonModule],
 })
-export class ProductDetailComponent implements OnChanges, OnDestroy {
+export class ProductDetailComponent {
   // Just enough here for the template to compile
-  @Input() productId: number = 0;
   errorMessage = '';
-  sub!: Subscription;
 
   private productService = inject(ProductService);
 
   // Product to display
-  product: Product | null = null;
+  product$ = this.productService.product$.pipe(
+    catchError((error) => {
+      this.errorMessage = error;
+      return EMPTY;
+    })
+  );
 
   // Set the page title
-  pageTitle = this.product
-    ? `Product Detail for: ${this.product.productName}`
-    : 'Product Detail';
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const id = changes['productId'].currentValue;
-    if (id) {
-      this.sub = this.productService
-        .getProductById$(id)
-
-        .pipe(
-          catchError((error) => {
-            this.errorMessage = error;
-            return EMPTY;
-          })
-        )
-        .subscribe((product) => {
-          this.product = product;
-        });
-    }
-  }
-
-  ngOnDestroy(): void {
-    // since we're using onChanges it may be possible the sub was never subscribed to
-    if (this.sub) {
-      this.sub.unsubscribe();
-    }
-  }
+  // pageTitle = this.product
+  //   ? `Product Detail for: ${this.product.productName}`
+  //   : 'Product Detail';
+  pageTitle = 'ProductDetail';
 
   addToCart(product: Product) {}
 }
