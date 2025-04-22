@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
+  combineLatest,
   EMPTY,
   filter,
   map,
@@ -50,7 +51,7 @@ export class ProductService {
     this.productSelectedSubject.next(selectedProductId);
   }
 
-  readonly product$ = this.productSelected$.pipe(
+  readonly product1$ = this.productSelected$.pipe(
     // filter out null and undefined values
     filter(Boolean),
     switchMap((id) => {
@@ -60,6 +61,15 @@ export class ProductService {
         catchError((err) => this.handleErrors(err))
       );
     })
+  );
+
+  product$ = combineLatest([this.productSelected$, this.products$]).pipe(
+    map(([selectedProductId, products]) =>
+      products.find((product) => product.id === selectedProductId)
+    ),
+    filter(Boolean),
+    switchMap((product) => this.getProductWithReviews(product)),
+    catchError((err) => this.handleErrors(err))
   );
 
   // use a switchMap to cancel all prior subscriptions

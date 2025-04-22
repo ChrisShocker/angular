@@ -18,7 +18,7 @@ export class ProductDetailComponent {
   private productService = inject(ProductService);
 
   // Product to display
-  product$ = this.productService.product$.pipe(
+  product$ = this.productService.product1$.pipe(
     catchError((error) => {
       this.errorMessage = error;
       return EMPTY;
