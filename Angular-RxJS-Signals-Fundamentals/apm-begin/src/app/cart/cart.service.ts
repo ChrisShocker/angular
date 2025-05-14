@@ -51,4 +51,14 @@ export class CartService {
     // we must update the array/object to trigger the signal updates have ocurred
     this.cartItems.update((items) => [...items, { product, quantity: 1 }]);
   }
+
+  updateQuantity(cartItem: CartItem, quantity: number) {
+    // signals have an update method to update the signal and its dependencies
+    // update the item quantity if found else just return the new item
+    this.cartItems.update((items) =>
+      items.map((item) =>
+        item.product.id === cartItem.product.id ? { ...item, quantity } : item
+      )
+    );
+  }
 }
