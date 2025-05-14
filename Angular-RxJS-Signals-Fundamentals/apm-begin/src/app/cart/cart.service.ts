@@ -61,4 +61,10 @@ export class CartService {
       )
     );
   }
+
+  removeFromCart(cartItem: CartItem) {
+    this.cartItems.update((items) =>
+      items.filter((item) => item.product.id !== cartItem.product.id)
+    );
+  }
 }
