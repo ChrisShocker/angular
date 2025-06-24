@@ -32,8 +32,14 @@ export class ProductListComponent {
   );
   */
 
+  /**
+   * use signal instad
+   * 
   // Selected product id to highlight the entry
   selectedProductId$ = this.productService.productSelected$;
+   */
+  // Selected product id to highlight the entry
+  selectedProductId = this.productService.selectedProductId;
 
   onSelected(productId: number): void {
     this.productService.productSelected(productId);

@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
@@ -74,8 +74,11 @@ export class ProductService {
     undefined
   );
   readonly productSelected$ = this.productSelectedSubject.asObservable();
+  selectedProductId = signal<number | undefined>(undefined);
 
   productSelected(selectedProductId: number) {
+    // use signal instead
+    this.selectedProductId.set(selectedProductId);
     this.productSelectedSubject.next(selectedProductId);
   }
 
