@@ -1,0 +1,47 @@
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+
+import { NgIf, NgFor, NgClass, CommonModule } from '@angular/common';
+import { Product } from '../product';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
+import { ProductService } from '../product.service';
+import { catchError, EMPTY, Subscription } from 'rxjs';
+import { HttpErrorService } from 'src/app/utilities/http-error.service';
+
+@Component({
+  selector: 'pm-product-list',
+  templateUrl: './product-list.component.html',
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, CommonModule, ProductDetailComponent],
+})
+export class ProductListComponent {
+  // Just enough here for the template to compile
+  pageTitle = 'Products';
+
+  private productService = inject(ProductService);
+
+  // Products
+  // Use the new signal for products and errors instead
+  products = this.productService.products;
+  errorMessage = this.productService.productsError;
+  /*
+  readonly products$ = this.productService.products$.pipe(
+    catchError((error) => {
+      this.errorMessage = error;
+      return EMPTY;
+    })
+  );
+  */
+
+  /**
+   * use signal instad
+   * 
+  // Selected product id to highlight the entry
+  selectedProductId$ = this.productService.productSelected$;
+   */
+  // Selected product id to highlight the entry
+  selectedProductId = this.productService.selectedProductId;
+
+  onSelected(productId: number): void {
+    this.productService.productSelected(productId);
+  }
+}
