@@ -20,7 +20,7 @@ export class ProductDetailComponent {
   private cartService = inject(CartService);
 
   // Product to display
-  product$ = this.productService.product1$.pipe(
+  product$ = this.productService.product$.pipe(
     catchError((error) => {
       this.errorMessage = error;
       return EMPTY;

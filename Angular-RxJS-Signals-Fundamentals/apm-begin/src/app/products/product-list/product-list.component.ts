@@ -16,13 +16,13 @@ import { HttpErrorService } from 'src/app/utilities/http-error.service';
 export class ProductListComponent {
   // Just enough here for the template to compile
   pageTitle = 'Products';
-  errorMessage = '';
 
   private productService = inject(ProductService);
 
   // Products
-  // Use the new signal for products instead
+  // Use the new signal for products and errors instead
   products = this.productService.products;
+  errorMessage = this.productService.productsError;
   /*
   readonly products$ = this.productService.products$.pipe(
     catchError((error) => {

@@ -1,4 +1,4 @@
-import { Review } from "../reviews/review";
+import { Review } from '../reviews/review';
 
 /* Defines the product entity */
 export interface Product {
@@ -10,4 +10,10 @@ export interface Product {
   quantityInStock?: number;
   hasReviews?: boolean;
   reviews?: Review[];
+}
+
+// generic interface for catching data and displaying errors (should be its own file)
+export interface Result<T> {
+  data: T | undefined;
+  error?: string;
 }

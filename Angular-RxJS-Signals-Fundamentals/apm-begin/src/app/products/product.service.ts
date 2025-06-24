@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
   catchError,
@@ -15,7 +15,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { Product } from './product';
+import { Product, Result } from './product';
 import { HttpErrorService } from '../utilities/http-error.service';
 import { ReviewService } from '../reviews/review.service';
 import { Review } from '../reviews/review';
@@ -34,17 +34,41 @@ export class ProductService {
   private errorService = inject(HttpErrorService);
   private reviewService = inject(ReviewService);
 
-  private products$ = this.http.get<Product[]>(this.productsUrl).pipe(
+  private productsResult$ = this.http.get<Product[]>(this.productsUrl).pipe(
+    // map the result to the new result type and catch the error
+    map((p) => ({ data: p, error: undefined } as Result<Product[]>)),
     tap((p) => {
       console.log(JSON.stringify(p));
     }),
     // shareReplay location matters, operators above are executed before cache and not executed on next sub
     shareReplay(1),
     // operators below are executed on every subscription
-    catchError((error) => this.handleErrors(error))
+    catchError((error) =>
+      of({ data: [], error: this.errorService.formatError(error) } as Result<
+        Product[]
+      >)
+    )
   );
 
-  products = toSignal(this.products$, { initialValue: [] as Product[] });
+  private productsResult = toSignal(this.productsResult$, {
+    initialValue: { data: [] } as Result<Product[]>,
+  });
+
+  // add computed signals for products and error messages that can be subscribed to
+  products = computed(() => this.productsResult().data);
+  productsError = computed(() => this.productsResult().error);
+
+  /* example signla error handling (not so clean): 
+   * catch the error in the signal and handle it with a try catch block
+  products = computed(() => {
+    try {
+      // open the box ()!
+      return toSignal(this.products$, { initialValue: [] as Product[] })();
+    } catch (error) {
+      return [] as Product[];
+    }
+  });
+  */
 
   private productSelectedSubject = new BehaviorSubject<number | undefined>(
     undefined
@@ -55,7 +79,7 @@ export class ProductService {
     this.productSelectedSubject.next(selectedProductId);
   }
 
-  readonly product1$ = this.productSelected$.pipe(
+  readonly product$ = this.productSelected$.pipe(
     // filter out null and undefined values
     filter(Boolean),
     switchMap((id) => {
@@ -67,14 +91,14 @@ export class ProductService {
     })
   );
 
-  product$ = combineLatest([this.productSelected$, this.products$]).pipe(
-    map(([selectedProductId, products]) =>
-      products.find((product) => product.id === selectedProductId)
-    ),
-    filter(Boolean),
-    switchMap((product) => this.getProductWithReviews(product)),
-    catchError((err) => this.handleErrors(err))
-  );
+  // product$ = combineLatest([this.productSelected$, this.products$]).pipe(
+  //   map(([selectedProductId, products]) =>
+  //     products.find((product) => product.id === selectedProductId)
+  //   ),
+  //   filter(Boolean),
+  //   switchMap((product) => this.getProductWithReviews(product)),
+  //   catchError((err) => this.handleErrors(err))
+  // );
 
   // use a switchMap to cancel all prior subscriptions
   getProductById$(id: number): Observable<Product> {
