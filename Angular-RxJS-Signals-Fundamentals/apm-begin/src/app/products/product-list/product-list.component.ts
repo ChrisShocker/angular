@@ -21,12 +21,16 @@ export class ProductListComponent {
   private productService = inject(ProductService);
 
   // Products
+  // Use the new signal for products instead
+  products = this.productService.products;
+  /*
   readonly products$ = this.productService.products$.pipe(
     catchError((error) => {
       this.errorMessage = error;
       return EMPTY;
     })
   );
+  */
 
   // Selected product id to highlight the entry
   selectedProductId$ = this.productService.productSelected$;
