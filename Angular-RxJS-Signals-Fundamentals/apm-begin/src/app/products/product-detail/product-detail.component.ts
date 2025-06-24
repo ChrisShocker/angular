@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
 import { NgIf, NgFor, CurrencyPipe, CommonModule } from '@angular/common';
 import { Product } from '../product';
@@ -14,24 +14,31 @@ import { CartService } from 'src/app/cart/cart.service';
 })
 export class ProductDetailComponent {
   // Just enough here for the template to compile
-  errorMessage = '';
 
   private productService = inject(ProductService);
   private cartService = inject(CartService);
 
   // Product to display
-  product$ = this.productService.product$.pipe(
-    catchError((error) => {
-      this.errorMessage = error;
-      return EMPTY;
-    })
-  );
+  // use signals instad of the service observable
+  product = this.productService.product;
+  errorMessage = this.productService.productError;
+  // product$ = this.productService.productResult$.pipe(
+  //   catchError((error) => {
+  //     this.errorMessage = error;
+  //     return EMPTY;
+  //   })
+  // );
 
   // Set the page title
   // pageTitle = this.product
   //   ? `Product Detail for: ${this.product.productName}`
   //   : 'Product Detail';
-  pageTitle = 'ProductDetail';
+
+  // use signal with dynamic title instead of the static one
+  pageTitle = computed(() =>
+    this.product() ? `${this.product()?.productName}` : 'Product Details'
+  );
+  // pageTitle = 'ProductDetail';
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);

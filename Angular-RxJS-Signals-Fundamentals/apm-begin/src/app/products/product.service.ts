@@ -20,7 +20,7 @@ import { HttpErrorService } from '../utilities/http-error.service';
 import { ReviewService } from '../reviews/review.service';
 import { Review } from '../reviews/review';
 
-import { toSignal } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -70,29 +70,47 @@ export class ProductService {
   });
   */
 
+  /**
+   * remove subject and observable to use a toObservable instead! 
   private productSelectedSubject = new BehaviorSubject<number | undefined>(
     undefined
   );
   readonly productSelected$ = this.productSelectedSubject.asObservable();
+   * 
+   */
+
   selectedProductId = signal<number | undefined>(undefined);
 
   productSelected(selectedProductId: number) {
     // use signal instead
     this.selectedProductId.set(selectedProductId);
-    this.productSelectedSubject.next(selectedProductId);
+    // this.productSelectedSubject.next(selectedProductId);
   }
 
-  readonly product$ = this.productSelected$.pipe(
+  // use toObservable instead, note this could ignore emissions until it gets called
+  readonly productResult$ = toObservable(this.selectedProductId).pipe(
     // filter out null and undefined values
     filter(Boolean),
     switchMap((id) => {
       const productUrl = this.productsUrl + '/' + id;
       return this.http.get<Product>(productUrl).pipe(
         switchMap((product) => this.getProductWithReviews(product)),
-        catchError((err) => this.handleErrors(err))
+        catchError((err) =>
+          of({
+            data: undefined,
+            error: this.errorService.formatError(err),
+          } as Result<Product>)
+        )
       );
-    })
+    }),
+    map((p) => ({ data: p } as Result<Product>))
   );
+  // use a signal to expose observable
+  private productResult = toSignal(this.productResult$);
+
+  // expose the signals to components
+  product = computed(() => this.productResult()?.data);
+  productError = computed(() => this.productResult()?.error);
 
   // product$ = combineLatest([this.productSelected$, this.products$]).pipe(
   //   map(([selectedProductId, products]) =>
